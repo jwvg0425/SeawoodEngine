@@ -18,7 +18,6 @@ private:
 	virtual						~Application();
 
 	static LRESULT CALLBACK		WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
-	void						gameLoop();
 	bool						MakeWindow(TCHAR* title, int width, int height);
 	
 	static Application*			m_Instance;

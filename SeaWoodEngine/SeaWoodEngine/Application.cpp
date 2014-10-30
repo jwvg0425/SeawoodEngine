@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Application.h"
+#include "Director.h"
 
 USING_NS_SW;
 
@@ -12,6 +13,7 @@ Application::Application()
 
 Application::~Application()
 {
+
 }
 
 Application* SeaWood::Application::getInstance()
@@ -110,14 +112,7 @@ void SeaWood::Application::run()
 		}
 		else
 		{
-			gameLoop();
+			Director::getInstance()->gameLoop();
 		}
 	}
 }
-
-void SeaWood::Application::gameLoop()
-{
-
-}
-
-

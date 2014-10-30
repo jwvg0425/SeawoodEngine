@@ -8,6 +8,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance
 {
 	Application::getInstance()->init(_T("dummy client"), 500, 500);
 	Application::getInstance()->run();
+	Application::releaseInstance();
 
 	return 0;
 }

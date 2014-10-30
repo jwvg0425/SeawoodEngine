@@ -23,6 +23,9 @@
     <ClCompile Include="main.cpp">
       <Filter>더미 클라</Filter>
     </ClCompile>
+    <ClCompile Include="Director.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -35,6 +38,9 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="SeaWood.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Director.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>
