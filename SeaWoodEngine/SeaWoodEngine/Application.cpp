@@ -13,7 +13,7 @@ Application::Application()
 
 Application::~Application()
 {
-
+	Director::releaseInstance();
 }
 
 Application* SeaWood::Application::getInstance()
@@ -94,7 +94,7 @@ LRESULT CALLBACK SeaWood::Application::WndProc(HWND hWnd, UINT iMessage, WPARAM 
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
 }
 
-void SeaWood::Application::run()
+int SeaWood::Application::run()
 {
 	MSG message;
 
@@ -104,7 +104,8 @@ void SeaWood::Application::run()
 		{
 			if (message.message == WM_QUIT)
 			{
-				return;
+				Application::releaseInstance();
+				return 0;
 			}
 
 			TranslateMessage(&message);
