@@ -1,11 +1,14 @@
 ﻿#include "stdafx.h"
 #include "Point2.h"
+#include "Size.h"
 #include <cfloat>
 #include <math.h>
 #include <stdlib.h>
 
 
 USING_NS_SW;
+
+const Point2 Point2::ZERO = Point2(0.0f, 0.0f);
 
 SeaWood::Point2::Point2(float x, float y)
 {
@@ -17,6 +20,12 @@ SeaWood::Point2::Point2(const Point2& other)
 {
 	m_X = other.m_X;
 	m_Y = other.m_Y;
+}
+
+SeaWood::Point2::Point2()
+{
+	m_X = 0.0f;
+	m_Y = 0.0f;
 }
 
 SeaWood::Point2::~Point2()
@@ -68,6 +77,16 @@ const Point2 SeaWood::Point2::operator+(const Point2& other)
 	return point;
 }
 
+const Point2 SeaWood::Point2::operator+(const Size& size)
+{
+	Point2 point = *this;
+
+	point.m_X += size.m_Width;
+	point.m_Y += size.m_Height;
+
+	return point;
+}
+
 const Point2 SeaWood::Point2::operator-(const Point2& other)
 {
 	Point2 point = *this;
@@ -85,4 +104,14 @@ float SeaWood::Point2::getDistance(const Point2& other)
 	double yDiff = this->m_Y - other.m_Y;
 
 	return static_cast<float>(sqrt(xDiff*xDiff + yDiff*yDiff));
+}
+
+const Point2 SeaWood::Point2::operator-(const Size& size)
+{
+	Point2 point = *this;
+
+	point.m_X -= size.m_Width;
+	point.m_Y -= size.m_Height;
+
+	return point;
 }
