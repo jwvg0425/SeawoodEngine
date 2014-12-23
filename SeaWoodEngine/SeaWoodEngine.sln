@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SeaWoodEngine", "SeaWoodEngine\SeaWoodEngine.vcxproj", "{F12BB160-237E-41C4-B2F3-9A084DA7C451}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DummyClient", "DummyClient\DummyClient.vcxproj", "{2FE74CC2-2465-46E7-A91E-5BF7DD6A3C24}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -15,6 +17,10 @@ Global
 		{F12BB160-237E-41C4-B2F3-9A084DA7C451}.Debug|Win32.Build.0 = Debug|Win32
 		{F12BB160-237E-41C4-B2F3-9A084DA7C451}.Release|Win32.ActiveCfg = Release|Win32
 		{F12BB160-237E-41C4-B2F3-9A084DA7C451}.Release|Win32.Build.0 = Release|Win32
+		{2FE74CC2-2465-46E7-A91E-5BF7DD6A3C24}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2FE74CC2-2465-46E7-A91E-5BF7DD6A3C24}.Debug|Win32.Build.0 = Debug|Win32
+		{2FE74CC2-2465-46E7-A91E-5BF7DD6A3C24}.Release|Win32.ActiveCfg = Release|Win32
+		{2FE74CC2-2465-46E7-A91E-5BF7DD6A3C24}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,56 +1,59 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="더미 클라">
-      <UniqueIdentifier>{708b3a23-c853-43bd-b6e6-78e153585523}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="엔진">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="엔진\base">
+    <Filter Include="base">
       <UniqueIdentifier>{febdcc86-98fd-4be9-8670-6f7c6fc183dc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="엔진\node">
-      <UniqueIdentifier>{52f67417-3a6a-4ac6-ab6a-9e56088414db}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="엔진\file">
+    <Filter Include="file">
       <UniqueIdentifier>{6af36dd7-9604-49d7-81e9-d20498165ce2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="node">
+      <UniqueIdentifier>{52f67417-3a6a-4ac6-ab6a-9e56088414db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\structure">
+      <UniqueIdentifier>{eb8aa8fb-6e78-4e8b-aefd-659726875cb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>엔진</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>더미 클라</Filter>
-    </ClCompile>
     <ClCompile Include="Application.cpp">
-      <Filter>엔진\base</Filter>
+      <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="Director.cpp">
-      <Filter>엔진\base</Filter>
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Point2.cpp">
+      <Filter>base\structure</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>base\structure</Filter>
+    </ClCompile>
+    <ClCompile Include="Size.cpp">
+      <Filter>base\structure</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>엔진</Filter>
-    </ClInclude>
     <ClInclude Include="Application.h">
-      <Filter>엔진\base</Filter>
+      <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="Director.h">
-      <Filter>엔진\base</Filter>
+      <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="Macro.h">
-      <Filter>엔진\base</Filter>
+      <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="SeaWood.h">
-      <Filter>엔진\base</Filter>
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Point2.h">
+      <Filter>base\structure</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>base\structure</Filter>
+    </ClInclude>
+    <ClInclude Include="Size.h">
+      <Filter>base\structure</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
