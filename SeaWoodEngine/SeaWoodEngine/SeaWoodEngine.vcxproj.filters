@@ -31,6 +31,9 @@
     <ClCompile Include="Size.cpp">
       <Filter>base\structure</Filter>
     </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>node</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -53,6 +56,12 @@
       <Filter>base\structure</Filter>
     </ClInclude>
     <ClInclude Include="Size.h">
+      <Filter>base\structure</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>node</Filter>
+    </ClInclude>
+    <ClInclude Include="structure.h">
       <Filter>base\structure</Filter>
     </ClInclude>
   </ItemGroup>
