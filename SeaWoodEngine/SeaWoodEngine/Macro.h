@@ -17,3 +17,10 @@
 		PTR = nullptr; \
 	}\
 }
+#define CREATE_FUNC(CLASS)\
+CLASS* CLASS::create()\
+{\
+	CLASS* ptr = new CLASS; \
+	ptr->incRefCount(); \
+	return ptr; \
+}

@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "Director.h"
+#include "Node.h"
 
 SeaWood::Director* SeaWood::Director::m_Instance = nullptr;
 
@@ -30,6 +31,4 @@ void SeaWood::Director::releaseInstance()
 
 void SeaWood::Director::gameLoop()
 {
-
 }
-

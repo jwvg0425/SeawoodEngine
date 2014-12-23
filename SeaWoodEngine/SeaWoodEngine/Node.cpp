@@ -24,3 +24,31 @@ void SeaWood::Node::setPosition(Point2 position)
 {
 	m_Position = position;
 }
+
+void SeaWood::Node::incRefCount()
+{
+	m_RefCount++;
+}
+
+int SeaWood::Node::getRefCount()
+{
+	return m_RefCount;
+}
+
+void SeaWood::Node::decRefCount()
+{
+	_ASSERT(m_RefCount > 0);
+
+	m_RefCount--;
+
+	//reference Count가 0이 되면 할당 해제.
+	if (m_RefCount == 0)
+	{
+		delete this;
+	}
+}
+
+void SeaWood::Node::release()
+{
+	decRefCount();
+}

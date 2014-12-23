@@ -2,6 +2,7 @@
 
 NS_SW_BEGIN
 
+class Node;
 class Director
 {
 public:
