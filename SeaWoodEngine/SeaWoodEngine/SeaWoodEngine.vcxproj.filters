@@ -34,6 +34,12 @@
     <ClCompile Include="Node.cpp">
       <Filter>node</Filter>
     </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>node</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -64,5 +70,12 @@
     <ClInclude Include="structure.h">
       <Filter>base\structure</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>node</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="SWEngine.h" />
   </ItemGroup>
 </Project>

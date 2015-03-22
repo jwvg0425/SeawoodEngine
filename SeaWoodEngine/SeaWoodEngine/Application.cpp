@@ -6,8 +6,14 @@ USING_NS_SW;
 
 Application* Application::m_Instance = nullptr;
 
+LRESULT CALLBACK WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
+{
+	return Director::getInstance()->WndProc(hWnd, iMessage, wParam, lParam);
+}
+
 Application::Application()
 {
+	m_Instance = this;
 }
 
 
@@ -16,21 +22,14 @@ Application::~Application()
 	Director::releaseInstance();
 }
 
-Application* SeaWood::Application::getInstance()
+Application* Application::getInstance()
 {
-	if (m_Instance == nullptr)
-	{
-		m_Instance = new Application;
-	}
+	_ASSERT(m_Instance != nullptr);
+
 	return m_Instance;
 }
 
-void SeaWood::Application::releaseInstance()
-{
-	SAFE_DELETE(m_Instance);
-}
-
-bool SeaWood::Application::MakeWindow(TCHAR* title, int width, int height)
+bool Application::MakeWindow(TCHAR* title, int width, int height)
 {
 	WNDCLASS WndClass;
 
@@ -60,7 +59,7 @@ bool SeaWood::Application::MakeWindow(TCHAR* title, int width, int height)
 	}
 }
 
-bool SeaWood::Application::init(TCHAR* title, int width, int height)
+bool Application::init(TCHAR* title, int width, int height)
 {
 	m_InstanceHandle = GetModuleHandle(0);
 
@@ -74,27 +73,7 @@ bool SeaWood::Application::init(TCHAR* title, int width, int height)
 	return true;
 }
 
-LRESULT CALLBACK SeaWood::Application::WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
-{
-	HDC hdc;
-	PAINTSTRUCT ps;
-
-	switch (iMessage)
-	{
-	case WM_CREATE:
-		return 0;
-	case WM_PAINT:
-		hdc = BeginPaint(hWnd, &ps);
-		EndPaint(hWnd, &ps);
-		return 0;
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		return 0;
-	}
-	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
-}
-
-int SeaWood::Application::run()
+int Application::run()
 {
 	MSG message;
 
@@ -104,7 +83,6 @@ int SeaWood::Application::run()
 		{
 			if (message.message == WM_QUIT)
 			{
-				Application::releaseInstance();
 				return 0;
 			}
 
@@ -116,4 +94,9 @@ int SeaWood::Application::run()
 			Director::getInstance()->gameLoop();
 		}
 	}
+}
+
+void Application::onCreate()
+{
+
 }

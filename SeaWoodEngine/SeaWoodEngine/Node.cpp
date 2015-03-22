@@ -3,52 +3,57 @@
 
 USING_NS_SW;
 
-SeaWood::Node::Node()
-{
-	m_RefCount = 0;
-	m_Position = Point2::ZERO;
-	m_Size = Size::ZERO;
-}
-
-SeaWood::Node::~Node()
+Node::Node() : m_Position(Point2::ZERO), m_Size(Size::ZERO)
 {
 
 }
 
-const Point2& SeaWood::Node::getPosition()
+Node::~Node()
+{
+
+}
+
+const Point2& Node::getPosition()
 {
 	return m_Position;
 }
 
-void SeaWood::Node::setPosition(Point2 position)
+void Node::setPosition(Point2 position)
 {
 	m_Position = position;
 }
 
-void SeaWood::Node::incRefCount()
+void Node::draw()
 {
-	m_RefCount++;
+
 }
 
-int SeaWood::Node::getRefCount()
+void Node::update(float dTime)
 {
-	return m_RefCount;
+
 }
 
-void SeaWood::Node::decRefCount()
+void Node::addChild(Node* child)
 {
-	_ASSERT(m_RefCount > 0);
+	m_Childs.push_back(child);
+}
 
-	m_RefCount--;
-
-	//reference Count가 0이 되면 할당 해제.
-	if (m_RefCount == 0)
+void Node::removeChild(Node* child)
+{
+	for (auto it = m_Childs.begin(); it != m_Childs.end();)
 	{
-		delete this;
+		if (*it == child)
+		{
+			it = m_Childs.erase(it);
+		}
+		else
+		{
+			++it;
+		}
 	}
 }
 
-void SeaWood::Node::release()
+bool Node::init()
 {
-	decRefCount();
+	return true;
 }

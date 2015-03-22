@@ -7,27 +7,30 @@ NS_SW_BEGIN
 class Node
 {
 public:
-	Node();
-	~Node();
-	const		Point2& getPosition();
-	void		setPosition(Point2 position);
-	void		release();
-	int			getRefCount();
+					Node();
+	virtual			~Node();
+	const			Point2& getPosition();
+	void			setPosition(Point2 position);
+	int				getRefCount();
+
+	virtual bool	init();
 
 	//그리기 함수.
-	void		render();
+	virtual void	draw();
 
-private:
+	//매 프레임 해야 하는 작업
+	virtual void    update(float dTime);
 
-	//reference count 변화시킴.
-	void		incRefCount();
-	void		decRefCount();
+	//부모 자식 관계 관련 함수
+	void			addChild(Node* child);
+	void			removeChild(Node* child);
 
-	void		autoRelease();
+protected:
+	using Childs = std::vector<Node*>;
 
+	Childs		m_Childs;
 	Point2		m_Position;
 	Size		m_Size;
-	int			m_RefCount = 0;
 };
 
 NS_SW_END

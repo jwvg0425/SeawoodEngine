@@ -18,9 +18,16 @@
 	}\
 }
 #define CREATE_FUNC(CLASS)\
-CLASS* CLASS::create()\
+static CLASS* create()\
 {\
 	CLASS* ptr = new CLASS; \
-	ptr->incRefCount(); \
-	return ptr; \
+	if(ptr->init())\
+	{\
+		return ptr; \
+	}\
+	else\
+	{\
+		delete ptr;\
+		return nullptr;\
+	}\
 }

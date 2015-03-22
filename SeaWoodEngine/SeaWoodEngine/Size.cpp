@@ -5,35 +5,35 @@ USING_NS_SW;
 
 const Size Size::ZERO = Size(0.0f, 0.0f);
 
-SeaWood::Size::Size()
+Size::Size()
 {
 	m_Width = 0.0f;
 	m_Height = 0.0f;
 }
 
-SeaWood::Size::Size(float width, float height)
+Size::Size(float width, float height)
 {
 	m_Width = width;
 	m_Height = height;
 }
 
-SeaWood::Size::Size(const Size& other)
+Size::Size(const Size& other)
 {
 	this->m_Width = other.m_Width;
 	this->m_Height = other.m_Height;
 }
 
-SeaWood::Size::~Size()
+Size::~Size()
 {
 
 }
 
-float SeaWood::Size::getArea()
+float Size::getArea()
 {
 	return m_Width * m_Height;
 }
 
-Size& SeaWood::Size::operator=(const Size& other)
+Size& Size::operator=(const Size& other)
 {
 	this->m_Width = other.m_Width;
 	this->m_Height = other.m_Height;
@@ -41,7 +41,7 @@ Size& SeaWood::Size::operator=(const Size& other)
 	return *this;
 }
 
-const Size SeaWood::Size::operator+(const Size& other)
+const Size Size::operator+(const Size& other)
 {
 	Size size = *this;
 
@@ -51,7 +51,7 @@ const Size SeaWood::Size::operator+(const Size& other)
 	return size;
 }
 
-const Size SeaWood::Size::operator-(const Size& other)
+const Size Size::operator-(const Size& other)
 {
 	Size size = *this;
 

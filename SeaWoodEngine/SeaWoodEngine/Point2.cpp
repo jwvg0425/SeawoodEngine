@@ -10,30 +10,30 @@ USING_NS_SW;
 
 const Point2 Point2::ZERO = Point2(0.0f, 0.0f);
 
-SeaWood::Point2::Point2(float x, float y)
+Point2::Point2(float x, float y)
 {
 	m_X = x;
 	m_Y = y;
 }
 
-SeaWood::Point2::Point2(const Point2& other)
+Point2::Point2(const Point2& other)
 {
 	m_X = other.m_X;
 	m_Y = other.m_Y;
 }
 
-SeaWood::Point2::Point2()
+Point2::Point2()
 {
 	m_X = 0.0f;
 	m_Y = 0.0f;
 }
 
-SeaWood::Point2::~Point2()
+Point2::~Point2()
 {
 
 }
 
-Point2& SeaWood::Point2::operator=(const Point2& other)
+Point2& Point2::operator=(const Point2& other)
 {
 	if (this != &other)
 	{
@@ -44,7 +44,7 @@ Point2& SeaWood::Point2::operator=(const Point2& other)
 	return *this;
 }
 
-bool SeaWood::Point2::operator==(const Point2& other)
+bool Point2::operator==(const Point2& other)
 {
 	float xDiff = fabs(other.m_X - this->m_X);
 	float yDiff = fabs(other.m_Y - this->m_Y);
@@ -62,12 +62,12 @@ bool SeaWood::Point2::operator==(const Point2& other)
 	}
 }
 
-bool SeaWood::Point2::operator!=(const Point2& other)
+bool Point2::operator!=(const Point2& other)
 {
 	return !(*this == other);
 }
 
-const Point2 SeaWood::Point2::operator+(const Point2& other)
+const Point2 Point2::operator+(const Point2& other)
 {
 	Point2 point = *this;
 
@@ -77,7 +77,7 @@ const Point2 SeaWood::Point2::operator+(const Point2& other)
 	return point;
 }
 
-const Point2 SeaWood::Point2::operator+(const Size& size)
+const Point2 Point2::operator+(const Size& size)
 {
 	Point2 point = *this;
 
@@ -87,7 +87,7 @@ const Point2 SeaWood::Point2::operator+(const Size& size)
 	return point;
 }
 
-const Point2 SeaWood::Point2::operator-(const Point2& other)
+const Point2 Point2::operator-(const Point2& other)
 {
 	Point2 point = *this;
 
@@ -98,7 +98,7 @@ const Point2 SeaWood::Point2::operator-(const Point2& other)
 
 }
 
-float SeaWood::Point2::getDistance(const Point2& other)
+float Point2::getDistance(const Point2& other)
 {
 	double xDiff = this->m_X - other.m_X;
 	double yDiff = this->m_Y - other.m_Y;
@@ -106,7 +106,7 @@ float SeaWood::Point2::getDistance(const Point2& other)
 	return static_cast<float>(sqrt(xDiff*xDiff + yDiff*yDiff));
 }
 
-const Point2 SeaWood::Point2::operator-(const Size& size)
+const Point2 Point2::operator-(const Size& size)
 {
 	Point2 point = *this;
 
