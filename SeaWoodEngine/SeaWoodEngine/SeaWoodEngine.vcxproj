@@ -20,6 +20,7 @@
     <ClInclude Include="Node.h" />
     <ClInclude Include="Point2.h" />
     <ClInclude Include="Rect.h" />
+    <ClInclude Include="Ref.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SeaWood.h" />
     <ClInclude Include="Size.h" />
@@ -38,6 +39,7 @@
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Point2.cpp" />
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="Ref.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Size.cpp" />
     <ClCompile Include="stdafx.cpp">

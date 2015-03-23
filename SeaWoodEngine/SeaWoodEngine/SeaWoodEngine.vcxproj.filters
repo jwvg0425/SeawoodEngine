@@ -58,6 +58,9 @@
     <ClCompile Include="MouseEvent.cpp">
       <Filter>base\event</Filter>
     </ClCompile>
+    <ClCompile Include="Ref.cpp">
+      <Filter>node</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -106,6 +109,9 @@
     </ClInclude>
     <ClInclude Include="MouseEvent.h">
       <Filter>base\event</Filter>
+    </ClInclude>
+    <ClInclude Include="Ref.h">
+      <Filter>node</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

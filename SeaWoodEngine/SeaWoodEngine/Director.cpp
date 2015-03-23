@@ -51,6 +51,14 @@ void Director::gameLoop()
 
 	draw();
 
+	//autorelease 작업
+	for (auto& ref : m_ReleasePool)
+	{
+		ref->release();
+	}
+
+	m_ReleasePool.clear();
+
 	calculateFPS(dTime);
 	m_Tick = nowTick;
 }
@@ -98,6 +106,7 @@ void Director::startScene(Scene* scene)
 	_ASSERT(m_NowScene == nullptr);
 
 	m_NowScene = scene;
+	m_NowScene->retain();
 }
 
 LRESULT CALLBACK SeaWood::Director::WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam)
@@ -204,4 +213,27 @@ void SeaWood::Director::calculateFPS(float dTime)
 		frame = 0;
 		time = 0;
 	}
+}
+
+void SeaWood::Director::autorelease(Ref* ref)
+{
+	m_ReleasePool.push_back(ref);
+}
+
+void SeaWood::Director::changeScene(Scene* scene)
+{
+	_ASSERT(m_NowScene != nullptr);
+
+	m_NowScene->release();
+	m_NowScene = scene;
+	m_NowScene->retain();
+}
+
+void SeaWood::Director::end()
+{
+	_ASSERT(m_NowScene != nullptr);
+
+	m_NowScene->release();
+
+	PostQuitMessage(0);
 }

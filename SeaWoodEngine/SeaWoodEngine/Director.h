@@ -6,10 +6,12 @@ NS_SW_BEGIN
 class Scene;
 class View;
 class Node;
+class Ref;
 class Director
 {
 public:
 	using Nodes = std::vector<Node*>;
+	using Refs = std::vector<Ref*>;
 	using EventNodes = std::map<EventType, Nodes>;
 
 	static Director*	getInstance();
@@ -17,10 +19,14 @@ public:
 
 	void				gameLoop();
 
+	//프로그램 종료
+	void				end();
+
 	//등록된 개체들을 모두 그림
 	void				draw();
 
 	void				startScene(Scene* scene);
+	void				changeScene(Scene* scene);
 
 	void				registerView(View* view);
 	View*				getView();
@@ -33,6 +39,7 @@ public:
 	void				onMouseDown(MouseEvent::Status status);
 	void				onMouseMove(int x, int y);
 	void				onMouseUp(MouseEvent::Status status);
+	void				autorelease(Ref* ref);
 
 	LRESULT CALLBACK	WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 
@@ -54,6 +61,7 @@ protected:
 	MouseEvent*			m_Mouse;
 	EventNodes			m_EventNodes;
 	int					m_FPS = 0;
+	Refs				m_ReleasePool;
 };
 
 NS_SW_END

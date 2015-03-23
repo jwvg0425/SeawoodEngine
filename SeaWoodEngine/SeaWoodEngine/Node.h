@@ -1,11 +1,12 @@
 ﻿#pragma once
 #include "SeaWood.h"
+#include "Ref.h"
 #include "MouseEvent.h"
 
 NS_SW_BEGIN
 
 //엔진 기본 클래스.
-class Node
+class Node : public Ref
 {
 public:
 					Node();
@@ -28,6 +29,7 @@ public:
 	Node*			getChild(std::string name);
 	Node*			getParent();
 	void			removeChild(Node* child);
+	void			removeAllChilds();
 
 	//이벤트 관련 함수
 	virtual void	onMouseDown(MouseEvent e);
