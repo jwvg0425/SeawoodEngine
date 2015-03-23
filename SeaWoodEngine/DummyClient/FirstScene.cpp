@@ -1,5 +1,5 @@
 ﻿#include "FirstScene.h"
-#include "RectNode.h"
+#include "DynamicRect.h"
 
 USING_NS_SW;
 
@@ -19,9 +19,11 @@ bool FirstScene::init()
 		return false;
 	}
 
-	auto rect = RectNode::createWithRect({ 20, 20, 80, 80 });
+	auto rect = RectNode::createWithRect({ 40, 40, 120, 60 });
+	addChild(rect, "rect");
 
-	addChild(rect);
+	auto mouseRect = DynamicRect::createWithRect({ 0, 0, 50, 50 });
+	addChild(mouseRect);
 
 	return true;
 }

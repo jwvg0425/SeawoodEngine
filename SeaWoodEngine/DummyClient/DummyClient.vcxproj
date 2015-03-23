@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DynamicRect.cpp" />
     <ClCompile Include="FirstScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyApplication.cpp" />
@@ -90,6 +91,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DynamicRect.h" />
     <ClInclude Include="FirstScene.h" />
     <ClInclude Include="MyApplication.h" />
     <ClInclude Include="RectNode.h" />
