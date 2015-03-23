@@ -173,7 +173,7 @@ void SeaWood::Director::onMouseUp(MouseEvent::Status status)
 	}
 }
 
-void SeaWood::Director::registerEventNode(EventType type, Node* node)
+void SeaWood::Director::registerEvent(EventType type, Node* node)
 {
 	m_EventNodes[type].push_back(node);
 }

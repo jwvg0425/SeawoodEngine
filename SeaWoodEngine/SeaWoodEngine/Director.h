@@ -26,7 +26,7 @@ public:
 	View*				getView();
 
 	//특정 이벤트에 대해 해당 이벤트 처리할 노드 등록.
-	void				registerEventNode(EventType type, Node* node);
+	void				registerEvent(EventType type, Node* node);
 	
 
 	MouseEvent*			getMouse();

@@ -1,11 +1,9 @@
 ﻿#include "Seawood.h"
 
 NS_SW_BEGIN
-
 #ifdef UNICODE
-void log(LPCWSTR format, ...);
+void debugLog(LPCWSTR format, ...);
 #else
-void log(LPCSTR format, ...);
+void debugLog(LPCSTR format, ...);
 #endif
-
 NS_SW_END
