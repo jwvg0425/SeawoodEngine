@@ -113,52 +113,19 @@ LRESULT CALLBACK SeaWood::Director::WndProc(HWND hWnd, UINT iMessage, WPARAM wPa
 		EndPaint(hWnd, &ps);
 		return 0;
 	case WM_MOUSEMOVE:
-		m_Mouse->m_Position.m_X = LOWORD(lParam);
-		m_Mouse->m_Position.m_Y = HIWORD(lParam);
+		onMouseMove(LOWORD(lParam), HIWORD(lParam));
 		return 0;
 	case WM_LBUTTONDOWN:
-		switch (m_Mouse->m_Status)
-		{
-		case MouseEvent::Status::NONE:
-			m_Mouse->m_Status = MouseEvent::Status::LEFT;
-			break;
-		case MouseEvent::Status::RIGHT:
-			m_Mouse->m_Status = MouseEvent::Status::LEFT_RIGHT;
-			break;
-		}
+		onMouseDown(MouseEvent::Status::LEFT);
 		return 0;
 	case WM_LBUTTONUP:
-		switch (m_Mouse->m_Status)
-		{
-		case MouseEvent::Status::LEFT:
-			m_Mouse->m_Status = MouseEvent::Status::NONE;
-			break;
-		case MouseEvent::Status::LEFT_RIGHT:
-			m_Mouse->m_Status = MouseEvent::Status::RIGHT;
-			break;
-		}
+		onMouseUp(MouseEvent::Status::LEFT);
 		return 0;
 	case WM_RBUTTONDOWN:
-		switch (m_Mouse->m_Status)
-		{
-		case MouseEvent::Status::NONE:
-			m_Mouse->m_Status = MouseEvent::Status::RIGHT;
-			break;
-		case MouseEvent::Status::LEFT:
-			m_Mouse->m_Status = MouseEvent::Status::LEFT_RIGHT;
-			break;
-		}
+		onMouseDown(MouseEvent::Status::RIGHT);
 		return 0;
 	case WM_RBUTTONUP:
-		switch (m_Mouse->m_Status)
-		{
-		case MouseEvent::Status::RIGHT:
-			m_Mouse->m_Status = MouseEvent::Status::NONE;
-			break;
-		case MouseEvent::Status::LEFT_RIGHT:
-			m_Mouse->m_Status = MouseEvent::Status::LEFT;
-			break;
-		}
+		onMouseUp(MouseEvent::Status::RIGHT);
 		return 0;
 	case WM_DESTROY:
 		PostQuitMessage(0);
@@ -182,4 +149,42 @@ View* SeaWood::Director::getView()
 MouseEvent* SeaWood::Director::getMouse()
 {
 	return m_Mouse;
+}
+
+void SeaWood::Director::onMouseDown(MouseEvent::Status status)
+{
+	m_Mouse->m_Status = 
+		static_cast<MouseEvent::Status>(m_Mouse->m_Status | status);
+
+	for (auto& node : m_EventNodes[EventType::MOUSE_DOWN])
+	{
+		node->onMouseDown(*m_Mouse);
+	}
+}
+
+void SeaWood::Director::onMouseUp(MouseEvent::Status status)
+{
+	m_Mouse->m_Status = 
+		static_cast<MouseEvent::Status>(m_Mouse->m_Status & ~status);
+
+	for (auto& node : m_EventNodes[EventType::MOUSE_UP])
+	{
+		node->onMouseUp(*m_Mouse);
+	}
+}
+
+void SeaWood::Director::registerEventNode(EventType type, Node* node)
+{
+	m_EventNodes[type].push_back(node);
+}
+
+void SeaWood::Director::onMouseMove(int x, int y)
+{
+	m_Mouse->m_Position.m_X = static_cast<float>(x);
+	m_Mouse->m_Position.m_Y = static_cast<float>(y);
+
+	for (auto& node : m_EventNodes[EventType::MOUSE_MOVE])
+	{
+		node->onMouseMove(*m_Mouse);
+	}
 }

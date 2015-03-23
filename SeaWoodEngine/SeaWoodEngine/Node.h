@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "SeaWood.h"
+#include "MouseEvent.h"
 
 NS_SW_BEGIN
 
@@ -27,6 +28,11 @@ public:
 	Node*			getChild(std::string name);
 	Node*			getParent();
 	void			removeChild(Node* child);
+
+	//이벤트 관련 함수
+	virtual void	onMouseDown(MouseEvent e);
+	virtual void	onMouseMove(MouseEvent e);
+	virtual void	onMouseUp(MouseEvent e);
 
 protected:
 	using Childs = std::vector<std::pair<std::string, Node*>>;

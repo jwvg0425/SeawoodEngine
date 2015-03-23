@@ -63,6 +63,21 @@ Node* SeaWood::Node::getParent()
 	return m_Parent;
 }
 
+void SeaWood::Node::onMouseDown(MouseEvent e)
+{
+
+}
+
+void SeaWood::Node::onMouseMove(MouseEvent e)
+{
+
+}
+
+void SeaWood::Node::onMouseUp(MouseEvent e)
+{
+
+}
+
 void Node::removeChild(Node* child)
 {
 	for (auto it = m_Childs.begin(); it != m_Childs.end();)

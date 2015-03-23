@@ -1,10 +1,11 @@
-﻿#include "Event.h"
+﻿#pragma once
+#include "Event.h"
 
 NS_SW_BEGIN
 
 struct MouseEvent : public Event
 {
-	enum class Status
+	enum Status
 	{
 		NONE = 0,
 		LEFT = 1,
@@ -18,5 +19,7 @@ struct MouseEvent : public Event
 	Point2 m_Position = Point2::ZERO;
 	Status m_Status = Status::NONE;
 };
+
+using MouseCallback = std::function<void(MouseEvent)>;
 
 NS_SW_END

@@ -2,6 +2,8 @@
 #include <Windows.h>
 #include <tchar.h>
 #include <vector>
+#include <functional>
+#include <map>
 #include "Macro.h"
 #include "structure.h"
 #include "Utility.h"

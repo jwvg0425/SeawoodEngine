@@ -1,13 +1,17 @@
 ﻿#pragma once
+#include "MouseEvent.h"
 
 NS_SW_BEGIN
 
 class Scene;
 class View;
-struct MouseEvent;
+class Node;
 class Director
 {
 public:
+	using Nodes = std::vector<Node*>;
+	using EventNodes = std::map<EventType, Nodes>;
+
 	static Director*	getInstance();
 	static void			releaseInstance();
 
@@ -21,7 +25,14 @@ public:
 	void				registerView(View* view);
 	View*				getView();
 
+	//특정 이벤트에 대해 해당 이벤트 처리할 노드 등록.
+	void				registerEventNode(EventType type, Node* node);
+	
+
 	MouseEvent*			getMouse();
+	void				onMouseDown(MouseEvent::Status status);
+	void				onMouseMove(int x, int y);
+	void				onMouseUp(MouseEvent::Status status);
 
 	LRESULT CALLBACK	WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 
@@ -40,7 +51,7 @@ protected:
 	LARGE_INTEGER		m_TicksPerSecond;
 	long long int		m_Tick = 0;
 	MouseEvent*			m_Mouse;
-	
+	EventNodes			m_EventNodes;
 };
 
 NS_SW_END
