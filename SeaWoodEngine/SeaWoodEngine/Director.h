@@ -42,6 +42,7 @@ protected:
 
 	long long int		getTick();
 	long long int		getTicksPerSecond();
+	void				calculateFPS(float dTime);
 
 	static Director*	m_Instance;
 
@@ -52,6 +53,7 @@ protected:
 	long long int		m_Tick = 0;
 	MouseEvent*			m_Mouse;
 	EventNodes			m_EventNodes;
+	int					m_FPS = 0;
 };
 
 NS_SW_END

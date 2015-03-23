@@ -2,8 +2,11 @@
 
 NS_SW_BEGIN
 #ifdef UNICODE
-void debugLog(LPCWSTR format, ...);
+#define LOG(format, ...) debugLogW(format, __VA_ARGS__)
 #else
-void debugLog(LPCSTR format, ...);
+#define LOG(format, ...) debugLogA(format, __VA_AGRS__)
 #endif
+
+void debugLogA(LPCSTR format, ...);
+void debugLogW(LPCWSTR format, ...);
 NS_SW_END

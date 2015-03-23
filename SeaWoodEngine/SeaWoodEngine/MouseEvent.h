@@ -20,6 +20,4 @@ struct MouseEvent : public Event
 	Status m_Status = Status::NONE;
 };
 
-using MouseCallback = std::function<void(MouseEvent)>;
-
 NS_SW_END

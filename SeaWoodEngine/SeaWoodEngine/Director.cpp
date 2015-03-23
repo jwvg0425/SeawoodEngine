@@ -51,6 +51,7 @@ void Director::gameLoop()
 
 	draw();
 
+	calculateFPS(dTime);
 	m_Tick = nowTick;
 }
 
@@ -186,5 +187,21 @@ void SeaWood::Director::onMouseMove(int x, int y)
 	for (auto& node : m_EventNodes[EventType::MOUSE_MOVE])
 	{
 		node->onMouseMove(*m_Mouse);
+	}
+}
+
+void SeaWood::Director::calculateFPS(float dTime)
+{
+	static int frame = 0;
+	static float time = 0;
+
+	frame++;
+	time += dTime;
+
+	if (time >= 1)
+	{
+		m_FPS = frame / time;
+		frame = 0;
+		time = 0;
 	}
 }
