@@ -1,4 +1,5 @@
 ﻿#include "FirstScene.h"
+#include "RectNode.h"
 
 USING_NS_SW;
 
@@ -17,6 +18,10 @@ bool FirstScene::init()
 	{
 		return false;
 	}
+
+	auto rect = RectNode::createWithRect({ 20, 20, 80, 80 });
+
+	addChild(rect);
 
 	return true;
 }

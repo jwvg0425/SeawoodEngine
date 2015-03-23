@@ -17,5 +17,10 @@ void MyApplication::onCreate()
 {
 	auto scene = FirstScene::create();
 	Director::getInstance()->startScene(scene);
+
+	auto view = new GdiView;
+	Director::getInstance()->registerView(view);
+
+	
 }
 

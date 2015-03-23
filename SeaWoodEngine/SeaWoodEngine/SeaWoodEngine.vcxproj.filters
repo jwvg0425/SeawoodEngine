@@ -13,6 +13,12 @@
     <Filter Include="base\structure">
       <UniqueIdentifier>{eb8aa8fb-6e78-4e8b-aefd-659726875cb5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="base\view">
+      <UniqueIdentifier>{828aeec7-002a-4a94-b8c4-f13bb214a849}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\event">
+      <UniqueIdentifier>{6dd7335a-646f-4e82-a5ba-743eb4163a93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -39,6 +45,18 @@
     </ClCompile>
     <ClCompile Include="Utility.cpp">
       <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="View.cpp">
+      <Filter>base\view</Filter>
+    </ClCompile>
+    <ClCompile Include="GdiView.cpp">
+      <Filter>base\view</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>base\event</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseEvent.cpp">
+      <Filter>base\event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -77,5 +95,17 @@
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="SWEngine.h" />
+    <ClInclude Include="View.h">
+      <Filter>base\view</Filter>
+    </ClInclude>
+    <ClInclude Include="GdiView.h">
+      <Filter>base\view</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>base\event</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseEvent.h">
+      <Filter>base\event</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

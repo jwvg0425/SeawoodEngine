@@ -8,6 +8,7 @@ public:
 
 	bool init() override;
 	void draw() override;
+	void update(float dTime) override;
 
 	static RectNode* createWithRect(SeaWood::Rect rect);
 

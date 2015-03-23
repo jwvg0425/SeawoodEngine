@@ -70,6 +70,8 @@ bool Application::init(TCHAR* title, int width, int height)
 
 	ShowWindow(m_WindowHandle, SW_SHOWNORMAL);
 
+	onCreate();
+
 	return true;
 }
 
@@ -99,4 +101,14 @@ int Application::run()
 void Application::onCreate()
 {
 
+}
+
+HWND SeaWood::Application::getWindowHandle()
+{
+	return m_WindowHandle;
+}
+
+HINSTANCE SeaWood::Application::getInstanceHandle()
+{
+	return m_InstanceHandle;
 }

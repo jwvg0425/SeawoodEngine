@@ -2,12 +2,13 @@
 #include "Director.h"
 #include "Scene.h"
 #include "Application.h"
+#include "View.h"
+#include "MouseEvent.h"
 #pragma comment(lib, "winmm.lib")
 
 USING_NS_SW;
 
 Director* Director::m_Instance = nullptr;
-
 
 Director::Director()
 {
@@ -18,11 +19,12 @@ Director::Director()
 	}
 
 	m_Tick = getTick();
+	m_Mouse = new MouseEvent;
 }
 
 Director::~Director()
 {
-
+	delete m_Mouse;
 }
 
 Director* Director::getInstance()
@@ -57,7 +59,9 @@ void Director::draw()
 		return;
 	}
 
+	m_View->beginFrame();
 	m_NowScene->draw();
+	m_View->draw();
 }
 
 long long int Director::getTick()
@@ -88,7 +92,7 @@ long long int Director::getTicksPerSecond()
 
 void Director::startScene(Scene* scene)
 {
-	_ASSERT(m_NowScene != nullptr);
+	_ASSERT(m_NowScene == nullptr);
 
 	m_NowScene = scene;
 }
@@ -101,15 +105,79 @@ LRESULT CALLBACK SeaWood::Director::WndProc(HWND hWnd, UINT iMessage, WPARAM wPa
 	switch (iMessage)
 	{
 	case WM_CREATE:
-		Application::getInstance()->onCreate();
 		return 0;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
 		EndPaint(hWnd, &ps);
+		return 0;
+	case WM_MOUSEMOVE:
+		m_Mouse->m_Position.m_X = LOWORD(lParam);
+		m_Mouse->m_Position.m_Y = HIWORD(lParam);
+		return 0;
+	case WM_LBUTTONDOWN:
+		switch (m_Mouse->m_Status)
+		{
+		case MouseEvent::Status::NONE:
+			m_Mouse->m_Status = MouseEvent::Status::LEFT;
+			break;
+		case MouseEvent::Status::RIGHT:
+			m_Mouse->m_Status = MouseEvent::Status::LEFT_RIGHT;
+			break;
+		}
+		return 0;
+	case WM_LBUTTONUP:
+		switch (m_Mouse->m_Status)
+		{
+		case MouseEvent::Status::LEFT:
+			m_Mouse->m_Status = MouseEvent::Status::NONE;
+			break;
+		case MouseEvent::Status::LEFT_RIGHT:
+			m_Mouse->m_Status = MouseEvent::Status::RIGHT;
+			break;
+		}
+		return 0;
+	case WM_RBUTTONDOWN:
+		switch (m_Mouse->m_Status)
+		{
+		case MouseEvent::Status::NONE:
+			m_Mouse->m_Status = MouseEvent::Status::RIGHT;
+			break;
+		case MouseEvent::Status::LEFT:
+			m_Mouse->m_Status = MouseEvent::Status::LEFT_RIGHT;
+			break;
+		}
+		return 0;
+	case WM_RBUTTONUP:
+		switch (m_Mouse->m_Status)
+		{
+		case MouseEvent::Status::RIGHT:
+			m_Mouse->m_Status = MouseEvent::Status::NONE;
+			break;
+		case MouseEvent::Status::LEFT_RIGHT:
+			m_Mouse->m_Status = MouseEvent::Status::LEFT;
+			break;
+		}
 		return 0;
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		return 0;
 	}
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
+}
+
+void SeaWood::Director::registerView(View* view)
+{
+	_ASSERT(m_View == nullptr);
+
+	m_View = view;
+}
+
+View* SeaWood::Director::getView()
+{
+	return m_View;
+}
+
+MouseEvent* SeaWood::Director::getMouse()
+{
+	return m_Mouse;
 }

@@ -13,7 +13,10 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Director.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="GdiView.h" />
     <ClInclude Include="Macro.h" />
+    <ClInclude Include="MouseEvent.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Point2.h" />
     <ClInclude Include="Rect.h" />
@@ -24,10 +27,14 @@
     <ClInclude Include="structure.h" />
     <ClInclude Include="SWEngine.h" />
     <ClInclude Include="Utility.h" />
+    <ClInclude Include="View.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Director.cpp" />
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="GdiView.cpp" />
+    <ClCompile Include="MouseEvent.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Point2.cpp" />
     <ClCompile Include="Rect.cpp" />
@@ -37,6 +44,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Utility.cpp" />
+    <ClCompile Include="View.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F12BB160-237E-41C4-B2F3-9A084DA7C451}</ProjectGuid>
