@@ -28,7 +28,7 @@ Size::~Size()
 
 }
 
-float Size::getArea()
+float Size::getArea() const
 {
 	return m_Width * m_Height;
 }
@@ -41,7 +41,7 @@ Size& Size::operator=(const Size& other)
 	return *this;
 }
 
-const Size Size::operator+(const Size& other)
+const Size Size::operator+(const Size& other) const
 {
 	Size size = *this;
 
@@ -51,7 +51,7 @@ const Size Size::operator+(const Size& other)
 	return size;
 }
 
-const Size Size::operator-(const Size& other)
+const Size Size::operator-(const Size& other) const
 {
 	Size size = *this;
 
@@ -61,7 +61,7 @@ const Size Size::operator-(const Size& other)
 	return size;
 }
 
-const Size SeaWood::Size::operator*(int n)
+const Size SeaWood::Size::operator*(int n) const
 {
 	Size size = *this;
 
@@ -71,7 +71,7 @@ const Size SeaWood::Size::operator*(int n)
 	return size;
 }
 
-const Size SeaWood::Size::operator/(int n)
+const Size SeaWood::Size::operator/(int n) const
 {
 	Size size = *this;
 

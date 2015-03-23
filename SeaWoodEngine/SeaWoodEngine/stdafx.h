@@ -2,6 +2,4 @@
 #include <TCHAR.h>
 #include "SeaWood.h"
 #include <list>
-#pragma comment(lib, "d2d1")
-#pragma comment(lib, "DWrite")
 #pragma comment(lib, "ws2_32")

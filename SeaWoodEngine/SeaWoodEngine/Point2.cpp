@@ -98,7 +98,7 @@ const Point2 Point2::operator-(const Point2& other)
 
 }
 
-float Point2::getDistance(const Point2& other)
+float Point2::getDistance(const Point2& other) const
 {
 	double xDiff = this->m_X - other.m_X;
 	double yDiff = this->m_Y - other.m_Y;
@@ -116,12 +116,12 @@ const Point2 Point2::operator-(const Size& size)
 	return point;
 }
 
-const Point2 SeaWood::Point2::rotate(double radian)
+const Point2 SeaWood::Point2::rotate(double radian) const
 {
 	Point2 res;
 
-	res.m_X = m_X*cos(radian) - m_Y*sin(radian);
-	res.m_Y = m_X*sin(radian) + m_Y*cos(radian);
+	res.m_X = static_cast<float>(m_X*cos(radian) - m_Y*sin(radian));
+	res.m_Y = static_cast<float>(m_X*sin(radian) + m_Y*cos(radian));
 
 	return res;
 }

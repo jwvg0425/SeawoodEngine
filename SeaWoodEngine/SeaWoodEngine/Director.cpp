@@ -138,7 +138,7 @@ LRESULT CALLBACK SeaWood::Director::WndProc(HWND hWnd, UINT iMessage, WPARAM wPa
 		onMouseUp(MouseEvent::Status::RIGHT);
 		return 0;
 	case WM_DESTROY:
-		PostQuitMessage(0);
+		end();
 		return 0;
 	}
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
@@ -185,6 +185,8 @@ void SeaWood::Director::onMouseUp(MouseEvent::Status status)
 
 void SeaWood::Director::registerEvent(EventType type, Node* node)
 {
+	_ASSERT(node != nullptr);
+
 	m_EventNodes[type].push_back(node);
 }
 
@@ -209,7 +211,7 @@ void SeaWood::Director::calculateFPS(float dTime)
 
 	if (time >= 1)
 	{
-		m_FPS = frame / time;
+		m_FPS = static_cast<int>(frame / time);
 		frame = 0;
 		time = 0;
 	}
@@ -217,6 +219,8 @@ void SeaWood::Director::calculateFPS(float dTime)
 
 void SeaWood::Director::autorelease(Ref* ref)
 {
+	_ASSERT(ref != nullptr);
+
 	m_ReleasePool.push_back(ref);
 }
 

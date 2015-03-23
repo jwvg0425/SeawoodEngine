@@ -4,7 +4,7 @@ class RectNode : public SeaWood::Node
 {
 public:
 	RectNode(SeaWood::Rect rect);
-	~RectNode();
+	~RectNode() override;
 
 	bool init() override;
 	void draw() override;

@@ -33,7 +33,6 @@ public:
 
 	//특정 이벤트에 대해 해당 이벤트 처리할 노드 등록.
 	void				registerEvent(EventType type, Node* node);
-	
 
 	MouseEvent*			getMouse();
 	void				onMouseDown(MouseEvent::Status status);

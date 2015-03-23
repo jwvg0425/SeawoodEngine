@@ -4,7 +4,7 @@ class DynamicRect : public RectNode
 {
 public:
 	DynamicRect(SeaWood::Rect rect);
-	~DynamicRect();
+	~DynamicRect() override;
 
 	bool init() override;
 	void draw() override;

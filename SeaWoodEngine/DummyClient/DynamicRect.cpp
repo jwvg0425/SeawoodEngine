@@ -17,6 +17,7 @@ DynamicRect* DynamicRect::createWithRect(SeaWood::Rect rect)
 
 	if (node->init())
 	{
+		node->autorelease();
 		return node;
 	}
 	else

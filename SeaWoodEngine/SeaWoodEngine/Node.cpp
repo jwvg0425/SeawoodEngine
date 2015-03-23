@@ -93,6 +93,12 @@ void SeaWood::Node::removeAllChilds()
 
 void Node::removeChild(Node* child)
 {
+	_ASSERT(child != nullptr);
+	if (child == nullptr)
+	{
+		return;
+	}
+
 	for (auto it = m_Childs.begin(); it != m_Childs.end();)
 	{
 		if (it->second == child)

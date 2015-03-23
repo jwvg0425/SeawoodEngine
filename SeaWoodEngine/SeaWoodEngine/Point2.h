@@ -34,10 +34,10 @@ public:
 	const Point2 operator -(const Size& size);
 
 	//두 좌표 사이의 거리를 계산하여 리턴한다.
-	float getDistance(const Point2& other);
+	float getDistance(const Point2& other) const;
 
 	//원점 기준 회전시킨 좌표 리턴
-	const Point2 rotate(double radian);
+	const Point2 rotate(double radian) const;
 
 public:
 	static const Point2 ZERO;

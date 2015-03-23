@@ -31,6 +31,8 @@ Application* Application::getInstance()
 
 bool Application::MakeWindow(TCHAR* title, int width, int height)
 {
+	_ASSERT(title != nullptr);
+
 	WNDCLASS WndClass;
 
 	WndClass.cbClsExtra = 0;
@@ -61,6 +63,8 @@ bool Application::MakeWindow(TCHAR* title, int width, int height)
 
 bool Application::init(TCHAR* title, int width, int height)
 {
+	_ASSERT(title != nullptr);
+
 	m_InstanceHandle = GetModuleHandle(0);
 
 	if (!MakeWindow(title, width, height))
