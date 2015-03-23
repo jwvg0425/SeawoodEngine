@@ -115,3 +115,13 @@ const Point2 Point2::operator-(const Size& size)
 
 	return point;
 }
+
+const Point2 SeaWood::Point2::rotate(double radian)
+{
+	Point2 res;
+
+	res.m_X = m_X*cos(radian) - m_Y*sin(radian);
+	res.m_Y = m_X*sin(radian) + m_Y*cos(radian);
+
+	return res;
+}

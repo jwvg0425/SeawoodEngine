@@ -6,7 +6,7 @@
 NS_SW_BEGIN
 
 //사각형을 나타내는 구조체.
-struct Rect
+struct Rect final
 {
 public:
 	Rect();

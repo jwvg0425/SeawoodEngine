@@ -18,7 +18,7 @@ void Scene::draw()
 {
 	for (auto& child : m_Childs)
 	{
-		child->draw();
+		child.second->draw();
 	}
 }
 
@@ -26,7 +26,7 @@ void Scene::update(float dTime)
 {
 	for (auto& child : m_Childs)
 	{
-		child->update(dTime);
+		child.second->update(dTime);
 	}
 }
 

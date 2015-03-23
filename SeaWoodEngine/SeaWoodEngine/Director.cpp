@@ -50,6 +50,8 @@ void Director::gameLoop()
 	m_NowScene->update(dTime);
 
 	draw();
+
+	m_Tick = nowTick;
 }
 
 void Director::draw()

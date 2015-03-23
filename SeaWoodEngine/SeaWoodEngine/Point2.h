@@ -6,7 +6,7 @@ NS_SW_BEGIN
 
 // 2차원 좌표계의 한 점을 나타내는 구조체.
 struct Size;
-struct Point2
+struct Point2 final
 {
 public:
 	Point2();
@@ -35,6 +35,9 @@ public:
 
 	//두 좌표 사이의 거리를 계산하여 리턴한다.
 	float getDistance(const Point2& other);
+
+	//원점 기준 회전시킨 좌표 리턴
+	const Point2 rotate(double radian);
 
 public:
 	static const Point2 ZERO;

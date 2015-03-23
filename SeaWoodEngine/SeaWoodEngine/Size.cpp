@@ -60,3 +60,23 @@ const Size Size::operator-(const Size& other)
 
 	return size;
 }
+
+const Size SeaWood::Size::operator*(int n)
+{
+	Size size = *this;
+
+	size.m_Width *= n;
+	size.m_Height *= n;
+
+	return size;
+}
+
+const Size SeaWood::Size::operator/(int n)
+{
+	Size size = *this;
+
+	size.m_Width /= n;
+	size.m_Height /= n;
+
+	return size;
+}

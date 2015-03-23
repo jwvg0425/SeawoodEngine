@@ -23,14 +23,18 @@ public:
 
 	//부모 자식 관계 관련 함수
 	void			addChild(Node* child);
+	void			addChild(Node* child, std::string name);
+	Node*			getChild(std::string name);
+	Node*			getParent();
 	void			removeChild(Node* child);
 
 protected:
-	using Childs = std::vector<Node*>;
+	using Childs = std::vector<std::pair<std::string, Node*>>;
 
 	Childs		m_Childs;
 	Point2		m_Position;
 	Size		m_Size;
+	Node*		m_Parent = nullptr;
 };
 
 NS_SW_END

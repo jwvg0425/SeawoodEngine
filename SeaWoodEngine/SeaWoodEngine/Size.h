@@ -4,7 +4,7 @@
 NS_SW_BEGIN
 
 //크기를 나타내는 구조체.
-struct Size
+struct Size final
 {
 public:
 	Size();
@@ -18,6 +18,12 @@ public:
 
 	//두 사이즈의 너비, 높이 값을 각각 뺀 사이즈를 돌려준다.
 	const Size operator -(const Size& other);
+
+	//사이즈를 확대한 값을 돌려준다
+	const Size operator *(int n);
+
+	//사이즈를 축소한 값을 돌려준다
+	const Size operator /(int n);
 
 	//너비와 높이를 곱한 면적을 돌려준다.
 	float getArea();
