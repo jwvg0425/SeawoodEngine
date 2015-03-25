@@ -1,8 +1,10 @@
-﻿#include "SeaWood.h"
+﻿#pragma once
+#include "SeaWood.h"
+#include "Ref.h"
 
 NS_SW_BEGIN
 
-class View
+class View : public Ref
 {
 public:
 	enum class ViewType
@@ -15,8 +17,10 @@ public:
 	View();
 	virtual ~View();
 
+	virtual bool init() = 0;
 	virtual void draw() = 0;
 	virtual void beginFrame() = 0;
+	ViewType getType();
 
 protected:
 

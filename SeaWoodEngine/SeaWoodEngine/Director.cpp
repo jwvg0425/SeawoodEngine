@@ -2,8 +2,10 @@
 #include "Director.h"
 #include "Scene.h"
 #include "Application.h"
-#include "View.h"
+#include "D3DView.h"
+#include "GdiView.h"
 #include "MouseEvent.h"
+#include <time.h>
 #pragma comment(lib, "winmm.lib")
 
 USING_NS_SW;
@@ -18,13 +20,21 @@ Director::Director()
 		m_IsQueryPerformance = true;
 	}
 
+	srand((unsigned)time(nullptr));
 	m_Tick = getTick();
 	m_Mouse = new MouseEvent;
+	m_KeyManager = new KeyManager;
 }
 
 Director::~Director()
 {
 	delete m_Mouse;
+	delete m_KeyManager;
+
+	if (m_View != nullptr)
+	{
+		m_View->release();
+	}
 }
 
 Director* Director::getInstance()
@@ -47,6 +57,10 @@ void Director::gameLoop()
 
 	float dTime = static_cast<float>(nowTick - m_Tick) / getTicksPerSecond();
 
+	//input device 갱신
+	m_KeyManager->update(dTime);
+
+	// 화면 갱신
 	m_NowScene->update(dTime);
 
 	draw();
@@ -148,6 +162,8 @@ void SeaWood::Director::registerView(View* view)
 {
 	_ASSERT(m_View == nullptr);
 
+	view->retain();
+
 	m_View = view;
 }
 
@@ -240,4 +256,33 @@ void SeaWood::Director::end()
 	m_NowScene->release();
 
 	PostQuitMessage(0);
+}
+
+KeyManager* SeaWood::Director::getKeyManager()
+{
+	return m_KeyManager;
+}
+
+D3DView* SeaWood::Director::getD3DView()
+{
+	if (m_View->getType() == View::ViewType::D3_DX)
+	{
+		return static_cast<D3DView*>(m_View);
+	}
+	else
+	{
+		return nullptr;
+	}
+}
+
+GdiView* SeaWood::Director::getGdiView()
+{
+	if (m_View->getType() == View::ViewType::D2_GDI)
+	{
+		return static_cast<GdiView*>(m_View);
+	}
+	else
+	{
+		return nullptr;
+	}
 }

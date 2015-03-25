@@ -1,4 +1,5 @@
-﻿#include "SeaWood.h"
+﻿#pragma once
+#include "SeaWood.h"
 
 NS_SW_BEGIN
 

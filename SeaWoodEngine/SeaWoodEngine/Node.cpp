@@ -91,6 +91,17 @@ void SeaWood::Node::removeAllChilds()
 	m_Childs.clear();
 }
 
+void SeaWood::Node::getChilds(std::string name, Nodes* childs)
+{
+	for (auto& child : m_Childs)
+	{
+		if (child.first == name)
+		{
+			childs->push_back(child.second);
+		}
+	}
+}
+
 void Node::removeChild(Node* child)
 {
 	_ASSERT(child != nullptr);

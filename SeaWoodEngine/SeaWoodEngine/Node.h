@@ -9,6 +9,7 @@ NS_SW_BEGIN
 class Node : public Ref
 {
 public:
+	using Nodes = std::vector<Node*>;
 					Node();
 	virtual			~Node();
 	const			Point2& getPosition();
@@ -27,6 +28,8 @@ public:
 	void			addChild(Node* child);
 	void			addChild(Node* child, std::string name);
 	Node*			getChild(std::string name);
+	//childs 배열에 해당 이름과 같은 이름을 가진 자식들을 전부 담아서 리턴
+	void			getChilds(std::string name, Nodes* childs);
 	Node*			getParent();
 	void			removeChild(Node* child);
 	void			removeAllChilds();

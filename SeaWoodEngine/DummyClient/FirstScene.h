@@ -9,8 +9,6 @@ public:
 
 	bool init() override;
 
-	void onMouseDown(SeaWood::MouseEvent e) override;
-
 	CREATE_FUNC(FirstScene);
 
 private:

@@ -53,3 +53,8 @@ void SeaWood::GdiView::beginFrame()
 
 	FillRect(m_MemoryDC, &crt, GetSysColorBrush(COLOR_WINDOW));
 }
+
+bool SeaWood::GdiView::init()
+{
+	return true;
+}

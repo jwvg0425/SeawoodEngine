@@ -33,3 +33,5 @@ static CLASS* create()\
 		return nullptr;\
 	}\
 }
+
+#define ReleaseCOM(x) { if(x){ x->Release(); x = nullptr; } }

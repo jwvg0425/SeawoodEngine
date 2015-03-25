@@ -8,10 +8,13 @@ public:
 	GdiView();
 	~GdiView() override;
 
+	bool init() override;
 	void beginFrame() override;
 	void draw() override;
 
 	HDC getDC();
+
+	CREATE_FUNC(GdiView);
 
 private:
 	HBITMAP m_MemoryBitmap;

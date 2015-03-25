@@ -12,9 +12,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="D3DView.h" />
     <ClInclude Include="Director.h" />
     <ClInclude Include="Event.h" />
+    <ClInclude Include="Figure.h" />
     <ClInclude Include="GdiView.h" />
+    <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="MouseEvent.h" />
     <ClInclude Include="Node.h" />
@@ -23,6 +27,7 @@
     <ClInclude Include="Ref.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SeaWood.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="Size.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="structure.h" />
@@ -32,15 +37,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="D3DView.cpp" />
     <ClCompile Include="Director.cpp" />
     <ClCompile Include="Event.cpp" />
+    <ClCompile Include="Figure.cpp" />
     <ClCompile Include="GdiView.cpp" />
+    <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="MouseEvent.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Point2.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Ref.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Size.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
@@ -79,6 +89,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <ExecutablePath>$(DXSDK_DIR)\Utilities\bin\x86;$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
+    <IncludePath>$(DXSDK_DIR)\Include;$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\DirectXCommon</IncludePath>
+    <LibraryPath>C:\DirectXCommon;$(DXSDK_DIR)\Lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -95,7 +108,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>D2D1.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

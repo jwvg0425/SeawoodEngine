@@ -1,7 +1,20 @@
 ﻿#include "FirstScene.h"
-#include "DynamicRect.h"
+#include "Box.h"
 
 USING_NS_SW;
+
+struct Vertex
+{
+	XMFLOAT3 m_Pos;
+	XMFLOAT4 m_Color;
+};
+
+struct MeshData
+{
+	std::vector<Vertex> m_Vertices;
+	std::vector<UINT> m_Indices;
+};
+
 
 FirstScene::FirstScene()
 {
@@ -19,26 +32,27 @@ bool FirstScene::init()
 		return false;
 	}
 
-	auto rect = RectNode::createWithRect({ 40, 40, 120, 60 });
-	addChild(rect, "rect");
+	std::vector<XMFLOAT4> colors =
+	{
+		{ 0.0f, 0.0f, 0.0f, 1.0f },
+		{ 1.0f, 0.0f, 0.0f, 1.0f },
+		{ 0.0f, 1.0f, 0.0f, 1.0f },
+		{ 0.0f, 0.0f, 1.0f, 1.0f },
+		{ 0.0f, 0.0f, 0.5f, 1.0f },
+		{ 0.0f, 0.5f, 0.0f, 1.0f },
+		{ 0.5f, 0.0f, 0.0f, 1.0f },
+		{ 0.0f, 0.7f, 1.0f, 1.0f },
+	};
 
-	auto mouseRect = DynamicRect::createWithRect({ 0, 0, 50, 50 });
-	addChild(mouseRect);
+	auto box = Box::create();
+	box->setBox(1.0f, 1.0f, 1.0f, colors);
+	addChild(box);
 
-	Director::getInstance()->registerEvent(EventType::MOUSE_DOWN, this);
+	auto box2 = Box::create();
+	box2->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);
+	box2->setPosition(-3.0f, 6.0f, 0.0f);
+	addChild(box2);
+	
 
 	return true;
-}
-
-void FirstScene::onMouseDown(MouseEvent e)
-{
-	auto rect = RectNode::createWithRect
-		({ e.m_Position.m_X - 40, e.m_Position.m_Y - 40, 80, 80 });
-
-	addChild(rect, "rect");
-
-	if (e.m_Status == MouseEvent::RIGHT)
-	{
-		Director::getInstance()->end();
-	}
 }

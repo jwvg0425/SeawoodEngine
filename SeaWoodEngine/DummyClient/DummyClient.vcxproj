@@ -41,7 +41,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)SeaWoodEngine;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>C:\DirectXCommon;$(DXSDK_DIR)\Include;$(SolutionDir)SeaWoodEngine;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <ExecutablePath>$(DXSDK_DIR)\Utilities\bin\x86;$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
+    <LibraryPath>C:\DirectXCommon;$(DXSDK_DIR)\Lib\x86;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -59,6 +61,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>Effects11d.lib;d3d11.lib;d3dx11d.lib;D3DCompiler.lib;dxerr.lib;dxgi.lib;dxguid.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -79,11 +82,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="DynamicRect.cpp" />
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="FirstScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyApplication.cpp" />
-    <ClCompile Include="RectNode.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SeaWoodEngine\SeaWoodEngine.vcxproj">
@@ -91,10 +93,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DynamicRect.h" />
+    <ClInclude Include="Box.h" />
     <ClInclude Include="FirstScene.h" />
     <ClInclude Include="MyApplication.h" />
-    <ClInclude Include="RectNode.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="FX\color.fx">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

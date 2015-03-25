@@ -51,6 +51,9 @@ bool Application::MakeWindow(TCHAR* title, int width, int height)
 		CW_USEDEFAULT, CW_USEDEFAULT,
 		width, height, NULL, (HMENU)NULL, m_InstanceHandle, NULL);
 
+	m_ClientSize.m_Width = width;
+	m_ClientSize.m_Height = height;
+
 	if (m_WindowHandle == NULL)
 	{
 		return false;
@@ -66,6 +69,9 @@ bool Application::init(TCHAR* title, int width, int height)
 	_ASSERT(title != nullptr);
 
 	m_InstanceHandle = GetModuleHandle(0);
+
+	m_ClientSize.m_Width = width;
+	m_ClientSize.m_Height = height;
 
 	if (!MakeWindow(title, width, height))
 	{
@@ -89,7 +95,7 @@ int Application::run()
 		{
 			if (message.message == WM_QUIT)
 			{
-				return 0;
+				break;
 			}
 
 			TranslateMessage(&message);
@@ -100,6 +106,9 @@ int Application::run()
 			Director::getInstance()->gameLoop();
 		}
 	}
+
+	Director::releaseInstance();
+	return 0;
 }
 
 void Application::onCreate()
@@ -115,4 +124,14 @@ HWND SeaWood::Application::getWindowHandle()
 HINSTANCE SeaWood::Application::getInstanceHandle()
 {
 	return m_InstanceHandle;
+}
+
+float SeaWood::Application::getAspectRatio() const
+{
+	return m_ClientSize.m_Width / m_ClientSize.m_Height;
+}
+
+const Size& Application::getClientSize() const
+{
+	return m_ClientSize;
 }
