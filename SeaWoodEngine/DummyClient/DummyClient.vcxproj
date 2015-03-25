@@ -83,8 +83,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="DynamicBox.cpp" />
     <ClCompile Include="FirstScene.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MouseCamera.cpp" />
     <ClCompile Include="MyApplication.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -94,7 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box.h" />
+    <ClInclude Include="DynamicBox.h" />
     <ClInclude Include="FirstScene.h" />
+    <ClInclude Include="MouseCamera.h" />
     <ClInclude Include="MyApplication.h" />
   </ItemGroup>
   <ItemGroup>

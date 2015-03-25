@@ -26,6 +26,12 @@
     <ClCompile Include="Box.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="DynamicBox.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseCamera.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyApplication.h">
@@ -35,6 +41,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="Box.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicBox.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseCamera.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

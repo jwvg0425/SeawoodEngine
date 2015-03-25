@@ -48,3 +48,34 @@ void Camera::updateView()
 	XMMATRIX V = XMMatrixLookAtLH(eyePos, targetPos, up);
 	XMStoreFloat4x4(&m_View, V);
 }
+
+bool SeaWood::Camera::init()
+{
+	if (!Node::init())
+	{
+		return false;
+	}
+
+	return true;
+}
+
+SeaWood::Camera::Camera()
+{
+
+}
+
+Camera* SeaWood::Camera::createWithPos(XMVECTOR eyePos, XMVECTOR targetPos, XMVECTOR up)
+{
+	Camera* camera = new Camera(eyePos, targetPos, up);
+
+	if (camera->init())
+	{
+		camera->autorelease();
+		return camera;
+	}
+	else
+	{
+		delete camera;
+		return nullptr;
+	}
+}

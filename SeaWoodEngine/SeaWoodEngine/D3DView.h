@@ -22,11 +22,11 @@ public:
 	void setInputLayout(ID3D11InputLayout* inputLayout);
 	void setPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY topology);
 	void registerCamera(Camera* camera);
+	void update(float dTime) override;
 
 	CREATE_FUNC(D3DView);
 
 private:
-	static const float PI;
 
 	void updateProjection();
 

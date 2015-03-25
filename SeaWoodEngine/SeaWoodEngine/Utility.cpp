@@ -1,6 +1,8 @@
 ﻿#include "stdafx.h"
 #include "Utility.h"
 
+const float SeaWood::PI = 3.1415926535f;
+
 void SeaWood::debugLogA(LPCSTR format, ...)
 {
 	char buf[1024];

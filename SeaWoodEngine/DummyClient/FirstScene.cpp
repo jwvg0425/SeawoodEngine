@@ -1,5 +1,5 @@
 ﻿#include "FirstScene.h"
-#include "Box.h"
+#include "DynamicBox.h"
 
 USING_NS_SW;
 
@@ -30,28 +30,19 @@ bool FirstScene::init()
 	if (!Scene::init())
 	{
 		return false;
-	}
+	}	
 
-	std::vector<XMFLOAT4> colors =
+	auto dynamicBox = DynamicBox::create();
+	dynamicBox->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);
+	addChild(dynamicBox);
+
+	for (int i = 0; i < 20; i++)
 	{
-		{ 0.0f, 0.0f, 0.0f, 1.0f },
-		{ 1.0f, 0.0f, 0.0f, 1.0f },
-		{ 0.0f, 1.0f, 0.0f, 1.0f },
-		{ 0.0f, 0.0f, 1.0f, 1.0f },
-		{ 0.0f, 0.0f, 0.5f, 1.0f },
-		{ 0.0f, 0.5f, 0.0f, 1.0f },
-		{ 0.5f, 0.0f, 0.0f, 1.0f },
-		{ 0.0f, 0.7f, 1.0f, 1.0f },
-	};
-
-	auto box = Box::create();
-	box->setBox(1.0f, 1.0f, 1.0f, colors);
-	addChild(box);
-
-	auto box2 = Box::create();
-	box2->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);
-	box2->setPosition(-3.0f, 6.0f, 0.0f);
-	addChild(box2);
+		auto randomBox = Box::create();
+		randomBox->setBoxWithRandomColor(1.0f, 1.0f, 1.0f);
+		randomBox->setPosition(-10 + rand() % 21, -10 + rand() % 21, -10 + rand() % 21);
+		addChild(randomBox);
+	}
 	
 
 	return true;

@@ -5,8 +5,6 @@
 
 USING_NS_SW;
 
-const float D3DView::PI = 3.1415926535f;
-
 SeaWood::D3DView::D3DView()
 {
 	m_Type = ViewType::D3_DX;
@@ -21,7 +19,7 @@ SeaWood::D3DView::~D3DView()
 	
 	if (m_Camera != nullptr)
 	{
-		delete m_Camera;
+		m_Camera->release();
 	}
 
 	ReleaseCOM(m_RenderTargetView);
@@ -272,5 +270,11 @@ ID3D11DeviceContext* SeaWood::D3DView::getDeviceContext()
 
 void SeaWood::D3DView::registerCamera(Camera* camera)
 {
+	camera->retain();
 	m_Camera = camera;
+}
+
+void SeaWood::D3DView::update(float dTime)
+{
+	m_Camera->update(dTime);
 }

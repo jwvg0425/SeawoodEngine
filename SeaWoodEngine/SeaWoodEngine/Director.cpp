@@ -57,6 +57,9 @@ void Director::gameLoop()
 
 	float dTime = static_cast<float>(nowTick - m_Tick) / getTicksPerSecond();
 
+	//view 갱신
+	m_View->update(dTime);
+
 	//input device 갱신
 	m_KeyManager->update(dTime);
 

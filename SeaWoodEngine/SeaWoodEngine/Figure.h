@@ -46,6 +46,8 @@ protected:
 	XMFLOAT4X4 m_Scaling;
 	XMFLOAT4X4 m_Rotation;
 	XMFLOAT4X4 m_World;
+	float m_ScaleX, m_ScaleY, m_ScaleZ;
+	float m_AngleX, m_AngleY, m_AngleZ;
 
 	Shader* m_Shader = nullptr;
 	ID3D11Buffer* m_VertexBuffer = nullptr;
@@ -65,6 +67,8 @@ SeaWood::Figure<Vertex>::Figure()
 {
 	XMMATRIX I = XMMatrixIdentity();
 
+	m_ScaleX = m_ScaleY = m_ScaleZ = 1.0f;
+	m_AngleX = m_AngleY = m_AngleZ = 0.0f;
 	XMStoreFloat4x4(&m_Scaling, I);
 	XMStoreFloat4x4(&m_Rotation, I);
 	XMStoreFloat4x4(&m_Translation, I);
@@ -156,17 +160,23 @@ XMFLOAT4X4 SeaWood::Figure<Vertex>::getWorld()
 template <typename Vertex>
 void SeaWood::Figure<Vertex>::setAngle(float x, float y, float z, bool relative)
 {
-	XMMATRIX X = XMMatrixRotationX(x);
-	XMMATRIX Y = XMMatrixRotationY(y);
-	XMMATRIX Z = XMMatrixRotationZ(z);
-	XMMATRIX R = X*Y*Z;
-
 	if (relative)
 	{
-		XMMATRIX now = XMLoadFloat4x4(&m_Rotation);
-
-		R = now*R;
+		m_AngleX += x;
+		m_AngleY += y;
+		m_AngleZ += z;
 	}
+	else
+	{
+		m_AngleX = x;
+		m_AngleY = y;
+		m_AngleZ = z;
+	}
+
+	XMMATRIX X = XMMatrixRotationX(m_AngleX);
+	XMMATRIX Y = XMMatrixRotationY(m_AngleY);
+	XMMATRIX Z = XMMatrixRotationZ(m_AngleZ);
+	XMMATRIX R = X*Y*Z;
 
 	XMStoreFloat4x4(&m_Rotation, R);
 
@@ -176,14 +186,20 @@ void SeaWood::Figure<Vertex>::setAngle(float x, float y, float z, bool relative)
 template <typename Vertex>
 void SeaWood::Figure<Vertex>::setScale(float x, float y, float z, bool relative)
 {
-	XMMATRIX S = XMMatrixScaling(x, y, z);
-
 	if (relative)
 	{
-		XMMATRIX now = XMLoadFloat4x4(&m_Scaling);
-
-		S = now*S;
+		m_ScaleX += x;
+		m_ScaleY += y;
+		m_ScaleZ += z;
 	}
+	else
+	{
+		m_ScaleX = x;
+		m_ScaleY = y;
+		m_ScaleZ = z;
+	}
+
+	XMMATRIX S = XMMatrixScaling(m_ScaleX, m_ScaleY, m_ScaleZ);
 
 	XMStoreFloat4x4(&m_Scaling, S);
 

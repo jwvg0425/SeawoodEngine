@@ -31,6 +31,9 @@ if (FAILED(hr))                                         \
 
 
 NS_SW_BEGIN
+
+extern const float PI;
+
 void debugLogA(LPCSTR format, ...);
 void debugLogW(LPCWSTR format, ...);
 NS_SW_END
