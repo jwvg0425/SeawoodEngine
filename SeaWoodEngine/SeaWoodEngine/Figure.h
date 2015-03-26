@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "Node.h"
 #include "Director.h"
-#include "D3DView.h"
+#include "D3DRenderer.h"
 
 NS_SW_BEGIN
 
@@ -26,6 +26,11 @@ public:
 	void setScale(float x, float y, float z, bool relative = false);
 	void setAngle(float x, float y, float z, bool relative = false);
 
+	//포인터로 넘어온 변수에 해당하는 값 저장해서 돌려줌
+	void getPosition(float* x, float* y, float* z);
+	void getScale(float* scaleX, float* scaleY, float* scaleZ);
+	void getAngle(float* angleX, float* angleY, float* angleZ);
+
 	XMFLOAT4X4 getWorld();
 
 	void draw() override;
@@ -46,6 +51,7 @@ protected:
 	XMFLOAT4X4 m_Scaling;
 	XMFLOAT4X4 m_Rotation;
 	XMFLOAT4X4 m_World;
+	float m_X, m_Y, m_Z;
 	float m_ScaleX, m_ScaleY, m_ScaleZ;
 	float m_AngleX, m_AngleY, m_AngleZ;
 
@@ -53,6 +59,30 @@ protected:
 	ID3D11Buffer* m_VertexBuffer = nullptr;
 	ID3D11Buffer* m_IndexBuffer = nullptr;
 };
+
+template <typename Vertex>
+void SeaWood::Figure<Vertex>::getAngle(float* angleX, float* angleY, float* angleZ)
+{
+	*angleX = m_AngleX;
+	*angleY = m_AngleY;
+	*angleZ = m_AngleZ;
+}
+
+template <typename Vertex>
+void SeaWood::Figure<Vertex>::getScale(float* scaleX, float* scaleY, float* scaleZ)
+{
+	*scaleX = m_ScaleX;
+	*scaleY = m_ScaleY;
+	*scaleZ = m_ScaleZ;
+}
+
+template <typename Vertex>
+void SeaWood::Figure<Vertex>::getPosition(float* x, float* y, float* z)
+{
+	*x = m_X;
+	*y = m_Y;
+	*z = m_Z;
+}
 
 template <typename Vertex>
 void SeaWood::Figure<Vertex>::setShader(Shader* shader)
@@ -67,6 +97,7 @@ SeaWood::Figure<Vertex>::Figure()
 {
 	XMMATRIX I = XMMatrixIdentity();
 
+	m_X = m_Y = m_Z = 0.0f;
 	m_ScaleX = m_ScaleY = m_ScaleZ = 1.0f;
 	m_AngleX = m_AngleY = m_AngleZ = 0.0f;
 	XMStoreFloat4x4(&m_Scaling, I);
@@ -127,17 +158,17 @@ void SeaWood::Figure<Vertex>::updateWorld()
 template <typename Vertex>
 void SeaWood::Figure<Vertex>::draw()
 {
-	GET_D3D_VIEW()->setInputLayout(m_Shader->getInputLayout());
-	GET_D3D_VIEW()->setPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	GET_D3D_RENDERER()->setInputLayout(m_Shader->getInputLayout());
+	GET_D3D_RENDERER()->setPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	UINT stride = sizeof(Vertex);
 	UINT offset = 0;
 
-	GET_D3D_VIEW()->getDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
-	GET_D3D_VIEW()->getDeviceContext()->IASetIndexBuffer(m_IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+	GET_D3D_RENDERER()->getDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
+	GET_D3D_RENDERER()->getDeviceContext()->IASetIndexBuffer(m_IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
 	XMMATRIX world = XMLoadFloat4x4(&m_World);
-	XMMATRIX viewProj = XMLoadFloat4x4(&GET_D3D_VIEW()->getViewProj());
+	XMMATRIX viewProj = XMLoadFloat4x4(&GET_D3D_RENDERER()->getViewProj());
 	XMMATRIX worldViewProj = world*viewProj;
 
 	m_Shader->getWorldViewProj()->SetMatrix(reinterpret_cast<float*>(&worldViewProj));
@@ -146,8 +177,8 @@ void SeaWood::Figure<Vertex>::draw()
 	m_Shader->getTech()->GetDesc(&techDesc);
 	for (UINT p = 0; p < techDesc.Passes; ++p)
 	{
-		m_Shader->getTech()->GetPassByIndex(p)->Apply(0, GET_D3D_VIEW()->getDeviceContext());
-		GET_D3D_VIEW()->getDeviceContext()->DrawIndexed(m_Indices.size(), 0, 0);
+		m_Shader->getTech()->GetPassByIndex(p)->Apply(0, GET_D3D_RENDERER()->getDeviceContext());
+		GET_D3D_RENDERER()->getDeviceContext()->DrawIndexed(m_Indices.size(), 0, 0);
 	}
 }
 
@@ -209,14 +240,20 @@ void SeaWood::Figure<Vertex>::setScale(float x, float y, float z, bool relative)
 template <typename Vertex>
 void SeaWood::Figure<Vertex>::setPosition(float x, float y, float z, bool relative)
 {
-	XMMATRIX T = XMMatrixTranslation(x, y, z);
-
 	if (relative)
 	{
-		XMMATRIX now = XMLoadFloat4x4(&m_Translation);
-
-		T = now*T;
+		m_X += x;
+		m_Y += y;
+		m_Z += z;
 	}
+	else
+	{
+		m_X = x;
+		m_Y = y;
+		m_Z = z;
+	}
+
+	XMMATRIX T = XMMatrixTranslation(m_X, m_Y, m_Z);
 
 	XMStoreFloat4x4(&m_Translation, T);
 
@@ -234,7 +271,7 @@ void SeaWood::Figure<Vertex>::buildBuffer()
 	vbd.MiscFlags = 0;
 	D3D11_SUBRESOURCE_DATA vinitData;
 	vinitData.pSysMem = &m_Vertices[0];
-	HR(GET_D3D_VIEW()->getDevice()->CreateBuffer(&vbd, &vinitData, &m_VertexBuffer));
+	HR(GET_D3D_RENDERER()->getDevice()->CreateBuffer(&vbd, &vinitData, &m_VertexBuffer));
 
 	D3D11_BUFFER_DESC ibd;
 	ibd.Usage = D3D11_USAGE_IMMUTABLE;
@@ -244,7 +281,7 @@ void SeaWood::Figure<Vertex>::buildBuffer()
 	ibd.MiscFlags = 0;
 	D3D11_SUBRESOURCE_DATA iinitData;
 	iinitData.pSysMem = &m_Indices[0];
-	HR(GET_D3D_VIEW()->getDevice()->CreateBuffer(&ibd, &iinitData, &m_IndexBuffer));
+	HR(GET_D3D_RENDERER()->getDevice()->CreateBuffer(&ibd, &iinitData, &m_IndexBuffer));
 }
 
 template <typename Vertex>

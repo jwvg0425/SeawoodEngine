@@ -2,8 +2,8 @@
 #include "Director.h"
 #include "Scene.h"
 #include "Application.h"
-#include "D3DView.h"
-#include "GdiView.h"
+#include "D3DRenderer.h"
+#include "GdiRenderer.h"
 #include "MouseEvent.h"
 #include <time.h>
 #pragma comment(lib, "winmm.lib")
@@ -31,9 +31,9 @@ Director::~Director()
 	delete m_Mouse;
 	delete m_KeyManager;
 
-	if (m_View != nullptr)
+	if (m_Renderer != nullptr)
 	{
-		m_View->release();
+		m_Renderer->release();
 	}
 }
 
@@ -58,7 +58,7 @@ void Director::gameLoop()
 	float dTime = static_cast<float>(nowTick - m_Tick) / getTicksPerSecond();
 
 	//view 갱신
-	m_View->update(dTime);
+	m_Renderer->update(dTime);
 
 	//input device 갱신
 	m_KeyManager->update(dTime);
@@ -87,9 +87,9 @@ void Director::draw()
 		return;
 	}
 
-	m_View->beginFrame();
+	m_Renderer->beginFrame();
 	m_NowScene->draw();
-	m_View->draw();
+	m_Renderer->draw();
 }
 
 long long int Director::getTick()
@@ -161,18 +161,18 @@ LRESULT CALLBACK SeaWood::Director::WndProc(HWND hWnd, UINT iMessage, WPARAM wPa
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
 }
 
-void SeaWood::Director::registerView(View* view)
+void SeaWood::Director::registerRenderer(Renderer* renderer)
 {
-	_ASSERT(m_View == nullptr);
+	_ASSERT(m_Renderer == nullptr);
 
-	view->retain();
+	renderer->retain();
 
-	m_View = view;
+	m_Renderer = renderer;
 }
 
-View* SeaWood::Director::getView()
+Renderer* SeaWood::Director::getRenderer()
 {
-	return m_View;
+	return m_Renderer;
 }
 
 MouseEvent* SeaWood::Director::getMouse()
@@ -207,6 +207,7 @@ void SeaWood::Director::registerEvent(EventType type, Node* node)
 	_ASSERT(node != nullptr);
 
 	m_EventNodes[type].push_back(node);
+	node->setEvent(type);
 }
 
 void SeaWood::Director::onMouseMove(int x, int y)
@@ -266,11 +267,11 @@ KeyManager* SeaWood::Director::getKeyManager()
 	return m_KeyManager;
 }
 
-D3DView* SeaWood::Director::getD3DView()
+D3DRenderer* SeaWood::Director::getD3DRenderer()
 {
-	if (m_View->getType() == View::ViewType::D3_DX)
+	if (m_Renderer->getType() == Renderer::ViewType::D3_DX)
 	{
-		return static_cast<D3DView*>(m_View);
+		return static_cast<D3DRenderer*>(m_Renderer);
 	}
 	else
 	{
@@ -278,14 +279,29 @@ D3DView* SeaWood::Director::getD3DView()
 	}
 }
 
-GdiView* SeaWood::Director::getGdiView()
+GdiRenderer* SeaWood::Director::getGdiRenderer()
 {
-	if (m_View->getType() == View::ViewType::D2_GDI)
+	if (m_Renderer->getType() == Renderer::ViewType::D2_GDI)
 	{
-		return static_cast<GdiView*>(m_View);
+		return static_cast<GdiRenderer*>(m_Renderer);
 	}
 	else
 	{
 		return nullptr;
+	}
+}
+
+void SeaWood::Director::clearEvent(EventType type, Node* node)
+{
+	for (auto it = m_EventNodes[type].begin(); it != m_EventNodes[type].end();)
+	{
+		if (*it == node)
+		{
+			it = m_EventNodes[type].erase(it);
+		}
+		else
+		{
+			it++;
+		}
 	}
 }

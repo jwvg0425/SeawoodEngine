@@ -2,18 +2,18 @@
 #include "MouseEvent.h"
 #include "KeyManager.h"
 #define GET_KEY_MANAGER() SeaWood::Director::getInstance()->getKeyManager()
-#define GET_VIEW() SeaWood::Director::getInstance()->getView()
-#define GET_D3D_VIEW() SeaWood::Director::getInstance()->getD3DView()
-#define GET_GDI_VIEW() SeaWood::Director::getInstance()->getGdiView()
+#define GET_RENDERER() SeaWood::Director::getInstance()->getRenderer()
+#define GET_D3D_RENDERER() SeaWood::Director::getInstance()->getD3DRenderer()
+#define GET_GDI_RENDERER() SeaWood::Director::getInstance()->getGdiRenderer()
 
 NS_SW_BEGIN
 
 class Scene;
-class View;
+class Renderer;
 class Node;
 class Ref;
-class D3DView;
-class GdiView;
+class D3DRenderer;
+class GdiRenderer;
 class Director
 {
 public:
@@ -35,10 +35,10 @@ public:
 	void				startScene(Scene* scene);
 	void				changeScene(Scene* scene);
 
-	void				registerView(View* view);
-	View*				getView();
-	D3DView*			getD3DView();
-	GdiView*			getGdiView();
+	void					registerRenderer(Renderer* renderer);
+	Renderer*				getRenderer();
+	D3DRenderer*			getD3DRenderer();
+	GdiRenderer*			getGdiRenderer();
 
 	//input 관련
 	KeyManager*			getKeyManager();
@@ -46,7 +46,7 @@ public:
 
 	//특정 이벤트에 대해 해당 이벤트 처리할 노드 등록.
 	void				registerEvent(EventType type, Node* node);
-
+	void				clearEvent(EventType type, Node* node);
 	
 	void				onMouseDown(MouseEvent::Status status);
 	void				onMouseMove(int x, int y);
@@ -66,7 +66,7 @@ protected:
 	static Director*	m_Instance;
 
 	Scene*				m_NowScene = nullptr;
-	View*				m_View = nullptr;
+	Renderer*				m_Renderer = nullptr;
 	KeyManager*			m_KeyManager = nullptr;
 	bool				m_IsQueryPerformance = false;
 	LARGE_INTEGER		m_TicksPerSecond;

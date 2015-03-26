@@ -1,5 +1,6 @@
 ﻿#include "stdafx.h"
 #include "Node.h"
+#include "Director.h"
 
 USING_NS_SW;
 
@@ -11,6 +12,10 @@ Node::Node() : m_Position(Point2::ZERO), m_Size(Size::ZERO)
 Node::~Node()
 {
 	removeAllChilds();
+	for (auto& e : m_Events)
+	{
+		Director::getInstance()->clearEvent(e, this);
+	}
 }
 
 const Point2& Node::getPosition()
@@ -100,6 +105,18 @@ void SeaWood::Node::getChilds(std::string name, Nodes* childs)
 			childs->push_back(child.second);
 		}
 	}
+}
+
+void SeaWood::Node::setEvent(EventType e)
+{
+	m_Events.push_back(e);
+}
+
+void SeaWood::Node::setParent(Node* parent)
+{
+	_ASSERT(parent != nullptr);
+
+	m_Parent = parent;
 }
 
 void Node::removeChild(Node* child)

@@ -1,16 +1,16 @@
 ﻿#include "stdafx.h"
-#include "D3DView.h"
+#include "D3DRenderer.h"
 #include "Application.h"
 #include "Camera.h"
 
 USING_NS_SW;
 
-SeaWood::D3DView::D3DView()
+SeaWood::D3DRenderer::D3DRenderer()
 {
 	m_Type = ViewType::D3_DX;
 }
 
-SeaWood::D3DView::~D3DView()
+SeaWood::D3DRenderer::~D3DRenderer()
 {
 	if (m_D3DImmediateContext)
 	{
@@ -30,7 +30,7 @@ SeaWood::D3DView::~D3DView()
 	ReleaseCOM(m_D3DDevice);
 }
 
-bool SeaWood::D3DView::init()
+bool SeaWood::D3DRenderer::init()
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -128,7 +128,7 @@ bool SeaWood::D3DView::init()
 	return true;
 }
 
-void SeaWood::D3DView::beginFrame()
+void SeaWood::D3DRenderer::beginFrame()
 {
 	_ASSERT(m_D3DImmediateContext);
 	_ASSERT(m_SwapChain);
@@ -147,12 +147,12 @@ void SeaWood::D3DView::beginFrame()
 	XMStoreFloat4x4(&m_ViewProj, viewproj);
 }
 
-void SeaWood::D3DView::draw()
+void SeaWood::D3DRenderer::draw()
 {
 	HR(m_SwapChain->Present(0, 0));
 }
 
-void SeaWood::D3DView::setBackgroundColor(const FLOAT colorRGBA[4])
+void SeaWood::D3DRenderer::setBackgroundColor(const FLOAT colorRGBA[4])
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -160,7 +160,7 @@ void SeaWood::D3DView::setBackgroundColor(const FLOAT colorRGBA[4])
 	}
 }
 
-void SeaWood::D3DView::initRenderTarget()
+void SeaWood::D3DRenderer::initRenderTarget()
 {
 	_ASSERT(m_D3DImmediateContext);
 	_ASSERT(m_D3DDevice);
@@ -228,7 +228,7 @@ void SeaWood::D3DView::initRenderTarget()
 	m_D3DImmediateContext->RSSetViewports(1, &m_ScreenViewport);
 }
 
-void SeaWood::D3DView::setProjection(FLOAT fovAngleY, FLOAT nearZ, FLOAT farZ)
+void SeaWood::D3DRenderer::setProjection(FLOAT fovAngleY, FLOAT nearZ, FLOAT farZ)
 {
 	m_FovAngleY = fovAngleY;
 	m_Near = nearZ;
@@ -237,44 +237,54 @@ void SeaWood::D3DView::setProjection(FLOAT fovAngleY, FLOAT nearZ, FLOAT farZ)
 	updateProjection();
 }
 
-void SeaWood::D3DView::updateProjection()
+void SeaWood::D3DRenderer::updateProjection()
 {
 	XMMATRIX p = XMMatrixPerspectiveFovLH(0.25f*PI, Application::getInstance()->getAspectRatio(), m_Near, m_Far);
 	XMStoreFloat4x4(&m_Projection, p);
 }
 
-const XMFLOAT4X4& SeaWood::D3DView::getViewProj()
+const XMFLOAT4X4& SeaWood::D3DRenderer::getViewProj()
 {
 	return m_ViewProj;
 }
 
-ID3D11Device* SeaWood::D3DView::getDevice()
+ID3D11Device* SeaWood::D3DRenderer::getDevice()
 {
 	return m_D3DDevice;
 }
 
-void SeaWood::D3DView::setInputLayout(ID3D11InputLayout* inputLayout)
+void SeaWood::D3DRenderer::setInputLayout(ID3D11InputLayout* inputLayout)
 {
 	m_D3DImmediateContext->IASetInputLayout(inputLayout);
 }
 
-void SeaWood::D3DView::setPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY topology)
+void SeaWood::D3DRenderer::setPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY topology)
 {
 	m_D3DImmediateContext->IASetPrimitiveTopology(topology);
 }
 
-ID3D11DeviceContext* SeaWood::D3DView::getDeviceContext()
+ID3D11DeviceContext* SeaWood::D3DRenderer::getDeviceContext()
 {
 	return m_D3DImmediateContext;
 }
 
-void SeaWood::D3DView::registerCamera(Camera* camera)
+void SeaWood::D3DRenderer::registerCamera(Camera* camera)
 {
 	camera->retain();
 	m_Camera = camera;
 }
 
-void SeaWood::D3DView::update(float dTime)
+void SeaWood::D3DRenderer::update(float dTime)
 {
 	m_Camera->update(dTime);
+}
+
+void SeaWood::D3DRenderer::changeCamera(Camera* camera)
+{
+	_ASSERT(camera != nullptr);
+
+	camera->retain();
+	m_Camera->release();
+
+	m_Camera = camera;
 }

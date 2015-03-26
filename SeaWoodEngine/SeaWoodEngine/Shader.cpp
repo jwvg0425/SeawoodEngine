@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "Shader.h"
 #include "Director.h"
-#include "D3DView.h"
+#include "D3DRenderer.h"
 #include <fstream>
 
 USING_NS_SW;
@@ -31,7 +31,7 @@ void Shader::buildFx(const std::string& fileName, const std::string& techniqueNa
 	fin.read(&compiledShader[0], size);
 	fin.close();
 
-	HR(D3DX11CreateEffectFromMemory(&compiledShader[0], size, 0, GET_D3D_VIEW()->getDevice(), &m_Fx));
+	HR(D3DX11CreateEffectFromMemory(&compiledShader[0], size, 0, GET_D3D_RENDERER()->getDevice(), &m_Fx));
 	
 	m_Tech = m_Fx->GetTechniqueByName(techniqueName.c_str());
 	m_FxWorldViewProj = m_Fx->GetVariableByName(worldViewProjName.c_str())->AsMatrix();
@@ -43,7 +43,7 @@ void Shader::buildVertexLayout(D3D11_INPUT_ELEMENT_DESC vertexDesc[], int vertex
 	D3DX11_PASS_DESC passDesc;
 
 	m_Tech->GetPassByIndex(0)->GetDesc(&passDesc);
-	HR(GET_D3D_VIEW()->getDevice()->
+	HR(GET_D3D_RENDERER()->getDevice()->
 		CreateInputLayout(vertexDesc, vertexNum, passDesc.pIAInputSignature,
 		passDesc.IAInputSignatureSize, &m_InputLayout));
 }

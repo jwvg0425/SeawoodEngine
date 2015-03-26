@@ -3,8 +3,8 @@
 #include "Application.h"
 #include "Director.h"
 #include "Scene.h"
-#include "GdiView.h"
-#include "D3DView.h"
+#include "GdiRenderer.h"
+#include "D3DRenderer.h"
 #include "MouseEvent.h"
 #include "Camera.h"
 

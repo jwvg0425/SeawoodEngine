@@ -2,6 +2,17 @@
 #include "SeaWood.h"
 
 //존재하지 않는 키코드 정의
+#define		VK_0	0x30
+#define		VK_1	0x31
+#define		VK_2	0x32
+#define		VK_3	0x33
+#define		VK_4	0x34
+#define		VK_5	0x35
+#define		VK_6	0x36
+#define		VK_7	0x37
+#define		VK_8	0x38
+#define		VK_9	0x39
+
 #define 	VK_A 	0x41 
 #define 	VK_B 	0x42 
 #define 	VK_C 	0x43 
@@ -25,8 +36,8 @@
 #define 	VK_U 	0x55 
 #define 	VK_V 	0x56 
 #define 	VK_W 	0x57
-#define 	VK_X 	0x58 
-#define 	VK_Y 	0x59 
+#define 	VK_X 	0x58
+#define 	VK_Y 	0x59
 #define 	VK_Z 	0x5A
 
 NS_SW_BEGIN

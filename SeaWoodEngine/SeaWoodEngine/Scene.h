@@ -15,6 +15,11 @@ public:
 
 	void draw() override;
 	void update(float dTime) override;
+
+	void addChild(Node* child) override;
+
+protected:
+	Childs		m_AddingChilds;
 };
 
 NS_SW_END

@@ -1,12 +1,12 @@
-﻿#include "View.h"
+﻿#include "Renderer.h"
 
 NS_SW_BEGIN
 
-class GdiView : public View
+class GdiRenderer : public Renderer
 {
 public:
-	GdiView();
-	~GdiView() override;
+	GdiRenderer();
+	~GdiRenderer() override;
 
 	bool init() override;
 	void beginFrame() override;
@@ -14,7 +14,7 @@ public:
 
 	HDC getDC();
 
-	CREATE_FUNC(GdiView);
+	CREATE_FUNC(GdiRenderer);
 
 private:
 	HBITMAP m_MemoryBitmap;

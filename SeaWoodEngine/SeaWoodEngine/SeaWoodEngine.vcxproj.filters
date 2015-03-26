@@ -13,14 +13,14 @@
     <Filter Include="base\structure">
       <UniqueIdentifier>{eb8aa8fb-6e78-4e8b-aefd-659726875cb5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="base\view">
-      <UniqueIdentifier>{828aeec7-002a-4a94-b8c4-f13bb214a849}</UniqueIdentifier>
-    </Filter>
     <Filter Include="base\event">
       <UniqueIdentifier>{6dd7335a-646f-4e82-a5ba-743eb4163a93}</UniqueIdentifier>
     </Filter>
     <Filter Include="unconfirmed">
       <UniqueIdentifier>{2bfd673e-4b0d-42d7-800a-6cd846103bb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\renderer">
+      <UniqueIdentifier>{828aeec7-002a-4a94-b8c4-f13bb214a849}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -49,12 +49,6 @@
     <ClCompile Include="Utility.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="View.cpp">
-      <Filter>base\view</Filter>
-    </ClCompile>
-    <ClCompile Include="GdiView.cpp">
-      <Filter>base\view</Filter>
-    </ClCompile>
     <ClCompile Include="Event.cpp">
       <Filter>base\event</Filter>
     </ClCompile>
@@ -64,20 +58,26 @@
     <ClCompile Include="Ref.cpp">
       <Filter>node</Filter>
     </ClCompile>
-    <ClCompile Include="D3DView.cpp">
-      <Filter>base\view</Filter>
-    </ClCompile>
     <ClCompile Include="KeyManager.cpp">
       <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>base\view</Filter>
+      <Filter>base\renderer</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>unconfirmed</Filter>
     </ClCompile>
     <ClCompile Include="Figure.cpp">
       <Filter>unconfirmed</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DRenderer.cpp">
+      <Filter>base\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="GdiRenderer.cpp">
+      <Filter>base\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>base\renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,12 +116,6 @@
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="SWEngine.h" />
-    <ClInclude Include="View.h">
-      <Filter>base\view</Filter>
-    </ClInclude>
-    <ClInclude Include="GdiView.h">
-      <Filter>base\view</Filter>
-    </ClInclude>
     <ClInclude Include="Event.h">
       <Filter>base\event</Filter>
     </ClInclude>
@@ -131,20 +125,26 @@
     <ClInclude Include="Ref.h">
       <Filter>node</Filter>
     </ClInclude>
-    <ClInclude Include="D3DView.h">
-      <Filter>base\view</Filter>
-    </ClInclude>
     <ClInclude Include="KeyManager.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>base\view</Filter>
+      <Filter>base\renderer</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>unconfirmed</Filter>
     </ClInclude>
     <ClInclude Include="Figure.h">
       <Filter>unconfirmed</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DRenderer.h">
+      <Filter>base\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="GdiRenderer.h">
+      <Filter>base\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>base\renderer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

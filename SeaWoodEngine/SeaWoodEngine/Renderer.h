@@ -4,7 +4,7 @@
 
 NS_SW_BEGIN
 
-class View : public Ref
+class Renderer : public Ref
 {
 public:
 	enum class ViewType
@@ -14,8 +14,8 @@ public:
 		D3_DX
 	};
 
-	View();
-	virtual ~View();
+	Renderer();
+	virtual ~Renderer();
 
 	virtual bool init() = 0;
 	virtual void draw() = 0;

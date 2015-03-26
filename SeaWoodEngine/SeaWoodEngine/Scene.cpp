@@ -28,6 +28,13 @@ void Scene::update(float dTime)
 	{
 		child.second->update(dTime);
 	}
+
+	for (auto& child : m_AddingChilds)
+	{
+		m_Childs.push_back(child);
+	}
+
+	m_AddingChilds.clear();
 }
 
 bool SeaWood::Scene::init()
@@ -38,4 +45,11 @@ bool SeaWood::Scene::init()
 	}
 
 	return true;
+}
+
+void SeaWood::Scene::addChild(Node* child)
+{
+	child->setParent(this);
+	child->retain();
+	m_AddingChilds.push_back(std::make_pair("NO_NAME", child));
 }

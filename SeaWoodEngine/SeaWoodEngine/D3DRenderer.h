@@ -1,14 +1,14 @@
 ﻿#pragma once
-#include "View.h"
+#include "Renderer.h"
 
 NS_SW_BEGIN
 
 class Camera;
-class D3DView : public View
+class D3DRenderer : public Renderer
 {
 public:
-	D3DView();
-	~D3DView() override;
+	D3DRenderer();
+	~D3DRenderer() override;
 
 	bool init() override;
 	void beginFrame() override;
@@ -22,9 +22,10 @@ public:
 	void setInputLayout(ID3D11InputLayout* inputLayout);
 	void setPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY topology);
 	void registerCamera(Camera* camera);
+	void changeCamera(Camera* camera);
 	void update(float dTime) override;
 
-	CREATE_FUNC(D3DView);
+	CREATE_FUNC(D3DRenderer);
 
 private:
 

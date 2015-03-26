@@ -13,11 +13,11 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="D3DView.h" />
+    <ClInclude Include="D3DRenderer.h" />
     <ClInclude Include="Director.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="Figure.h" />
-    <ClInclude Include="GdiView.h" />
+    <ClInclude Include="GdiRenderer.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="MouseEvent.h" />
@@ -33,16 +33,16 @@
     <ClInclude Include="structure.h" />
     <ClInclude Include="SWEngine.h" />
     <ClInclude Include="Utility.h" />
-    <ClInclude Include="View.h" />
+    <ClInclude Include="Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="D3DView.cpp" />
+    <ClCompile Include="D3DRenderer.cpp" />
     <ClCompile Include="Director.cpp" />
     <ClCompile Include="Event.cpp" />
     <ClCompile Include="Figure.cpp" />
-    <ClCompile Include="GdiView.cpp" />
+    <ClCompile Include="GdiRenderer.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="MouseEvent.cpp" />
     <ClCompile Include="Node.cpp" />
@@ -56,7 +56,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Utility.cpp" />
-    <ClCompile Include="View.cpp" />
+    <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F12BB160-237E-41C4-B2F3-9A084DA7C451}</ProjectGuid>

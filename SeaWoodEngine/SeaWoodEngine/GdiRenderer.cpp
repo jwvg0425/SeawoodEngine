@@ -1,10 +1,10 @@
 ﻿#include "stdafx.h"
-#include "GdiView.h"
+#include "GdiRenderer.h"
 #include "Application.h"
 
 USING_NS_SW;
 
-SeaWood::GdiView::GdiView()
+SeaWood::GdiRenderer::GdiRenderer()
 {
 	m_Type = ViewType::D2_GDI;
 	HWND windowHandle = Application::getInstance()->getWindowHandle();
@@ -20,13 +20,13 @@ SeaWood::GdiView::GdiView()
 	ReleaseDC(windowHandle, hdc);
 }
 
-SeaWood::GdiView::~GdiView()
+SeaWood::GdiRenderer::~GdiRenderer()
 {
 	SelectObject(m_MemoryDC, m_OldBitmap);
 	DeleteDC(m_MemoryDC);
 }
 
-void SeaWood::GdiView::draw()
+void SeaWood::GdiRenderer::draw()
 {
 	HWND windowHandle = Application::getInstance()->getWindowHandle();
 
@@ -39,12 +39,12 @@ void SeaWood::GdiView::draw()
 	ReleaseDC(windowHandle, hdc);
 }
 
-HDC SeaWood::GdiView::getDC()
+HDC SeaWood::GdiRenderer::getDC()
 {
 	return m_MemoryDC;
 }
 
-void SeaWood::GdiView::beginFrame()
+void SeaWood::GdiRenderer::beginFrame()
 {
 	HWND windowHandle = Application::getInstance()->getWindowHandle();
 
@@ -54,7 +54,7 @@ void SeaWood::GdiView::beginFrame()
 	FillRect(m_MemoryDC, &crt, GetSysColorBrush(COLOR_WINDOW));
 }
 
-bool SeaWood::GdiView::init()
+bool SeaWood::GdiRenderer::init()
 {
 	return true;
 }
