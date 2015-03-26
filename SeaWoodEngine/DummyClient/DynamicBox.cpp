@@ -28,6 +28,8 @@ void DynamicBox::update(float dTime)
 	const float SCALE_SPEED = 1.0f;
 	const float ROTATE_SPEED = 1.0f;
 
+
+	//좌표 이동
 	if (GET_KEY_MANAGER()->getKeyState(VK_UP) & KeyManager::PRESS)
 	{
 		setPosition(0, 0, SPEED*dTime, true);
@@ -50,18 +52,16 @@ void DynamicBox::update(float dTime)
 
 	if (GET_KEY_MANAGER()->getKeyState(VK_W) & KeyManager::PRESS)
 	{
-		float scale = SCALE_SPEED*dTime;
-
-		setScale(scale, scale, scale, true);
+		setPosition(0, SPEED*dTime, 0, true);
 	}
 
 	if (GET_KEY_MANAGER()->getKeyState(VK_S) & KeyManager::PRESS)
 	{
-		float scale = SCALE_SPEED*dTime;
-
-		setScale(-scale, -scale, -scale, true);
+		setPosition(0, -SPEED*dTime, 0, true);
 	}
 
+
+	//회전
 	if (GET_KEY_MANAGER()->getKeyState(VK_A) & KeyManager::PRESS)
 	{
 		float rotate = ROTATE_SPEED*dTime;
@@ -74,5 +74,21 @@ void DynamicBox::update(float dTime)
 		float rotate = ROTATE_SPEED*dTime;
 
 		setAngle(-rotate, 0, 0, true);
+	}
+
+
+	//크기
+	if (GET_KEY_MANAGER()->getKeyState(VK_Z) & KeyManager::PRESS)
+	{
+		float scale = SCALE_SPEED*dTime;
+
+		setScale(scale, scale, scale, true);
+	}
+
+	if (GET_KEY_MANAGER()->getKeyState(VK_X) & KeyManager::PRESS)
+	{
+		float scale = SCALE_SPEED*dTime;
+
+		setScale(-scale, -scale, -scale, true);
 	}
 }

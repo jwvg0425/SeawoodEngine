@@ -83,11 +83,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="ChasingCamera.cpp" />
     <ClCompile Include="DynamicBox.cpp" />
     <ClCompile Include="FirstScene.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Missile.cpp" />
     <ClCompile Include="MouseCamera.cpp" />
     <ClCompile Include="MyApplication.cpp" />
+    <ClCompile Include="PlayingBox.cpp" />
+    <ClCompile Include="PlayingCamera.cpp" />
+    <ClCompile Include="SecondScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SeaWoodEngine\SeaWoodEngine.vcxproj">
@@ -96,10 +101,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box.h" />
+    <ClInclude Include="ChasingCamera.h" />
     <ClInclude Include="DynamicBox.h" />
     <ClInclude Include="FirstScene.h" />
+    <ClInclude Include="Missile.h" />
     <ClInclude Include="MouseCamera.h" />
     <ClInclude Include="MyApplication.h" />
+    <ClInclude Include="PlayingBox.h" />
+    <ClInclude Include="PlayingCamera.h" />
+    <ClInclude Include="SecondScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FX\color.fx">
