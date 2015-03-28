@@ -36,11 +36,10 @@ bool FirstScene::init()
 		auto randomBox = Box::create();
 		randomBox->setBoxWithRandomColor(1.0f + 0.1f * (rand() % 20), 1.0f + 0.1f * (rand() % 20), 1.0f + 0.1f * (rand() % 20));
 		randomBox->setPosition(-50 + rand() % 101, -50 + rand() % 101, -50 + rand() % 101);
-		randomBox->setAngle(0.1f * (rand() % 32), 0.1f * (rand() % 32), 0.1f * (rand() % 32));
+		randomBox->setRotate(0.1f * (rand() % 32), 0.1f * (rand() % 32), 0.1f * (rand() % 32));
 		addChild(randomBox);
 	}
 	
-
 	return true;
 }
 

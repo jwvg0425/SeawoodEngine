@@ -93,8 +93,8 @@ void Director::draw()
 	}
 
 	m_Renderer->beginFrame();
-	m_NowScene->draw();
-	m_Renderer->draw();
+	m_NowScene->render();
+	m_Renderer->render();
 }
 
 long long int Director::getTick()

@@ -110,7 +110,7 @@ void PlayingBox::onMouseMove(MouseEvent e)
 
 		m_Theta += dx;
 
-		setAngle(0, m_Theta, 0);
+		setRotate(0, m_Theta, 0);
 	}
 
 	m_PrevMouse = e.m_Position;

@@ -10,7 +10,7 @@ public:
 
 	bool init() override;
 	void beginFrame() override;
-	void draw() override;
+	void render() override;
 
 	HDC getDC();
 

@@ -26,7 +26,7 @@ SeaWood::GdiRenderer::~GdiRenderer()
 	DeleteDC(m_MemoryDC);
 }
 
-void SeaWood::GdiRenderer::draw()
+void SeaWood::GdiRenderer::render()
 {
 	HWND windowHandle = Application::getInstance()->getWindowHandle();
 

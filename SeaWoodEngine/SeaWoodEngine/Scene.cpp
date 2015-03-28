@@ -14,11 +14,11 @@ Scene::~Scene()
 
 }
 
-void Scene::draw()
+void Scene::render()
 {
 	for (auto& child : m_Childs)
 	{
-		child.second->draw();
+		child.second->render();
 	}
 }
 

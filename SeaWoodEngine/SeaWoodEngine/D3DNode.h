@@ -22,16 +22,16 @@ public:
 
 	void setPosition(float x, float y, float z, bool relative = false);
 	void setScale(float x, float y, float z, bool relative = false);
-	void setAngle(float x, float y, float z, bool relative = false);
+	void setRotate(float x, float y, float z, bool relative = false);
 
 	//포인터로 넘어온 변수에 해당하는 값 저장해서 돌려줌
 	void getPosition(float* x, float* y, float* z);
 	void getScale(float* scaleX, float* scaleY, float* scaleZ);
-	void getAngle(float* angleX, float* angleY, float* angleZ);
+	void getRotate(float* angleX, float* angleY, float* angleZ);
 
 	XMMATRIX getWorld();
 
-	void draw() override;
+	void render() override;
 
 	static D3DNode<E>* createWithEffect(E* effect);
 
@@ -156,7 +156,7 @@ void D3DNode<E>::setScale(float x, float y, float z, bool relative /*= false*/)
 }
 
 template<typename E>
-void D3DNode<E>::setAngle(float x, float y, float z, bool relative /*= false*/)
+void D3DNode<E>::setRotate(float x, float y, float z, bool relative /*= false*/)
 {
 	if (relative)
 	{
@@ -198,7 +198,7 @@ void D3DNode<E>::getScale(float* scaleX, float* scaleY, float* scaleZ)
 }
 
 template<typename E>
-void D3DNode<E>::getAngle(float* angleX, float* angleY, float* angleZ)
+void D3DNode<E>::getRotate(float* angleX, float* angleY, float* angleZ)
 {
 	*angleX = m_AngleX;
 	*angleY = m_AngleY;
@@ -212,7 +212,7 @@ XMMATRIX D3DNode<E>::getWorld()
 }
 
 template<typename E>
-void D3DNode<E>::draw()
+void D3DNode<E>::render()
 {
 	GET_D3D_RENDERER()->setInputLayout(m_InputLayout);
 	GET_D3D_RENDERER()->setPrimitiveTopology(m_Topology);

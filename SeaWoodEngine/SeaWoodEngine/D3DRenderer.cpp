@@ -150,7 +150,7 @@ void SeaWood::D3DRenderer::beginFrame()
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 }
 
-void SeaWood::D3DRenderer::draw()
+void SeaWood::D3DRenderer::render()
 {
 	HR(m_SwapChain->Present(0, 0));
 }

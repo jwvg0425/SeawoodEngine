@@ -19,7 +19,7 @@ public:
 	virtual bool	init();
 
 	//그리기 함수.
-	virtual void	draw();
+	virtual void	render();
 
 	//매 프레임 해야 하는 작업
 	virtual void    update(float dTime);

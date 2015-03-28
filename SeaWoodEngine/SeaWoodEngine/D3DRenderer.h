@@ -12,7 +12,7 @@ public:
 
 	bool init() override;
 	void beginFrame() override;
-	void draw() override;
+	void render() override;
 	void setBackgroundColor(const FLOAT colorRGBA[4]);
 	void initRenderTarget();
 	ID3D11Device* getDevice();

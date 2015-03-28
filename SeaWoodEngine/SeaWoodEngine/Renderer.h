@@ -18,7 +18,7 @@ public:
 	virtual ~Renderer();
 
 	virtual bool init() = 0;
-	virtual void draw() = 0;
+	virtual void render() = 0;
 	virtual void beginFrame() = 0;
 	virtual void update(float dTime);
 	ViewType getType();

@@ -28,7 +28,7 @@ void Node::setPosition(Point2 position)
 	m_Position = position;
 }
 
-void Node::draw()
+void Node::render()
 {
 
 }

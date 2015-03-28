@@ -66,14 +66,14 @@ void DynamicBox::update(float dTime)
 	{
 		float rotate = ROTATE_SPEED*dTime;
 
-		setAngle(rotate, 0, 0, true);
+		setRotate(rotate, 0, 0, true);
 	}
 
 	if (GET_KEY_MANAGER()->getKeyState(VK_D) & KeyManager::PRESS)
 	{
 		float rotate = ROTATE_SPEED*dTime;
 
-		setAngle(-rotate, 0, 0, true);
+		setRotate(-rotate, 0, 0, true);
 	}
 
 

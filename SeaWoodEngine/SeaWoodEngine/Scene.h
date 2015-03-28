@@ -13,7 +13,7 @@ public:
 
 	bool init() override;
 
-	void draw() override;
+	void render() override;
 	void update(float dTime) override;
 
 	void addChild(Node* child) override;
