@@ -217,13 +217,13 @@ void D3DNode<E>::draw()
 	GET_D3D_RENDERER()->setInputLayout(m_InputLayout);
 	GET_D3D_RENDERER()->setPrimitiveTopology(m_Topology);
 
-	m_Effect->updateByObject(this);
-
 	UINT stride = sizeof(VertexType);
 	UINT offset = 0;
 
 	GET_D3D_RENDERER()->getDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
-	GET_D3D_RENDERER()->getDeviceContext()->IASetIndexBuffer(m_IndexBuffer, DXGI_FORMAT_R32_UINT, 0);	
+	GET_D3D_RENDERER()->getDeviceContext()->IASetIndexBuffer(m_IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+	m_Effect->updateByObject(this);
 
 	D3DX11_TECHNIQUE_DESC techDesc;
 	m_Effect->getTech()->GetDesc(&techDesc);

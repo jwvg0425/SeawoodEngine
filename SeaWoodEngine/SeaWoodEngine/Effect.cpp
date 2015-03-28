@@ -42,7 +42,7 @@ void SeaWood::Effect::updateByFrame()
 SeaWood::SimpleColorEffect::SimpleColorEffect() : Effect(GET_D3D_RENDERER()->getDevice(), L"fx/color.cso")
 {
 	m_Tech = m_Fx->GetTechniqueByName("ColorTech");
-	m_FxWorldViewProj = m_Fx->GetVariableByName("")->AsMatrix();
+	m_FxWorldViewProj = m_Fx->GetVariableByName("gWorldViewProj")->AsMatrix();
 }
 
 SeaWood::SimpleColorEffect::~SimpleColorEffect()
