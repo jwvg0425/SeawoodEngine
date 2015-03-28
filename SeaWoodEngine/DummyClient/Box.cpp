@@ -40,20 +40,13 @@ Box::~Box()
 
 bool Box::init()
 {
-	if (!Figure<BoxVertex>::init())
+	if (!D3DNode<SimpleColorEffect>::init())
 	{
 		return false;
 	}
 
-	D3D11_INPUT_ELEMENT_DESC vertexDesc[] =
-	{
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	};
-
-	Shader* shader = new Shader("color.cso", "ColorTech", "gWorldViewProj", vertexDesc, 2);
-
-	setShader(shader);
+	setEffect(Effects::getSimpleColorEffect());
+	setInputLayout(InputLayouts::getPosColor(), D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	return true;
 }
@@ -64,7 +57,7 @@ void Box::setBox(float width, float height, float depth, const std::vector<XMFLO
 	float h2 = height / 2;
 	float d2 = depth / 2;
 
-	std::vector<BoxVertex> vertices =
+	std::vector<VertexType> vertices =
 	{
 		{ XMFLOAT3(-w2, -h2, -h2), colors[0] },
 		{ XMFLOAT3(-w2, +h2, -h2), colors[1] },
@@ -87,7 +80,7 @@ void Box::setBoxWithRandomColor(float width, float height, float depth)
 	float h2 = height / 2;
 	float d2 = depth / 2;
 
-	std::vector<BoxVertex> vertices =
+	std::vector<VertexType> vertices =
 	{
 		{ XMFLOAT3(-w2, -h2, -h2), { 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000) } },
 		{ XMFLOAT3(-w2, +h2, -h2), { 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000) } },

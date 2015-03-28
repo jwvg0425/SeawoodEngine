@@ -5,7 +5,7 @@
 
 NS_SW_BEGIN
 
-class Shader;
+class depShader;
 
 //vertex 구조체에 따라 다른 figure를 만들어 냄.
 template <typename Vertex>
@@ -13,12 +13,12 @@ class Figure : public Node
 {
 public:
 	Figure();
-	Figure(Shader* shader);
+	Figure(depShader* shader);
 	~Figure() override;
 
 	bool init() override;
 
-	void setShader(Shader* shader);
+	void setShader(depShader* shader);
 	void setBuffer(const std::vector<Vertex>& vertices,
 		const std::vector<UINT>& indices);
 
@@ -35,7 +35,7 @@ public:
 
 	void draw() override;
 	
-	static Figure<Vertex>* createWithShader(Shader* shader);
+	static Figure<Vertex>* createWithShader(depShader* shader);
 
 protected:
 	void setVertices(const std::vector<Vertex>& vertices);
@@ -55,7 +55,7 @@ protected:
 	float m_ScaleX, m_ScaleY, m_ScaleZ;
 	float m_AngleX, m_AngleY, m_AngleZ;
 
-	Shader* m_Shader = nullptr;
+	depShader* m_Shader = nullptr;
 	ID3D11Buffer* m_VertexBuffer = nullptr;
 	ID3D11Buffer* m_IndexBuffer = nullptr;
 };
@@ -85,7 +85,7 @@ void SeaWood::Figure<Vertex>::getPosition(float* x, float* y, float* z)
 }
 
 template <typename Vertex>
-void SeaWood::Figure<Vertex>::setShader(Shader* shader)
+void SeaWood::Figure<Vertex>::setShader(depShader* shader)
 {
 	_ASSERT(m_Shader == nullptr);
 
@@ -120,7 +120,7 @@ bool SeaWood::Figure<Vertex>::init()
 }
 
 template <typename Vertex>
-Figure<Vertex>* SeaWood::Figure<Vertex>::createWithShader(Shader* shader)
+Figure<Vertex>* SeaWood::Figure<Vertex>::createWithShader(depShader* shader)
 {
 	Figure<Vertex>* figure = new Figure<Vertex>(shader);
 
@@ -305,7 +305,7 @@ SeaWood::Figure<Vertex>::~Figure()
 }
 
 template <typename Vertex>
-SeaWood::Figure<Vertex>::Figure(Shader* shader)
+SeaWood::Figure<Vertex>::Figure(depShader* shader)
 {
 	XMMATRIX I = XMMatrixIdentity();
 

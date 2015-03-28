@@ -3,12 +3,12 @@
 
 NS_SW_BEGIN
 
-class Shader
+class depShader
 {
 public:
-	Shader(const std::string& fileName, const std::string& techniqueName, const std::string& worldViewProjName,
+	depShader(const std::string& fileName, const std::string& techniqueName, const std::string& worldViewProjName,
 		D3D11_INPUT_ELEMENT_DESC vertexDesc[], int vertexNum);
-	virtual ~Shader();
+	virtual ~depShader();
 
 	ID3DX11Effect*			getFx();
 	ID3DX11EffectTechnique* getTech();

@@ -1,25 +1,25 @@
 ﻿#include "stdafx.h"
-#include "Shader.h"
+#include "depShader.h"
 #include "Director.h"
 #include "D3DRenderer.h"
 #include <fstream>
 
 USING_NS_SW;
 
-Shader::Shader(const std::string& fileName, const std::string& techniqueName, const std::string& worldViewProjName,
+depShader::depShader(const std::string& fileName, const std::string& techniqueName, const std::string& worldViewProjName,
 	D3D11_INPUT_ELEMENT_DESC vertexDesc[], int vertexNum)
 {
 	buildFx(fileName, techniqueName, worldViewProjName);
 	buildVertexLayout(vertexDesc, vertexNum);
 }
 
-Shader::~Shader()
+depShader::~depShader()
 {
 	ReleaseCOM(m_InputLayout);
 	ReleaseCOM(m_Fx);
 }
 
-void Shader::buildFx(const std::string& fileName, const std::string& techniqueName, const std::string& worldViewProjName)
+void depShader::buildFx(const std::string& fileName, const std::string& techniqueName, const std::string& worldViewProjName)
 {
 	std::ifstream fin(fileName, std::ios::binary);
 
@@ -32,13 +32,13 @@ void Shader::buildFx(const std::string& fileName, const std::string& techniqueNa
 	fin.close();
 
 	HR(D3DX11CreateEffectFromMemory(&compiledShader[0], size, 0, GET_D3D_RENDERER()->getDevice(), &m_Fx));
-	
+
 	m_Tech = m_Fx->GetTechniqueByName(techniqueName.c_str());
-	m_FxWorldViewProj = m_Fx->GetVariableByName(worldViewProjName.c_str())->AsMatrix();
+	m_FxWorldViewProj = m_Fx->GetVariableByName("gWorldViewProj"))->AsMatrix();
 
 }
 
-void Shader::buildVertexLayout(D3D11_INPUT_ELEMENT_DESC vertexDesc[], int vertexNum)
+void depShader::buildVertexLayout(D3D11_INPUT_ELEMENT_DESC vertexDesc[], int vertexNum)
 {
 	D3DX11_PASS_DESC passDesc;
 
@@ -48,22 +48,22 @@ void Shader::buildVertexLayout(D3D11_INPUT_ELEMENT_DESC vertexDesc[], int vertex
 		passDesc.IAInputSignatureSize, &m_InputLayout));
 }
 
-ID3DX11Effect* SeaWood::Shader::getFx()
+ID3DX11Effect* SeaWood::depShader::getFx()
 {
 	return m_Fx;
 }
 
-ID3D11InputLayout* SeaWood::Shader::getInputLayout()
+ID3D11InputLayout* SeaWood::depShader::getInputLayout()
 {
 	return m_InputLayout;
 }
 
-ID3DX11EffectTechnique* SeaWood::Shader::getTech()
+ID3DX11EffectTechnique* SeaWood::depShader::getTech()
 {
 	return m_Tech;
 }
 
-ID3DX11EffectMatrixVariable* SeaWood::Shader::getWorldViewProj()
+ID3DX11EffectMatrixVariable* SeaWood::depShader::getWorldViewProj()
 {
 	return m_FxWorldViewProj;
 }

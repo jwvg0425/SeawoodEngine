@@ -9,9 +9,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\Fx">
-      <UniqueIdentifier>{eb35eb64-92f9-428d-8374-0ca1a3f98ecb}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MyApplication.cpp">
@@ -79,10 +76,5 @@
     <ClInclude Include="Missile.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="FX\color.fx">
-      <Filter>소스 파일\Fx</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>

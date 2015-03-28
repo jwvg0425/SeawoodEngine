@@ -2,6 +2,8 @@
 #include "D3DRenderer.h"
 #include "Application.h"
 #include "Camera.h"
+#include "InputLayout.h"
+#include "Effect.h"
 
 USING_NS_SW;
 
@@ -21,6 +23,9 @@ SeaWood::D3DRenderer::~D3DRenderer()
 	{
 		m_Camera->release();
 	}
+
+	InputLayouts::destroyAll();
+	Effects::destroyAll();
 
 	ReleaseCOM(m_RenderTargetView);
 	ReleaseCOM(m_DepthStencilView);

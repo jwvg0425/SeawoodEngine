@@ -24,7 +24,8 @@ bool FirstScene::init()
 	}	
 
 	//현재 scene에 맞는 카메라로 변경
-	GET_D3D_RENDERER()->changeCamera(Camera::createWithPos(XMVectorSet(0.0f, 0.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)));
+	auto camera = Camera::createWithPos(XMVectorSet(0.0f, 0.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
+	GET_D3D_RENDERER()->changeCamera(camera);
 
 	m_Box = DynamicBox::create();
 	m_Box->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);

@@ -13,11 +13,11 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="D3DNode.h" />
     <ClInclude Include="D3DRenderer.h" />
     <ClInclude Include="Director.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Event.h" />
-    <ClInclude Include="Figure.h" />
     <ClInclude Include="GdiRenderer.h" />
     <ClInclude Include="InputLayout.h" />
     <ClInclude Include="KeyManager.h" />
@@ -29,13 +29,13 @@
     <ClInclude Include="Ref.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SeaWood.h" />
-    <ClInclude Include="Shader.h" />
     <ClInclude Include="Size.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="structure.h" />
     <ClInclude Include="SWEngine.h" />
     <ClInclude Include="Utility.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
@@ -44,7 +44,6 @@
     <ClCompile Include="Director.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Event.cpp" />
-    <ClCompile Include="Figure.cpp" />
     <ClCompile Include="GdiRenderer.cpp" />
     <ClCompile Include="InputLayout.cpp" />
     <ClCompile Include="KeyManager.cpp" />
@@ -54,7 +53,6 @@
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Ref.cpp" />
     <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Size.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Use</PrecompiledHeader>

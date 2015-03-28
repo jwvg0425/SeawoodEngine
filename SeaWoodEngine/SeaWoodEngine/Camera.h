@@ -18,9 +18,9 @@ public:
 	void				setUpVector(XMVECTOR up);
 	void				setLens(FLOAT fovAngleY, FLOAT aspect, FLOAT nearZ, FLOAT farZ);
 
-	const XMMATRIX&		getView() const;
-	const XMMATRIX&		getProjection() const;
-	const XMMATRIX&		getViewProj() const;
+	XMMATRIX			getView() const;
+	XMMATRIX			getProjection() const;
+	XMMATRIX			getViewProj() const;
 
 	CREATE_FUNC(Camera);
 	static Camera*		createWithPos(XMVECTOR eyePos, XMVECTOR targetPos, XMVECTOR up);

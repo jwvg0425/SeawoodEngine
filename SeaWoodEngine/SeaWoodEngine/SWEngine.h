@@ -7,7 +7,7 @@
 #include "D3DRenderer.h"
 #include "MouseEvent.h"
 #include "Camera.h"
-
-//test(unconfirmed)
-#include "Figure.h"
-#include "Shader.h"
+#include "D3DNode.h"
+#include "Effect.h"
+#include "InputLayout.h"
+#include "Vertex.h"

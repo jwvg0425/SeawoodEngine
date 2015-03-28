@@ -16,9 +16,6 @@
     <Filter Include="base\event">
       <UniqueIdentifier>{6dd7335a-646f-4e82-a5ba-743eb4163a93}</UniqueIdentifier>
     </Filter>
-    <Filter Include="unconfirmed">
-      <UniqueIdentifier>{2bfd673e-4b0d-42d7-800a-6cd846103bb0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="base\renderer">
       <UniqueIdentifier>{828aeec7-002a-4a94-b8c4-f13bb214a849}</UniqueIdentifier>
     </Filter>
@@ -69,12 +66,6 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>base\renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>unconfirmed</Filter>
-    </ClCompile>
-    <ClCompile Include="Figure.cpp">
-      <Filter>unconfirmed</Filter>
     </ClCompile>
     <ClCompile Include="D3DRenderer.cpp">
       <Filter>base\renderer</Filter>
@@ -143,12 +134,6 @@
     <ClInclude Include="Camera.h">
       <Filter>base\renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>unconfirmed</Filter>
-    </ClInclude>
-    <ClInclude Include="Figure.h">
-      <Filter>unconfirmed</Filter>
-    </ClInclude>
     <ClInclude Include="D3DRenderer.h">
       <Filter>base\renderer</Filter>
     </ClInclude>
@@ -163,6 +148,12 @@
     </ClInclude>
     <ClInclude Include="Effect.h">
       <Filter>base\renderer\global</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>base\renderer\global</Filter>
+    </ClInclude>
+    <ClInclude Include="D3DNode.h">
+      <Filter>node</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

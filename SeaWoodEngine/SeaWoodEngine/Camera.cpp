@@ -41,7 +41,7 @@ void Camera::setUpVector(XMVECTOR up)
 	updateView();
 }
 
-const XMMATRIX& Camera::getView() const
+XMMATRIX Camera::getView() const
 {
 	return XMLoadFloat4x4(&m_View);
 }
@@ -88,12 +88,12 @@ void SeaWood::Camera::setLens(FLOAT fovAngleY, FLOAT aspect, FLOAT nearZ, FLOAT 
 	updateProjection();
 }
 
-const XMMATRIX& SeaWood::Camera::getProjection() const
+XMMATRIX SeaWood::Camera::getProjection() const
 {
 	return XMLoadFloat4x4(&m_Projection);
 }
 
-const XMMATRIX& SeaWood::Camera::getViewProj() const
+XMMATRIX SeaWood::Camera::getViewProj() const
 {
 	XMMATRIX view = getView();
 	XMMATRIX proj = getProjection();

@@ -24,7 +24,6 @@ void MyApplication::onCreate()
 	FLOAT color[4] = { 0.7f, 0.15f, 1.0f, 1.0f };
 
 	renderer->setBackgroundColor(color);
-	renderer->setProjection(0.25f, 1.0f, 1000.0f);
 	renderer->registerCamera(camera);
 
 	Director::getInstance()->registerRenderer(renderer);
