@@ -13,4 +13,7 @@ extern const float PI;
 
 void debugLogA(LPCSTR format, ...);
 void debugLogW(LPCWSTR format, ...);
+
+XMMATRIX inverseTranspose(CXMMATRIX M);
+
 NS_SW_END

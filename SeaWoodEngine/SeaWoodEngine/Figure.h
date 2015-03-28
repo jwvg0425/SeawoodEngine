@@ -1,117 +1,62 @@
 ﻿#pragma once
-#include "Node.h"
-#include "Director.h"
-#include "D3DRenderer.h"
+#include "Effect.h"
+#include "InputLayout.h"
+#include "D3DNode.h"
 
 NS_SW_BEGIN
 
-class depShader;
-
-//vertex 구조체에 따라 다른 figure를 만들어 냄.
-template <typename Vertex>
-class Figure : public Node
+template<typename E>
+class Figure : public D3DNode
 {
 public:
+	using VertexType = typename E::VertexType;
 	Figure();
-	Figure(depShader* shader);
 	~Figure() override;
 
 	bool init() override;
 
-	void setShader(depShader* shader);
-	void setBuffer(const std::vector<Vertex>& vertices,
+	void setEffect(E* effect);
+	void setInputLayout(ID3D11InputLayout* inputLayout, D3D11_PRIMITIVE_TOPOLOGY topology);
+	void setBuffer(const std::vector<VertexType>& vertices,
 		const std::vector<UINT>& indices);
 
-	void setPosition(float x, float y, float z, bool relative = false);
-	void setScale(float x, float y, float z, bool relative = false);
-	void setAngle(float x, float y, float z, bool relative = false);
+	void render() override;
 
-	//포인터로 넘어온 변수에 해당하는 값 저장해서 돌려줌
-	void getPosition(float* x, float* y, float* z);
-	void getScale(float* scaleX, float* scaleY, float* scaleZ);
-	void getAngle(float* angleX, float* angleY, float* angleZ);
-
-	XMFLOAT4X4 getWorld();
-
-	void draw() override;
-	
-	static Figure<Vertex>* createWithShader(depShader* shader);
+	static Figure<E>* createWithEffect(E* effect);
 
 protected:
-	void setVertices(const std::vector<Vertex>& vertices);
+	void setVertices(const std::vector<VertexType>& vertices);
 	void setIndices(const std::vector<UINT>& indices);
 	void buildBuffer();
-	void updateWorld();
-
-	std::vector<Vertex> m_Vertices;
+	
+	std::vector<VertexType> m_Vertices;
 	std::vector<UINT> m_Indices;
 
-	//world를 구하기 위한 요소. 기본적으로 I.
-	XMFLOAT4X4 m_Translation;
-	XMFLOAT4X4 m_Scaling;
-	XMFLOAT4X4 m_Rotation;
-	XMFLOAT4X4 m_World;
-	float m_X, m_Y, m_Z;
-	float m_ScaleX, m_ScaleY, m_ScaleZ;
-	float m_AngleX, m_AngleY, m_AngleZ;
-
-	depShader* m_Shader = nullptr;
+	E* m_Effect = nullptr;
 	ID3D11Buffer* m_VertexBuffer = nullptr;
 	ID3D11Buffer* m_IndexBuffer = nullptr;
+
+	D3D11_PRIMITIVE_TOPOLOGY m_Topology;
+	ID3D11InputLayout*	m_InputLayout = nullptr;
 };
 
-template <typename Vertex>
-void SeaWood::Figure<Vertex>::getAngle(float* angleX, float* angleY, float* angleZ)
+template<typename E>
+Figure<E>::Figure()
 {
-	*angleX = m_AngleX;
-	*angleY = m_AngleY;
-	*angleZ = m_AngleZ;
+	m_Effect = nullptr;
 }
 
-template <typename Vertex>
-void SeaWood::Figure<Vertex>::getScale(float* scaleX, float* scaleY, float* scaleZ)
+template<typename E>
+Figure<E>::~Figure()
 {
-	*scaleX = m_ScaleX;
-	*scaleY = m_ScaleY;
-	*scaleZ = m_ScaleZ;
+	ReleaseCOM(m_VertexBuffer);
+	ReleaseCOM(m_IndexBuffer);
 }
 
-template <typename Vertex>
-void SeaWood::Figure<Vertex>::getPosition(float* x, float* y, float* z)
+template<typename E>
+bool Figure<E>::init()
 {
-	*x = m_X;
-	*y = m_Y;
-	*z = m_Z;
-}
-
-template <typename Vertex>
-void SeaWood::Figure<Vertex>::setShader(depShader* shader)
-{
-	_ASSERT(m_Shader == nullptr);
-
-	m_Shader = shader;
-}
-
-template <typename Vertex>
-SeaWood::Figure<Vertex>::Figure()
-{
-	XMMATRIX I = XMMatrixIdentity();
-
-	m_X = m_Y = m_Z = 0.0f;
-	m_ScaleX = m_ScaleY = m_ScaleZ = 1.0f;
-	m_AngleX = m_AngleY = m_AngleZ = 0.0f;
-	XMStoreFloat4x4(&m_Scaling, I);
-	XMStoreFloat4x4(&m_Rotation, I);
-	XMStoreFloat4x4(&m_Translation, I);
-	XMStoreFloat4x4(&m_World, I);
-
-	m_Shader = nullptr;
-}
-
-template <typename Vertex>
-bool SeaWood::Figure<Vertex>::init()
-{
-	if (!Node::init())
+	if (!D3DNode::init())
 	{
 		return false;
 	}
@@ -119,153 +64,80 @@ bool SeaWood::Figure<Vertex>::init()
 	return true;
 }
 
-template <typename Vertex>
-Figure<Vertex>* SeaWood::Figure<Vertex>::createWithShader(depShader* shader)
+template<typename E>
+void Figure<E>::setEffect(E* effect)
 {
-	Figure<Vertex>* figure = new Figure<Vertex>(shader);
-
-	if (figure->init())
-	{
-		figure->autorelease();
-		return figure;
-	}
-	else
-	{
-		delete figure;
-		return nullptr;
-	}
+	m_Effect = effect;
 }
 
-template <typename Vertex>
-void SeaWood::Figure<Vertex>::setBuffer(const std::vector<Vertex>& vertices, const std::vector<UINT>& indices)
+template<typename E>
+void Figure<E>::setBuffer(const std::vector<VertexType>& vertices, const std::vector<UINT>& indices)
 {
 	setVertices(vertices);
 	setIndices(indices);
 	buildBuffer();
 }
 
-template <typename Vertex>
-void SeaWood::Figure<Vertex>::updateWorld()
+template<typename E>
+void Figure<E>::render()
 {
-	XMMATRIX S = XMLoadFloat4x4(&m_Scaling);
-	XMMATRIX R = XMLoadFloat4x4(&m_Rotation);
-	XMMATRIX T = XMLoadFloat4x4(&m_Translation);
-	XMMATRIX W = S*R*T;
+	GET_D3D_RENDERER()->setInputLayout(m_InputLayout);
+	GET_D3D_RENDERER()->setPrimitiveTopology(m_Topology);
 
-	XMStoreFloat4x4(&m_World, W);
-}
-
-template <typename Vertex>
-void SeaWood::Figure<Vertex>::draw()
-{
-	GET_D3D_RENDERER()->setInputLayout(m_Shader->getInputLayout());
-	GET_D3D_RENDERER()->setPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	UINT stride = sizeof(Vertex);
+	UINT stride = sizeof(VertexType);
 	UINT offset = 0;
 
 	GET_D3D_RENDERER()->getDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
 	GET_D3D_RENDERER()->getDeviceContext()->IASetIndexBuffer(m_IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
-	XMMATRIX world = XMLoadFloat4x4(&m_World);
-	XMMATRIX viewProj = GET_D3D_RENDERER()->getCamera()->getViewProj();
-	XMMATRIX worldViewProj = world*viewProj;
-
-	m_Shader->getWorldViewProj()->SetMatrix(reinterpret_cast<float*>(&worldViewProj));
+	m_Effect->updateByObject(this);
 
 	D3DX11_TECHNIQUE_DESC techDesc;
-	m_Shader->getTech()->GetDesc(&techDesc);
+	m_Effect->getTech()->GetDesc(&techDesc);
 	for (UINT p = 0; p < techDesc.Passes; ++p)
 	{
-		m_Shader->getTech()->GetPassByIndex(p)->Apply(0, GET_D3D_RENDERER()->getDeviceContext());
+		m_Effect->getTech()->GetPassByIndex(p)->Apply(0, GET_D3D_RENDERER()->getDeviceContext());
 		GET_D3D_RENDERER()->getDeviceContext()->DrawIndexed(m_Indices.size(), 0, 0);
 	}
 }
 
-template <typename Vertex>
-XMFLOAT4X4 SeaWood::Figure<Vertex>::getWorld()
+template<typename E>
+Figure<E>* Figure<E>::createWithEffect(E* effect)
 {
-	return m_World;
-}
+	Figure<E>* node = new Figure<E>();
 
-template <typename Vertex>
-void SeaWood::Figure<Vertex>::setAngle(float x, float y, float z, bool relative)
-{
-	if (relative)
+	node->setEffect(effect);
+
+	if (node->init())
 	{
-		m_AngleX += x;
-		m_AngleY += y;
-		m_AngleZ += z;
+		node->autorelease();
+		return node;
 	}
 	else
 	{
-		m_AngleX = x;
-		m_AngleY = y;
-		m_AngleZ = z;
+		delete node;
+		return nullptr;
 	}
-
-	XMMATRIX X = XMMatrixRotationX(m_AngleX);
-	XMMATRIX Y = XMMatrixRotationY(m_AngleY);
-	XMMATRIX Z = XMMatrixRotationZ(m_AngleZ);
-	XMMATRIX R = X*Y*Z;
-
-	XMStoreFloat4x4(&m_Rotation, R);
-
-	updateWorld();
 }
 
-template <typename Vertex>
-void SeaWood::Figure<Vertex>::setScale(float x, float y, float z, bool relative)
+template<typename E>
+void Figure<E>::setVertices(const std::vector<VertexType>& vertices)
 {
-	if (relative)
-	{
-		m_ScaleX += x;
-		m_ScaleY += y;
-		m_ScaleZ += z;
-	}
-	else
-	{
-		m_ScaleX = x;
-		m_ScaleY = y;
-		m_ScaleZ = z;
-	}
-
-	XMMATRIX S = XMMatrixScaling(m_ScaleX, m_ScaleY, m_ScaleZ);
-
-	XMStoreFloat4x4(&m_Scaling, S);
-
-	updateWorld();
+	m_Vertices = vertices;
 }
 
-template <typename Vertex>
-void SeaWood::Figure<Vertex>::setPosition(float x, float y, float z, bool relative)
+template<typename E>
+void Figure<E>::setIndices(const std::vector<UINT>& indices)
 {
-	if (relative)
-	{
-		m_X += x;
-		m_Y += y;
-		m_Z += z;
-	}
-	else
-	{
-		m_X = x;
-		m_Y = y;
-		m_Z = z;
-	}
-
-	XMMATRIX T = XMMatrixTranslation(m_X, m_Y, m_Z);
-
-	XMStoreFloat4x4(&m_Translation, T);
-
-	updateWorld();
+	m_Indices = indices;
 }
 
-template <typename Vertex>
-void SeaWood::Figure<Vertex>::buildBuffer()
+template<typename E>
+void Figure<E>::buildBuffer()
 {
 	D3D11_BUFFER_DESC vbd;
 	vbd.Usage = D3D11_USAGE_IMMUTABLE;
-	vbd.ByteWidth = sizeof(Vertex)* m_Vertices.size();
+	vbd.ByteWidth = sizeof(VertexType)* m_Vertices.size();
 	vbd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	vbd.CPUAccessFlags = 0;
 	vbd.MiscFlags = 0;
@@ -284,37 +156,11 @@ void SeaWood::Figure<Vertex>::buildBuffer()
 	HR(GET_D3D_RENDERER()->getDevice()->CreateBuffer(&ibd, &iinitData, &m_IndexBuffer));
 }
 
-template <typename Vertex>
-void SeaWood::Figure<Vertex>::setIndices(const std::vector<UINT>& indices)
+template<typename E>
+void Figure<E>::setInputLayout(ID3D11InputLayout* inputLayout, D3D11_PRIMITIVE_TOPOLOGY topology)
 {
-	m_Indices = indices;
-}
-
-template <typename Vertex>
-void SeaWood::Figure<Vertex>::setVertices(const std::vector<Vertex>& vertices)
-{
-	m_Vertices = vertices;
-}
-
-template <typename Vertex>
-SeaWood::Figure<Vertex>::~Figure()
-{
-	delete m_Shader;
-	ReleaseCOM(m_VertexBuffer);
-	ReleaseCOM(m_IndexBuffer);
-}
-
-template <typename Vertex>
-SeaWood::Figure<Vertex>::Figure(depShader* shader)
-{
-	XMMATRIX I = XMMatrixIdentity();
-
-	XMStoreFloat4x4(&m_Scaling, I);
-	XMStoreFloat4x4(&m_Rotation, I);
-	XMStoreFloat4x4(&m_Translation, I);
-	XMStoreFloat4x4(&m_World, I);
-
-	m_Shader = shader;
+	m_InputLayout = inputLayout;
+	m_Topology = topology;
 }
 
 NS_SW_END

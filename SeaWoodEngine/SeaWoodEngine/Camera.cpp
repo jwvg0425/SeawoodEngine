@@ -117,3 +117,12 @@ void SeaWood::Camera::updateProjection()
 	
 	XMStoreFloat4x4(&m_Projection, p);
 }
+
+XMFLOAT3 SeaWood::Camera::getEyePosW()
+{
+	XMVECTOR E = XMLoadFloat4(&m_EyePos);
+	XMFLOAT3 eyePosW;
+	XMStoreFloat3(&eyePosW, E);
+
+	return eyePosW;
+}

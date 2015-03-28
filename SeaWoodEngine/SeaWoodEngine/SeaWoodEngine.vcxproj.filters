@@ -82,6 +82,9 @@
     <ClCompile Include="Effect.cpp">
       <Filter>base\renderer\global</Filter>
     </ClCompile>
+    <ClCompile Include="D3DNode.cpp">
+      <Filter>node</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -152,12 +155,24 @@
     <ClInclude Include="Vertex.h">
       <Filter>base\renderer\global</Filter>
     </ClInclude>
+    <ClInclude Include="Figure.h">
+      <Filter>node</Filter>
+    </ClInclude>
     <ClInclude Include="D3DNode.h">
       <Filter>node</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>base\renderer\global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FX\color.fx">
+      <Filter>fx</Filter>
+    </FxCompile>
+    <FxCompile Include="FX\light.fx">
+      <Filter>fx</Filter>
+    </FxCompile>
+    <FxCompile Include="FX\LightHelper.fx">
       <Filter>fx</Filter>
     </FxCompile>
   </ItemGroup>

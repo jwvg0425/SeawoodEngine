@@ -310,3 +310,8 @@ void SeaWood::Director::clearEvent(EventType type, Node* node)
 		}
 	}
 }
+
+Scene* SeaWood::Director::getRunningScene()
+{
+	return m_NowScene;
+}

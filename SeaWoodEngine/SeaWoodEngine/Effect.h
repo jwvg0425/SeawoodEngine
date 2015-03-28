@@ -1,9 +1,10 @@
 ﻿#pragma once
 #include "SeaWood.h"
+#include "Light.h"
 #include "Vertex.h"
 
 NS_SW_BEGIN
-class Node;
+class D3DNode;
 class Effect
 {
 public:
@@ -17,18 +18,11 @@ public:
 
 	virtual void updateByFrame();
 
-	template<typename Object>
-	void updateByObject(Object* object);
+	virtual void updateByObject(D3DNode* object);
 
 protected:
 	ID3DX11Effect* m_Fx = nullptr;
 };
-
-template<typename Object>
-void SeaWood::Effect::updateByObject(Object* object)
-{
-
-}
 
 class SimpleColorEffect : public Effect
 {
@@ -41,32 +35,56 @@ public:
 	void setWorldViewProj(CXMMATRIX M);
 	ID3DX11EffectTechnique* getTech() override;
 
-	template<typename Object>
-	void updateByObject(Object* object);
+	void updateByObject(D3DNode* object) override;
 
 protected:
 	ID3DX11EffectTechnique* m_Tech = nullptr;
 	ID3DX11EffectMatrixVariable* m_FxWorldViewProj = nullptr;
 };
 
-template<typename Object>
-void SeaWood::SimpleColorEffect::updateByObject(Object* object)
+class SimpleLightEffect : public Effect
 {
-	auto world = object->getWorld();
-	auto viewProj = GET_D3D_RENDERER()->getCamera()->getViewProj();
-	auto worldViewProj = world * viewProj;
-	setWorldViewProj(worldViewProj);
-}
+public:
+	using VertexType = Vertex::PosNormal;
+
+	SimpleLightEffect();
+	~SimpleLightEffect() override;
+
+	void setWorldViewProj(CXMMATRIX M);
+	void setWorld(CXMMATRIX M);
+	void setWorldInvTranspose(CXMMATRIX M);
+	void setEyePosW(const XMFLOAT3& v);
+	void setDirLight(const DirectionalLight& light);
+	void setMaterial(const Material& mat);
+
+	ID3DX11EffectTechnique*			getTech() override;
+
+	void updateByFrame() override;
+	void updateByObject(D3DNode* object) override;
+
+protected:
+	ID3DX11EffectTechnique*			m_Tech = nullptr;
+
+	ID3DX11EffectMatrixVariable*	m_WorldViewProj = nullptr;
+	ID3DX11EffectMatrixVariable*	m_World = nullptr;
+	ID3DX11EffectMatrixVariable*	m_WorldInvTranspose = nullptr;
+	ID3DX11EffectVectorVariable*	m_EyePosW = nullptr;
+	ID3DX11EffectVariable*			m_DirLight = nullptr;
+	ID3DX11EffectVariable*			m_Material = nullptr;
+};
 
 class Effects
 {
 public:
 	static void destroyAll();
+	static void beginFrame();
 
 	static SimpleColorEffect* getSimpleColorEffect();
+	static SimpleLightEffect* getSimpleLightEffect();
 	
 private:
 	static SimpleColorEffect* m_SimpleColorFx;
+	static SimpleLightEffect* m_SimpleLightFx;
 };
 
 NS_SW_END

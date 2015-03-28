@@ -148,6 +148,8 @@ void SeaWood::D3DRenderer::beginFrame()
 	m_D3DImmediateContext->
 		ClearDepthStencilView(m_DepthStencilView,
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+	Effects::beginFrame();
 }
 
 void SeaWood::D3DRenderer::render()

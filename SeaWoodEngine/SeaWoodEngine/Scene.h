@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Seawood.h"
 #include "Node.h"
+#include "Light.h"
 
 NS_SW_BEGIN
 
@@ -18,8 +19,13 @@ public:
 
 	void addChild(Node* child) override;
 
+	//평행광 등록
+	void registerLight(DirectionalLight directionalLight);
+	DirectionalLight getDirectionalLight();
+
 protected:
-	Childs		m_AddingChilds;
+	Childs				m_AddingChilds;
+	DirectionalLight	m_DirectionalLight;
 };
 
 NS_SW_END

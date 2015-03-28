@@ -22,6 +22,8 @@ public:
 	XMMATRIX			getProjection() const;
 	XMMATRIX			getViewProj() const;
 
+	XMFLOAT3			getEyePosW();
+
 	CREATE_FUNC(Camera);
 	static Camera*		createWithPos(XMVECTOR eyePos, XMVECTOR targetPos, XMVECTOR up);
 

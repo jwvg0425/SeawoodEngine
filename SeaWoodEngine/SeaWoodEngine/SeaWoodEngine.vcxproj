@@ -14,6 +14,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="D3DNode.h" />
+    <ClInclude Include="Figure.h" />
     <ClInclude Include="D3DRenderer.h" />
     <ClInclude Include="Director.h" />
     <ClInclude Include="Effect.h" />
@@ -21,6 +22,7 @@
     <ClInclude Include="GdiRenderer.h" />
     <ClInclude Include="InputLayout.h" />
     <ClInclude Include="KeyManager.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="MouseEvent.h" />
     <ClInclude Include="Node.h" />
@@ -40,6 +42,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="D3DNode.cpp" />
     <ClCompile Include="D3DRenderer.cpp" />
     <ClCompile Include="Director.cpp" />
     <ClCompile Include="Effect.cpp" />
@@ -64,6 +67,16 @@
     <FxCompile Include="FX\color.fx">
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)Fx\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="FX\light.fx">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)Fx\%(Filename).cso</ObjectFileOutput>
+    </FxCompile>
+    <FxCompile Include="FX\LightHelper.fx">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">5.0</ShaderModel>
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutDir)Fx\%(Filename).cso</ObjectFileOutput>
     </FxCompile>
   </ItemGroup>

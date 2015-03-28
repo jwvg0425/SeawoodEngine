@@ -53,3 +53,14 @@ void SeaWood::Scene::addChild(Node* child)
 	child->retain();
 	m_AddingChilds.push_back(std::make_pair("NO_NAME", child));
 }
+
+void SeaWood::Scene::registerLight(DirectionalLight directionalLight)
+{
+	//TODO : 여러 개의 빛 등록 가능하도록 바꾸기
+	m_DirectionalLight = directionalLight;
+}
+
+DirectionalLight SeaWood::Scene::getDirectionalLight()
+{
+	return m_DirectionalLight;
+}

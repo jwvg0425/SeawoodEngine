@@ -34,6 +34,7 @@ public:
 
 	void				startScene(Scene* scene);
 	void				changeScene(Scene* scene);
+	Scene*				getRunningScene();
 
 	void					registerRenderer(Renderer* renderer);
 	Renderer*				getRenderer();

@@ -9,24 +9,24 @@ std::vector<UINT> Box::m_Indices =
 	0, 2, 3,
 
 	// back face
-	4, 6, 5,
-	4, 7, 6,
+	4, 5, 6,
+	4, 6, 7,
 
 	// left face
-	4, 5, 1,
-	4, 1, 0,
+	8, 9, 10,
+	8, 10, 11,
 
 	// right face
-	3, 2, 6,
-	3, 6, 7,
+	12, 13, 14,
+	12, 14, 15,
 
 	// top face
-	1, 5, 6,
-	1, 6, 2,
+	16, 17, 18,
+	16, 18, 19,
 
 	// bottom face
-	4, 0, 3,
-	4, 3, 7
+	20, 21, 22,
+	20, 22, 23
 };
 
 Box::Box()
@@ -40,13 +40,13 @@ Box::~Box()
 
 bool Box::init()
 {
-	if (!D3DNode<SimpleColorEffect>::init())
+	if (!Figure<SimpleLightEffect>::init())
 	{
 		return false;
 	}
 
-	setEffect(Effects::getSimpleColorEffect());
-	setInputLayout(InputLayouts::getPosColor(), D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	setEffect(Effects::getSimpleLightEffect());
+	setInputLayout(InputLayouts::getPosNormal(), D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	return true;
 }
@@ -59,19 +59,47 @@ void Box::setBox(float width, float height, float depth, const std::vector<XMFLO
 
 	std::vector<VertexType> vertices =
 	{
-		{ XMFLOAT3(-w2, -h2, -h2), colors[0] },
-		{ XMFLOAT3(-w2, +h2, -h2), colors[1] },
-		{ XMFLOAT3(+w2, +h2, -h2), colors[2] },
-		{ XMFLOAT3(+w2, -h2, -h2), colors[3] },
-		{ XMFLOAT3(-w2, -h2, +h2), colors[4] },
-		{ XMFLOAT3(-w2, +h2, +h2), colors[5] },
-		{ XMFLOAT3(+w2, +h2, +h2), colors[6] },
-		{ XMFLOAT3(+w2, -h2, +h2), colors[7] }
+		{ -w2, -h2, -d2, 0.0f, 0.0f, -1.0f },
+		{ -w2, +h2, -d2, 0.0f, 0.0f, -1.0f },
+		{ +w2, +h2, -d2, 0.0f, 0.0f, -1.0f },
+		{ +w2, -h2, -d2, 0.0f, 0.0f, -1.0f },
+
+		{ -w2, -h2, +d2, 0.0f, 0.0f, 1.0f },
+		{ +w2, -h2, +d2, 0.0f, 0.0f, 1.0f },
+		{ +w2, +h2, +d2, 0.0f, 0.0f, 1.0f },
+		{ -w2, +h2, +d2, 0.0f, 0.0f, 1.0f },
+
+		{ -w2, +h2, -d2, 0.0f, 1.0f, 0.0f },
+		{ -w2, +h2, +d2, 0.0f, 1.0f, 0.0f },
+		{ +w2, +h2, +d2, 0.0f, 1.0f, 0.0f },
+		{ +w2, +h2, -d2, 0.0f, 1.0f, 0.0f },
+
+		{ -w2, -h2, -d2, 0.0f, -1.0f, 0.0f },
+		{ +w2, -h2, -d2, 0.0f, -1.0f, 0.0f },
+		{ +w2, -h2, +d2, 0.0f, -1.0f, 0.0f },
+		{ -w2, -h2, +d2, 0.0f, -1.0f, 0.0f },
+
+		{ -w2, -h2, +d2, -1.0f, 0.0f, 0.0f },
+		{ -w2, +h2, +d2, -1.0f, 0.0f, 0.0f },
+		{ -w2, +h2, -d2, -1.0f, 0.0f, 0.0f },
+		{ -w2, -h2, -d2, -1.0f, 0.0f, 0.0f },
+
+		{ +w2, -h2, -d2, 1.0f, 0.0f, 0.0f },
+		{ +w2, +h2, -d2, 1.0f, 0.0f, 0.0f },
+		{ +w2, +h2, +d2, 1.0f, 0.0f, 0.0f },
+		{ +w2, -h2, +d2, 1.0f, 0.0f, 0.0f },
 	};
 
 	auto indices = m_Indices;
 
 	setBuffer(vertices, indices);
+
+	auto material = Material(); 
+	material.m_Ambient = XMFLOAT4(0.1f, 0.2f, 0.3f, 1.0f);
+	material.m_Diffuse = XMFLOAT4(0.2f, 0.4f, 0.6f, 1.0f);
+	material.m_Specular = XMFLOAT4(0.9f, 0.9f, 0.9f, 16.0f);
+
+	setMaterial(material);	
 }
 
 void Box::setBoxWithRandomColor(float width, float height, float depth)
@@ -82,17 +110,47 @@ void Box::setBoxWithRandomColor(float width, float height, float depth)
 
 	std::vector<VertexType> vertices =
 	{
-		{ XMFLOAT3(-w2, -h2, -h2), { 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000) } },
-		{ XMFLOAT3(-w2, +h2, -h2), { 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000) } },
-		{ XMFLOAT3(+w2, +h2, -h2), { 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000) } },
-		{ XMFLOAT3(+w2, -h2, -h2), { 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000) } },
-		{ XMFLOAT3(-w2, -h2, +h2), { 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000) } },
-		{ XMFLOAT3(-w2, +h2, +h2), { 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000) } },
-		{ XMFLOAT3(+w2, +h2, +h2), { 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000) } },
-		{ XMFLOAT3(+w2, -h2, +h2), { 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000), 0.001f * (rand() % 1000) } }
+		{ -w2, -h2, -d2, 0.0f, 0.0f, -1.0f },
+		{ -w2, +h2, -d2, 0.0f, 0.0f, -1.0f },
+		{ +w2, +h2, -d2, 0.0f, 0.0f, -1.0f },
+		{ +w2, -h2, -d2, 0.0f, 0.0f, -1.0f },
+
+		{ -w2, -h2, +d2, 0.0f, 0.0f, 1.0f },
+		{ +w2, -h2, +d2, 0.0f, 0.0f, 1.0f },
+		{ +w2, +h2, +d2, 0.0f, 0.0f, 1.0f },
+		{ -w2, +h2, +d2, 0.0f, 0.0f, 1.0f },
+
+		{ -w2, +h2, -d2, 0.0f, 1.0f, 0.0f },
+		{ -w2, +h2, +d2, 0.0f, 1.0f, 0.0f },
+		{ +w2, +h2, +d2, 0.0f, 1.0f, 0.0f },
+		{ +w2, +h2, -d2, 0.0f, 1.0f, 0.0f },
+
+		{ -w2, -h2, -d2, 0.0f, -1.0f, 0.0f },
+		{ +w2, -h2, -d2, 0.0f, -1.0f, 0.0f },
+		{ +w2, -h2, +d2, 0.0f, -1.0f, 0.0f },
+		{ -w2, -h2, +d2, 0.0f, -1.0f, 0.0f },
+
+		{ -w2, -h2, +d2, -1.0f, 0.0f, 0.0f },
+		{ -w2, +h2, +d2, -1.0f, 0.0f, 0.0f },
+		{ -w2, +h2, -d2, -1.0f, 0.0f, 0.0f },
+		{ -w2, -h2, -d2, -1.0f, 0.0f, 0.0f },
+
+		{ +w2, -h2, -d2, 1.0f, 0.0f, 0.0f },
+		{ +w2, +h2, -d2, 1.0f, 0.0f, 0.0f },
+		{ +w2, +h2, +d2, 1.0f, 0.0f, 0.0f },
+		{ +w2, -h2, +d2, 1.0f, 0.0f, 0.0f },
 	};
 
 	auto indices = m_Indices;
 
 	setBuffer(vertices, indices);
+
+	auto material = Material();
+	material.m_Ambient = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 1.0f);
+	material.m_Diffuse = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 1.0f);
+	material.m_Specular = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 16.0f);
+
+	setMaterial(material);
+
+	
 }

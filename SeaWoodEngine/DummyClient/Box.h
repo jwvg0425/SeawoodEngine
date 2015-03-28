@@ -8,7 +8,7 @@ struct BoxVertex
 	XMFLOAT4 m_Color;
 };
 
-class Box : public SeaWood::D3DNode<SeaWood::SimpleColorEffect>
+class Box : public SeaWood::Figure<SeaWood::SimpleLightEffect>
 {
 public:
 	Box();

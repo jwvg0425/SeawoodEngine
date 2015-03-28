@@ -39,6 +39,15 @@ bool FirstScene::init()
 		randomBox->setRotate(0.1f * (rand() % 32), 0.1f * (rand() % 32), 0.1f * (rand() % 32));
 		addChild(randomBox);
 	}
+
+	DirectionalLight directionalLight;
+
+	directionalLight.m_Ambient = XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f);
+	directionalLight.m_Diffuse = XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f);
+	directionalLight.m_Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f);
+	directionalLight.m_Direction = XMFLOAT3(1.0f, 1.0f, 0.0f);
+
+	registerLight(directionalLight);
 	
 	return true;
 }
