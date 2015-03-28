@@ -14,22 +14,19 @@ public:
 	void beginFrame() override;
 	void draw() override;
 	void setBackgroundColor(const FLOAT colorRGBA[4]);
-	void setProjection(FLOAT fovAngleY, FLOAT nearZ, FLOAT farZ);
 	void initRenderTarget();
-	const XMFLOAT4X4& getViewProj();
 	ID3D11Device* getDevice();
 	ID3D11DeviceContext* getDeviceContext();
 	void setInputLayout(ID3D11InputLayout* inputLayout);
 	void setPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY topology);
 	void registerCamera(Camera* camera);
 	void changeCamera(Camera* camera);
+	Camera* getCamera();
 	void update(float dTime) override;
 
 	CREATE_FUNC(D3DRenderer);
 
 private:
-
-	void updateProjection();
 
 	ID3D11Device* m_D3DDevice = nullptr;
 	ID3D11DeviceContext* m_D3DImmediateContext = nullptr;
@@ -45,14 +42,6 @@ private:
 	FLOAT m_BackgroundColor[4];
 
 	Camera* m_Camera = nullptr;
-
-	XMFLOAT4X4 m_Projection;
-	XMFLOAT4X4 m_ViewProj;
-
-	FLOAT m_FovAngleY;
-	FLOAT m_Near;
-	FLOAT m_Far;
-
 };
 
 NS_SW_END

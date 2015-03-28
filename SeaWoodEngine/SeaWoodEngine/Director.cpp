@@ -20,6 +20,11 @@ Director::Director()
 		m_IsQueryPerformance = true;
 	}
 
+	//디버깅 용 플래그
+#ifdef _DEBUG
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
+
 	srand((unsigned)time(nullptr));
 	m_Tick = getTick();
 	m_Mouse = new MouseEvent;

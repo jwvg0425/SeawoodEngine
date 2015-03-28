@@ -168,7 +168,7 @@ void SeaWood::Figure<Vertex>::draw()
 	GET_D3D_RENDERER()->getDeviceContext()->IASetIndexBuffer(m_IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
 	XMMATRIX world = XMLoadFloat4x4(&m_World);
-	XMMATRIX viewProj = XMLoadFloat4x4(&GET_D3D_RENDERER()->getViewProj());
+	XMMATRIX viewProj = GET_D3D_RENDERER()->getCamera()->getViewProj();
 	XMMATRIX worldViewProj = world*viewProj;
 
 	m_Shader->getWorldViewProj()->SetMatrix(reinterpret_cast<float*>(&worldViewProj));

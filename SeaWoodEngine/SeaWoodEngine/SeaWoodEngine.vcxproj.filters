@@ -22,6 +22,12 @@
     <Filter Include="base\renderer">
       <UniqueIdentifier>{828aeec7-002a-4a94-b8c4-f13bb214a849}</UniqueIdentifier>
     </Filter>
+    <Filter Include="base\renderer\global">
+      <UniqueIdentifier>{f72f595a-4ff7-425e-ac26-6a1a0e2cb2ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="fx">
+      <UniqueIdentifier>{8535f2fc-3e62-443e-94dd-11d23f7a8c15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -78,6 +84,12 @@
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>base\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="InputLayout.cpp">
+      <Filter>base\renderer\global</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>base\renderer\global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,5 +158,16 @@
     <ClInclude Include="Renderer.h">
       <Filter>base\renderer</Filter>
     </ClInclude>
+    <ClInclude Include="InputLayout.h">
+      <Filter>base\renderer\global</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>base\renderer\global</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="FX\color.fx">
+      <Filter>fx</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

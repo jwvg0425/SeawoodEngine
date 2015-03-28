@@ -16,18 +16,28 @@ public:
 	void				setEyePos(XMVECTOR eyePos);
 	void				setTargetPos(XMVECTOR targetPos);
 	void				setUpVector(XMVECTOR up);
+	void				setLens(FLOAT fovAngleY, FLOAT aspect, FLOAT nearZ, FLOAT farZ);
 
-	const XMFLOAT4X4&	getView() const;
+	const XMMATRIX&		getView() const;
+	const XMMATRIX&		getProjection() const;
+	const XMMATRIX&		getViewProj() const;
 
 	CREATE_FUNC(Camera);
 	static Camera*		createWithPos(XMVECTOR eyePos, XMVECTOR targetPos, XMVECTOR up);
+
 protected:
-	void				updateView();
+	void		updateView();
+	void		updateProjection();
 
 	XMFLOAT4	m_EyePos;
 	XMFLOAT4	m_TargetPos;
 	XMFLOAT4	m_Up;
 	XMFLOAT4X4	m_View;
+	XMFLOAT4X4	m_Projection;
+	FLOAT		m_FovAngleY = 0.0f;
+	FLOAT		m_Aspect = 0.0f;
+	FLOAT		m_NearZ = 0.0f;
+	FLOAT		m_FarZ = 0.0f;
 };
 
 NS_SW_END

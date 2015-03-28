@@ -123,6 +123,10 @@ bool SeaWood::D3DRenderer::init()
 
 	HR(dxgiFactory->CreateSwapChain(m_D3DDevice, &sd, &m_SwapChain));
 
+	ReleaseCOM(dxgiDevice);
+	ReleaseCOM(dxgiAdapter);
+	ReleaseCOM(dxgiFactory);
+
 	initRenderTarget();
 
 	return true;
@@ -139,12 +143,6 @@ void SeaWood::D3DRenderer::beginFrame()
 	m_D3DImmediateContext->
 		ClearDepthStencilView(m_DepthStencilView,
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-
-	XMMATRIX view = XMLoadFloat4x4(&m_Camera->getView());
-	XMMATRIX proj = XMLoadFloat4x4(&m_Projection);
-	XMMATRIX viewproj = view*proj;
-
-	XMStoreFloat4x4(&m_ViewProj, viewproj);
 }
 
 void SeaWood::D3DRenderer::draw()
@@ -228,26 +226,6 @@ void SeaWood::D3DRenderer::initRenderTarget()
 	m_D3DImmediateContext->RSSetViewports(1, &m_ScreenViewport);
 }
 
-void SeaWood::D3DRenderer::setProjection(FLOAT fovAngleY, FLOAT nearZ, FLOAT farZ)
-{
-	m_FovAngleY = fovAngleY;
-	m_Near = nearZ;
-	m_Far = farZ;
-
-	updateProjection();
-}
-
-void SeaWood::D3DRenderer::updateProjection()
-{
-	XMMATRIX p = XMMatrixPerspectiveFovLH(0.25f*PI, Application::getInstance()->getAspectRatio(), m_Near, m_Far);
-	XMStoreFloat4x4(&m_Projection, p);
-}
-
-const XMFLOAT4X4& SeaWood::D3DRenderer::getViewProj()
-{
-	return m_ViewProj;
-}
-
 ID3D11Device* SeaWood::D3DRenderer::getDevice()
 {
 	return m_D3DDevice;
@@ -287,4 +265,9 @@ void SeaWood::D3DRenderer::changeCamera(Camera* camera)
 	m_Camera->release();
 
 	m_Camera = camera;
+}
+
+Camera* SeaWood::D3DRenderer::getCamera()
+{
+	return m_Camera;
 }
