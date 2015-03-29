@@ -50,6 +50,9 @@
     <ClCompile Include="RoundLight.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="GeometryGenerator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyApplication.h">
@@ -88,7 +91,7 @@
     <ClInclude Include="RoundLight.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="testFunc.h">
+    <ClInclude Include="GeometryGenerator.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

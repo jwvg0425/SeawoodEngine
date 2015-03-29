@@ -5,7 +5,7 @@
 #include "SecondScene.h"
 #include "EyeLight.h"
 #include "RoundLight.h"
-#include "testFunc.h"
+#include "GeometryGenerator.h"
 
 USING_NS_SW;
 
@@ -27,46 +27,50 @@ bool FirstScene::init()
 	}	
 
 	//현재 scene에 맞는 카메라로 변경
-	auto camera = Camera::createWithPos(XMVectorSet(0.0f, 0.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
+	auto camera = Camera::createWithPos(XMVectorSet(0.0f, 5.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
 	GET_D3D_RENDERER()->changeCamera(camera);
 
 	m_Box = DynamicBox::create();
 	m_Box->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);
+	m_Box->setPosition(0.0f, 1.0f, 0.0f);
 	addChild(m_Box);
 
-	auto box = Figure<BasicEffect>::createWithEffect(
-									Effects::getBasicEffect());
+	std::vector<Vertex::PosBasic> earthVertices;
+	std::vector<UINT> earthIndices;
 
-	std::vector<Vertex::PosBasic> basicVertices;
-	std::vector<UINT> basicIndices;
+	auto earth = Figure<BasicEffect>::createWithEffect(
+		Effects::getBasicEffect());
 
-	createTextureBox(2.0f, 2.0f, 2.0f, basicVertices, basicIndices);
-	box->setBuffer(basicVertices, basicIndices);
-	box->setInputLayout(InputLayouts::getPosBasic(),
+	GeometryGenerator::createGrid(100.0f, 100.0f, 100, 100, earthVertices, earthIndices);
+
+	earth->setBuffer(earthVertices, earthIndices);
+	earth->setInputLayout(InputLayouts::getPosBasic(),
 		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	box->setTexture(L"Textures/WoodCrate01.dds");
 
-	auto mat = Material();
-	mat.m_Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
-	mat.m_Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	mat.m_Specular = XMFLOAT4(0.6f, 0.6f, 0.6f, 16.0f);
-	box->setMaterial(mat);
+	auto material = Material();
+	material.m_Ambient = XMFLOAT4(0.7f, 0.2f, 0.0f, 1.0f);
+	material.m_Diffuse = XMFLOAT4(0.7f, 0.2f, 0.0f, 1.0f);
+	material.m_Specular = XMFLOAT4(0.2f, 0.2f, 0.2f, 16.0f);
+
+	earth->setMaterial(material);
+
+	addChild(earth);
 
 
-	addChild(box);
-
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 50; i++)
 	{
-		std::vector<Vertex::PosNormal> vertices;
+		std::vector<Vertex::PosBasic> vertices;
 		std::vector<UINT> indices;
 
-		auto sphere = Figure<SimpleLightEffect>::createWithEffect(
-			Effects::getSimpleLightEffect());
+		auto sphere = Figure<BasicEffect>::createWithEffect(
+			Effects::getBasicEffect());
 
-		createSphere(2.0f + (rand() % 4), 30, 30, vertices, indices);
+		float radius = 2.0f + (rand() % 4);
+
+		GeometryGenerator::createSphere(radius, 30, 30, vertices, indices);
 
 		sphere->setBuffer(vertices, indices);
-		sphere->setInputLayout(InputLayouts::getPosNormal(),
+		sphere->setInputLayout(InputLayouts::getPosBasic(),
 			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		//재질 랜덤 설정
@@ -76,7 +80,7 @@ bool FirstScene::init()
 		material.m_Specular = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 16.0f);
 
 		sphere->setMaterial(material);
-		sphere->setPosition(-50 + rand() % 101, -50 + rand() % 101, -50 + rand() % 101);
+		sphere->setPosition(-50 + rand() % 101, radius, -50 + rand() % 101);
 
 		addChild(sphere);
 	}
@@ -102,7 +106,7 @@ void FirstScene::update(float dTime)
 	//고정 카메라
 	if (GET_KEY_MANAGER()->getKeyState(VK_1) == KeyManager::PUSH)
 	{
-		GET_D3D_RENDERER()->changeCamera(Camera::createWithPos(XMVectorSet(0.0f, 0.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)));
+		GET_D3D_RENDERER()->changeCamera(Camera::createWithPos(XMVectorSet(0.0f, 5.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)));
 	}
 
 	//mouse로 시점 변환 가능한 카메라

@@ -1,8 +1,9 @@
-﻿#pragma once
-#include "SWEngine.h"
+﻿#include "GeometryGenerator.h"
 
-void createTextureBox(float width, float height, float depth, 
-	std::vector<SeaWood::Vertex::PosBasic>& vertices, std::vector<UINT>& indices)
+
+USING_NS_SW;
+
+void GeometryGenerator::createBox(float width, float height, float depth, std::vector<SeaWood::Vertex::PosBasic>& vertices, std::vector<UINT>& indices)
 {
 	using Vertex = SeaWood::Vertex::PosBasic;
 	//
@@ -16,40 +17,40 @@ void createTextureBox(float width, float height, float depth,
 	float d2 = 0.5f*depth;
 
 	// Fill in the front face vertex data.
-	v[0] = Vertex(-w2, -h2, -d2, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f);
-	v[1] = Vertex(-w2, +h2, -d2, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f);
+	v[0] = Vertex(-w2, -h2, -d2, 0.0f, 0.0f, -1.0f, 0.5f, 0.5f);
+	v[1] = Vertex(-w2, +h2, -d2, 0.0f, 0.0f, -1.0f, 0.5f, 0.0f);
 	v[2] = Vertex(+w2, +h2, -d2, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f);
-	v[3] = Vertex(+w2, -h2, -d2, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f);
+	v[3] = Vertex(+w2, -h2, -d2, 0.0f, 0.0f, -1.0f, 1.0f, 0.5f);
 
 	// Fill in the back face vertex data.
-	v[4] = Vertex(-w2, -h2, +d2, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f);
-	v[5] = Vertex(+w2, -h2, +d2, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f);
-	v[6] = Vertex(+w2, +h2, +d2, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f);
+	v[4] = Vertex(-w2, -h2, +d2, 0.0f, 0.0f, 1.0f, 1.0f, 0.5f);
+	v[5] = Vertex(+w2, -h2, +d2, 0.0f, 0.0f, 1.0f, 0.5f, 0.5f);
+	v[6] = Vertex(+w2, +h2, +d2, 0.0f, 0.0f, 1.0f, 0.5f, 0.0f);
 	v[7] = Vertex(-w2, +h2, +d2, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f);
 
 	// Fill in the top face vertex data.
-	v[8] = Vertex(-w2, +h2, -d2, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f);
+	v[8] = Vertex(-w2, +h2, -d2, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f);
 	v[9] = Vertex(-w2, +h2, +d2, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f);
-	v[10] = Vertex(+w2, +h2, +d2, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f);
-	v[11] = Vertex(+w2, +h2, -d2, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f);
+	v[10] = Vertex(+w2, +h2, +d2, 0.0f, 1.0f, 0.0f, 0.5f, 0.0f);
+	v[11] = Vertex(+w2, +h2, -d2, 0.0f, 1.0f, 0.0f, 0.0f, 0.5f);
 
 	// Fill in the bottom face vertex data.
-	v[12] = Vertex(-w2, -h2, -d2, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f);
+	v[12] = Vertex(-w2, -h2, -d2, 0.0f, -1.0f, 0.0f, 0.5f, 1.0f);
 	v[13] = Vertex(+w2, -h2, -d2, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f);
-	v[14] = Vertex(+w2, -h2, +d2, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f);
-	v[15] = Vertex(-w2, -h2, +d2, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f);
+	v[14] = Vertex(+w2, -h2, +d2, 0.0f, -1.0f, 0.0f, 0.0f, 0.5f);
+	v[15] = Vertex(-w2, -h2, +d2, 0.0f, -1.0f, 0.0f, 0.5f, 0.5f);
 
 	// Fill in the left face vertex data.
-	v[16] = Vertex(-w2, -h2, +d2, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	v[17] = Vertex(-w2, +h2, +d2, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+	v[16] = Vertex(-w2, -h2, +d2, -1.0f, 0.0f, 0.0f, 0.5f, 0.5f);
+	v[17] = Vertex(-w2, +h2, +d2, -1.0f, 0.0f, 0.0f, 0.5f, 0.0f);
 	v[18] = Vertex(-w2, +h2, -d2, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-	v[19] = Vertex(-w2, -h2, -d2, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+	v[19] = Vertex(-w2, -h2, -d2, -1.0f, 0.0f, 0.0f, 1.0f, 0.5f);
 
 	// Fill in the right face vertex data.
-	v[20] = Vertex(+w2, -h2, -d2, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f);
-	v[21] = Vertex(+w2, +h2, -d2, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+	v[20] = Vertex(+w2, -h2, -d2, 1.0f, 0.0f, 0.0f, 0.5f, 0.5f);
+	v[21] = Vertex(+w2, +h2, -d2, 1.0f, 0.0f, 0.0f, 0.5f, 0.0f);
 	v[22] = Vertex(+w2, +h2, +d2, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-	v[23] = Vertex(+w2, -h2, +d2, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f);
+	v[23] = Vertex(+w2, -h2, +d2, 1.0f, 0.0f, 0.0f, 1.0f, 0.5f);
 
 	vertices.assign(&v[0], &v[24]);
 
@@ -86,10 +87,9 @@ void createTextureBox(float width, float height, float depth,
 	indices.assign(&i[0], &i[36]);
 }
 
-void createSphere(float radius, UINT sliceCount, UINT stackCount, 
-	std::vector<SeaWood::Vertex::PosNormal>& vertices, std::vector<UINT>& indices)
+void GeometryGenerator::createSphere(float radius, UINT sliceCount, UINT stackCount, std::vector<SeaWood::Vertex::PosBasic>& vertices, std::vector<UINT>& indices)
 {
-	using Vertex = SeaWood::Vertex::PosNormal;
+	using Vertex = SeaWood::Vertex::PosBasic;
 
 	//
 	// Compute the vertices stating at the top pole and moving down the stacks.
@@ -98,8 +98,8 @@ void createSphere(float radius, UINT sliceCount, UINT stackCount,
 	// Poles: note that there will be texture coordinate distortion as there is
 	// not a unique point on the texture map to assign to the pole when mapping
 	// a rectangular texture onto a sphere.
-	Vertex topVertex(0.0f, +radius, 0.0f, 0.0f, +1.0f, 0.0f);
-	Vertex bottomVertex(0.0f, -radius, 0.0f, 0.0f, -1.0f, 0.0f);
+	Vertex topVertex(0.0f, +radius, 0.0f, 0.0f, +1.0f, 0.0f, 0.0f, 0.0f);
+	Vertex bottomVertex(0.0f, -radius, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f);
 
 	vertices.push_back(topVertex);
 
@@ -125,6 +125,9 @@ void createSphere(float radius, UINT sliceCount, UINT stackCount,
 
 			XMVECTOR p = XMLoadFloat3(&v.m_Pos);
 			XMStoreFloat3(&v.m_Normal, XMVector3Normalize(p));
+
+			v.m_Tex.x = theta / XM_2PI;
+			v.m_Tex.y = phi / XM_PI;
 
 			vertices.push_back(v);
 		}
@@ -182,5 +185,65 @@ void createSphere(float radius, UINT sliceCount, UINT stackCount,
 		indices.push_back(southPoleIndex);
 		indices.push_back(baseIndex + i);
 		indices.push_back(baseIndex + i + 1);
+	}
+}
+
+void GeometryGenerator::createGrid(float width, float depth, UINT m, UINT n, std::vector<SeaWood::Vertex::PosBasic>& vertices, std::vector<UINT>& indices)
+{
+	UINT vertexCount = m*n;
+	UINT faceCount = (m - 1)*(n - 1) * 2;
+
+	//
+	// Create the vertices.
+	//
+
+	float halfWidth = 0.5f*width;
+	float halfDepth = 0.5f*depth;
+
+	float dx = width / (n - 1);
+	float dz = depth / (m - 1);
+
+	float du = 1.0f / (n - 1);
+	float dv = 1.0f / (m - 1);
+
+	vertices.resize(vertexCount);
+	for (UINT i = 0; i < m; ++i)
+	{
+		float z = halfDepth - i*dz;
+		for (UINT j = 0; j < n; ++j)
+		{
+			float x = -halfWidth + j*dx;
+
+			vertices[i*n + j].m_Pos = XMFLOAT3(x, 0.0f, z);
+			vertices[i*n + j].m_Normal = XMFLOAT3(0.0f, 1.0f, 0.0f);
+			
+			// Stretch texture over grid.
+			vertices[i*n + j].m_Tex.x = j*du;
+			vertices[i*n + j].m_Tex.y = i*dv;
+		}
+	}
+
+	//
+	// Create the indices.
+	//
+
+	indices.resize(faceCount * 3); // 3 indices per face
+
+	// Iterate over each quad and compute indices.
+	UINT k = 0;
+	for (UINT i = 0; i < m - 1; ++i)
+	{
+		for (UINT j = 0; j < n - 1; ++j)
+		{
+			indices[k] = i*n + j;
+			indices[k + 1] = i*n + j + 1;
+			indices[k + 2] = (i + 1)*n + j;
+
+			indices[k + 3] = (i + 1)*n + j;
+			indices[k + 4] = i*n + j + 1;
+			indices[k + 5] = (i + 1)*n + j + 1;
+
+			k += 6; // next quad
+		}
 	}
 }

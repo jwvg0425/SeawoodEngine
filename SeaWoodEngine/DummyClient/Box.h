@@ -8,7 +8,7 @@ struct BoxVertex
 	XMFLOAT4 m_Color;
 };
 
-class Box : public SeaWood::Figure<SeaWood::SimpleLightEffect>
+class Box : public SeaWood::Figure<SeaWood::BasicEffect>
 {
 public:
 	Box();
@@ -21,5 +21,4 @@ public:
 	CREATE_FUNC(Box);
 
 protected:
-	static std::vector<UINT> m_Indices;
 };

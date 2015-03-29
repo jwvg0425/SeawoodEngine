@@ -87,6 +87,7 @@
     <ClCompile Include="DynamicBox.cpp" />
     <ClCompile Include="EyeLight.cpp" />
     <ClCompile Include="FirstScene.cpp" />
+    <ClCompile Include="GeometryGenerator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Missile.cpp" />
     <ClCompile Include="MouseCamera.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="DynamicBox.h" />
     <ClInclude Include="EyeLight.h" />
     <ClInclude Include="FirstScene.h" />
+    <ClInclude Include="GeometryGenerator.h" />
     <ClInclude Include="Missile.h" />
     <ClInclude Include="MouseCamera.h" />
     <ClInclude Include="MyApplication.h" />
@@ -114,7 +116,6 @@
     <ClInclude Include="PlayingCamera.h" />
     <ClInclude Include="RoundLight.h" />
     <ClInclude Include="SecondScene.h" />
-    <ClInclude Include="testFunc.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
