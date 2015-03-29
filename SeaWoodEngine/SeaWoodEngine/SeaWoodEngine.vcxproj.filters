@@ -164,6 +164,9 @@
     <ClInclude Include="Light.h">
       <Filter>base\renderer\global</Filter>
     </ClInclude>
+    <ClInclude Include="LightNode.h">
+      <Filter>node</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FX\color.fx">

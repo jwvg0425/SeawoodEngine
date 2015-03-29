@@ -126,7 +126,12 @@ SeaWood::SimpleLightEffect::SimpleLightEffect()
 	m_WorldInvTranspose = m_Fx->GetVariableByName("gWorldInvTranspose")->AsMatrix();
 	m_EyePosW = m_Fx->GetVariableByName("gEyePosW")->AsVector();
 	m_DirLight = m_Fx->GetVariableByName("gDirLight");
+	m_PointLight = m_Fx->GetVariableByName("gPointLight");
+	m_SpotLight = m_Fx->GetVariableByName("gSpotLight");
 	m_Material = m_Fx->GetVariableByName("gMaterial");
+	m_DirNum = m_Fx->GetVariableByName("gDirLightNum");
+	m_PointNum = m_Fx->GetVariableByName("gPointLightNum");
+	m_SpotNum = m_Fx->GetVariableByName("gSpotLightNum");
 }
 
 SeaWood::SimpleLightEffect::~SimpleLightEffect()
@@ -153,9 +158,9 @@ void SeaWood::SimpleLightEffect::setEyePosW(const XMFLOAT3& v)
 	m_EyePosW->SetRawValue(&v, 0, sizeof(XMFLOAT3));
 }
 
-void SeaWood::SimpleLightEffect::setDirLight(const DirectionalLight& light)
+void SeaWood::SimpleLightEffect::setDirLight(DirectionalLight* light)
 {
-	m_DirLight->SetRawValue(&light, 0, sizeof(DirectionalLight));
+	m_DirLight->SetRawValue(light, 0, sizeof(DirectionalLight) * 3);
 }
 
 void SeaWood::SimpleLightEffect::setMaterial(const Material& mat)
@@ -188,9 +193,58 @@ void SeaWood::SimpleLightEffect::updateByObject(D3DNode* object)
 
 void SeaWood::SimpleLightEffect::updateByFrame()
 {
-	DirectionalLight dirLight;
-	dirLight = Director::getInstance()->getRunningScene()->getDirectionalLight();
+	auto dirLight = Director::getInstance()->getRunningScene()->getDirectionalLight();
+	auto pointLight = Director::getInstance()->getRunningScene()->getPointLight();
+	auto spotLight = Director::getInstance()->getRunningScene()->getSpotLight();
+	DirectionalLight dLight[3];
+	PointLight pLight[3];
+	SpotLight sLight[3];
+
+	for (int i = 0; i < dirLight.size(); i++)
+	{
+		dLight[i] = *dirLight[i];
+	}
+
+	for (int i = 0; i < pointLight.size(); i++)
+	{
+		pLight[i] = *pointLight[i];
+	}
+
+	for (int i = 0; i < spotLight.size(); i++)
+	{
+		sLight[i] = *spotLight[i];
+	}
 	
-	setDirLight(dirLight);
+	setDirLight(dLight);
+	setPointLight(pLight);
+	setSpotLight(sLight);
+	setDirLightNum(dirLight.size());
+	setPointLightNum(pointLight.size());
+	setSpotLightNum(spotLight.size());
 	setEyePosW(GET_D3D_RENDERER()->getCamera()->getEyePosW());
+}
+
+void SeaWood::SimpleLightEffect::setPointLight(PointLight* light)
+{
+	m_PointLight->SetRawValue(light, 0, sizeof(PointLight)* 3);
+}
+
+void SeaWood::SimpleLightEffect::setSpotLight(SpotLight* light)
+{
+	m_SpotLight->SetRawValue(light, 0, sizeof(SpotLight)* 3);
+}
+
+void SeaWood::SimpleLightEffect::setDirLightNum(int n)
+{
+	m_DirNum->SetRawValue(&n, 0, sizeof(int));
+}
+
+void SeaWood::SimpleLightEffect::setPointLightNum(int n)
+{
+	m_PointNum->SetRawValue(&n, 0, sizeof(int));
+}
+
+void SeaWood::SimpleLightEffect::setSpotLightNum(int n)
+{
+	m_SpotNum->SetRawValue(&n, 0, sizeof(int));
 }

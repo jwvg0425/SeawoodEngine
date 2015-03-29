@@ -54,8 +54,13 @@ public:
 	void setWorld(CXMMATRIX M);
 	void setWorldInvTranspose(CXMMATRIX M);
 	void setEyePosW(const XMFLOAT3& v);
-	void setDirLight(const DirectionalLight& light);
+	void setDirLight(DirectionalLight* light);
+	void setPointLight(PointLight* light);
+	void setSpotLight(SpotLight* light);
 	void setMaterial(const Material& mat);
+	void setDirLightNum(int n);
+	void setPointLightNum(int n);
+	void setSpotLightNum(int n);
 
 	ID3DX11EffectTechnique*			getTech() override;
 
@@ -70,7 +75,12 @@ protected:
 	ID3DX11EffectMatrixVariable*	m_WorldInvTranspose = nullptr;
 	ID3DX11EffectVectorVariable*	m_EyePosW = nullptr;
 	ID3DX11EffectVariable*			m_DirLight = nullptr;
+	ID3DX11EffectVariable*			m_PointLight = nullptr;
+	ID3DX11EffectVariable*			m_SpotLight = nullptr;
 	ID3DX11EffectVariable*			m_Material = nullptr;
+	ID3DX11EffectVariable*			m_DirNum = nullptr;
+	ID3DX11EffectVariable*			m_PointNum = nullptr;
+	ID3DX11EffectVariable*			m_SpotNum = nullptr;
 };
 
 class Effects

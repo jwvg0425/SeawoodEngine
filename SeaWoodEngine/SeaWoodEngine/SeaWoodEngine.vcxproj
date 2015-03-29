@@ -23,6 +23,7 @@
     <ClInclude Include="InputLayout.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="LightNode.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="MouseEvent.h" />
     <ClInclude Include="Node.h" />

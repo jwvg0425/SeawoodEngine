@@ -24,6 +24,8 @@ public:
 
 	XMFLOAT3			getEyePosW();
 
+	XMVECTOR			getTarget();
+
 	CREATE_FUNC(Camera);
 	static Camera*		createWithPos(XMVECTOR eyePos, XMVECTOR targetPos, XMVECTOR up);
 

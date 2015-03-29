@@ -34,6 +34,7 @@ public:
 	void			setParent(Node* parent);
 	void			removeChild(Node* child);
 	void			removeAllChilds();
+	void			removeFromParent();
 
 	//이벤트 관련 함수
 	virtual void	onMouseDown(MouseEvent e);

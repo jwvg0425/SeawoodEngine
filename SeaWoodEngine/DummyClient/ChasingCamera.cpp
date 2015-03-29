@@ -35,7 +35,7 @@ void ChasingCamera::update(float dTime)
 	XMVECTOR target = XMVectorSet(x, y, z, 1.0f);
 	XMVECTOR chaseVector = XMLoadFloat4(&m_ChaseVector);
 
-	XMVECTOR pos = target + chaseVector;
+	XMVECTOR pos = target - chaseVector;
 	//up vector는 고정
 	XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 

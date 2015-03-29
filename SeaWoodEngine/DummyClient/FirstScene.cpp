@@ -3,6 +3,8 @@
 #include "MouseCamera.h"
 #include "ChasingCamera.h"
 #include "SecondScene.h"
+#include "EyeLight.h"
+#include "RoundLight.h"
 
 USING_NS_SW;
 
@@ -42,13 +44,15 @@ bool FirstScene::init()
 
 	DirectionalLight directionalLight;
 
-	directionalLight.m_Ambient = XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f);
-	directionalLight.m_Diffuse = XMFLOAT4(0.8f, 0.8f, 0.8f, 1.0f);
-	directionalLight.m_Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f);
+	directionalLight.m_Ambient = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	directionalLight.m_Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	directionalLight.m_Specular = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	directionalLight.m_Direction = XMFLOAT3(1.0f, 1.0f, 0.0f);
 
-	registerLight(directionalLight);
+	m_Light = Light<DirectionalLight>::createWithScene(this, directionalLight);
 	
+	addChild(m_Light);
+
 	return true;
 }
 
@@ -76,9 +80,64 @@ void FirstScene::update(float dTime)
 	if (GET_KEY_MANAGER()->getKeyState(VK_3) == KeyManager::PUSH)
 	{
 		auto camera = ChasingCamera::create();
-		camera->setChase(m_Box, XMVectorSet(0.0f, 5.0f, -20.0f, 0.0f));
+		camera->setChase(m_Box, XMVectorSet(0.0f, -5.0f, 20.0f, 0.0f));
 
 		GET_D3D_RENDERER()->changeCamera(camera);
+	}
+
+	//빛 변경 - 평행광 켜기 끄기
+	if (GET_KEY_MANAGER()->getKeyState(VK_4) == KeyManager::PUSH)
+	{
+		if (m_Light != nullptr)
+		{
+			removeChild(m_Light);
+			m_Light = nullptr;
+		}
+		else
+		{
+
+			DirectionalLight directionalLight;
+
+			directionalLight.m_Ambient = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+			directionalLight.m_Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+			directionalLight.m_Specular = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+			directionalLight.m_Direction = XMFLOAT3(1.0f, 1.0f, 0.0f);
+
+			m_Light = Light<DirectionalLight>::createWithScene(this, directionalLight);
+
+			addChild(m_Light);
+		}
+	}
+
+	//빛 변경 - 점적광 켜기 끄기
+	if (GET_KEY_MANAGER()->getKeyState(VK_5) == KeyManager::PUSH)
+	{
+		if (m_Light2 != nullptr)
+		{
+			removeChild(m_Light2);
+			m_Light2 = nullptr;
+		}
+		else
+		{
+			m_Light2 = EyeLight::createWithScene(this);
+
+			addChild(m_Light2);
+		}
+	}
+
+	//빛 변경 - 점광 켜기 끄기
+	if (GET_KEY_MANAGER()->getKeyState(VK_6) == KeyManager::PUSH)
+	{
+		if (m_Light3 != nullptr)
+		{
+			removeChild(m_Light3);
+			m_Light3 = nullptr;
+		}
+		else
+		{
+			m_Light3 = RoundLight::createWithScene(this);
+			addChild(m_Light3);
+		}
 	}
 
 	//다음 씬으로 넘어가기

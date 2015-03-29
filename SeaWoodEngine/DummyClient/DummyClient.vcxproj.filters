@@ -44,6 +44,12 @@
     <ClCompile Include="Missile.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="EyeLight.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="RoundLight.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyApplication.h">
@@ -74,6 +80,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="Missile.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="EyeLight.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="RoundLight.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

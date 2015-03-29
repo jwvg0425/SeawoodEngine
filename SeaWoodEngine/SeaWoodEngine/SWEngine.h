@@ -11,3 +11,5 @@
 #include "Effect.h"
 #include "InputLayout.h"
 #include "Vertex.h"
+#include "Light.h"
+#include "LightNode.h"

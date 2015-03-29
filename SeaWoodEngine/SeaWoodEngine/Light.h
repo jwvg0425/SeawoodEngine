@@ -54,7 +54,6 @@ struct SpotLight
 	XMFLOAT3 m_Att;
 	float m_Pad; // Pad the last float so we can set an array of lights if we wanted.
 };
-
 //재질 설정
 struct Material
 {

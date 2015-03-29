@@ -51,7 +51,9 @@ bool SecondScene::init()
 	directionalLight.m_Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f);
 	directionalLight.m_Direction = XMFLOAT3(1.0f, 1.0f, 0.0f);
 
-	registerLight(directionalLight);
+	auto light = Light<DirectionalLight>::createWithScene(this, directionalLight);
+
+	addChild(light);
 	
 
 	return true;

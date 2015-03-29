@@ -119,6 +119,11 @@ void SeaWood::Node::setParent(Node* parent)
 	m_Parent = parent;
 }
 
+void SeaWood::Node::removeFromParent()
+{
+	m_Parent->removeChild(this);
+}
+
 void Node::removeChild(Node* child)
 {
 	_ASSERT(child != nullptr);

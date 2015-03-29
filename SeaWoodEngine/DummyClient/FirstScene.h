@@ -14,5 +14,8 @@ public:
 	CREATE_FUNC(FirstScene);
 
 private:
-	DynamicBox* m_Box;
+	DynamicBox* m_Box = nullptr;
+	Node*		m_Light = nullptr;
+	Node*		m_Light2 = nullptr;
+	Node*		m_Light3 = nullptr;
 };

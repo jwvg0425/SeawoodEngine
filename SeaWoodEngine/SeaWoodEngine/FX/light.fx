@@ -8,12 +8,18 @@
  
 cbuffer cbPerFrame
 {
-	DirectionalLight gDirLight;
+	DirectionalLight gDirLight[3];
+	PointLight gPointLight[3];
+	SpotLight gSpotLight[3];
 	float3 gEyePosW;
 
 	float  gFogStart;
 	float  gFogRange;
 	float4 gFogColor;
+
+	int gDirLightNum;
+	int gPointLightNum;
+	int gSpotLightNum;
 };
 
 cbuffer cbPerObject
@@ -88,15 +94,39 @@ float4 PS(VertexOut pin) : SV_Target
 	float4 diffuse = float4(0.0f, 0.0f, 0.0f, 0.0f);
 	float4 spec    = float4(0.0f, 0.0f, 0.0f, 0.0f);
 
-	// Sum the light contribution from each light source.  
-	float4 A, D, S;
-	
-	ComputeDirectionalLight(gMaterial, gDirLight, pin.NormalW, toEye, 
+	[unroll]
+	for (int i = 0; i < gDirLightNum; ++i)
+	{
+		float4 A, D, S;
+		ComputeDirectionalLight(gMaterial, gDirLight[i], pin.NormalW, toEye,
 			A, D, S);
 
-	ambient += A;
-	diffuse += D;
-	spec    += S;
+		ambient += A;
+		diffuse += D;
+		spec += S;
+	}
+
+	[unroll]
+	for (int j = 0; j < gPointLightNum; ++j)
+	{
+		float4 A, D, S;
+		ComputePointLight(gMaterial, gPointLight[j], pin.PosW, pin.NormalW, toEye,
+			A, D, S);
+		ambient += A;
+		diffuse += D;
+		spec += S;
+	}
+
+	[unroll]
+	for (int k = 0; k < gSpotLightNum; ++k)
+	{
+		float4 A, D, S;
+		ComputeSpotLight(gMaterial, gSpotLight[k], pin.PosW, pin.NormalW, toEye,
+			A, D, S);
+		ambient += A;
+		diffuse += D;
+		spec += S;
+	}
 
 	float4 litColor = ambient + diffuse + spec;
 

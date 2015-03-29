@@ -126,3 +126,8 @@ XMFLOAT3 SeaWood::Camera::getEyePosW()
 
 	return eyePosW;
 }
+
+XMVECTOR SeaWood::Camera::getTarget()
+{
+	return XMLoadFloat4(&m_TargetPos);
+}

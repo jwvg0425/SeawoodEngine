@@ -11,7 +11,7 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-
+	removeAllChilds();
 }
 
 void Scene::render()
@@ -54,13 +54,77 @@ void SeaWood::Scene::addChild(Node* child)
 	m_AddingChilds.push_back(std::make_pair("NO_NAME", child));
 }
 
-void SeaWood::Scene::registerLight(DirectionalLight directionalLight)
+void SeaWood::Scene::registerLight(const DirectionalLight* directionalLight)
 {
-	//TODO : 여러 개의 빛 등록 가능하도록 바꾸기
-	m_DirectionalLight = directionalLight;
+	m_DirectionalLight.push_back(directionalLight);
 }
 
-DirectionalLight SeaWood::Scene::getDirectionalLight()
+void SeaWood::Scene::registerLight(const PointLight* pointLight)
+{
+	m_PointLight.push_back(pointLight);
+}
+
+void SeaWood::Scene::registerLight(const SpotLight* spotLight)
+{
+	m_SpotLight.push_back(spotLight);
+}
+
+const Scene::DLights& SeaWood::Scene::getDirectionalLight()
 {
 	return m_DirectionalLight;
+}
+
+void SeaWood::Scene::deleteLight(const DirectionalLight* directionalLight)
+{
+	for (auto it = m_DirectionalLight.begin(); it != m_DirectionalLight.end();)
+	{
+		if (*it == directionalLight)
+		{
+			it = m_DirectionalLight.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
+
+void SeaWood::Scene::deleteLight(const PointLight* pointLight)
+{
+	for (auto it = m_PointLight.begin(); it != m_PointLight.end();)
+	{
+		if (*it == pointLight)
+		{
+			it = m_PointLight.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
+
+void SeaWood::Scene::deleteLight(const SpotLight* spotLight)
+{
+	for (auto it = m_SpotLight.begin(); it != m_SpotLight.end();)
+	{
+		if (*it == spotLight)
+		{
+			it = m_SpotLight.erase(it);
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
+
+const Scene::PLights& SeaWood::Scene::getPointLight()
+{
+	return m_PointLight;
+}
+
+const Scene::SLights& SeaWood::Scene::getSpotLight()
+{
+	return m_SpotLight;
 }
