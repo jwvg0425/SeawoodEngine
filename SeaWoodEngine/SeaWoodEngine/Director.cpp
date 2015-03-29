@@ -6,6 +6,8 @@
 #include "GdiRenderer.h"
 #include "MouseEvent.h"
 #include <time.h>
+#include <iostream>
+#include <sstream>
 #pragma comment(lib, "winmm.lib")
 
 USING_NS_SW;
@@ -82,6 +84,7 @@ void Director::gameLoop()
 	m_ReleasePool.clear();
 
 	calculateFPS(dTime);
+
 	m_Tick = nowTick;
 }
 
@@ -239,6 +242,10 @@ void SeaWood::Director::calculateFPS(float dTime)
 		m_FPS = static_cast<int>(frame / time);
 		frame = 0;
 		time = 0;
+
+#if defined(DEBUG) || defined(_DEBUG)
+		LOG(L"fps : %d", m_FPS);
+#endif
 	}
 }
 

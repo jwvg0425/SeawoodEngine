@@ -13,6 +13,8 @@ public:
 	HINSTANCE				getInstanceHandle();
 	const Size&				getClientSize() const;
 	float					getAspectRatio() const;
+	TCHAR*					getTitle();
+	void					setTitle(TCHAR* title);
 
 							Application();
 	virtual					~Application();
@@ -23,6 +25,7 @@ private:
 	static Application*			m_Instance;
 	HWND						m_WindowHandle;
 	HINSTANCE					m_InstanceHandle;
+	TCHAR*						m_Title;
 	Size						m_ClientSize = Size::ZERO;
 };
 

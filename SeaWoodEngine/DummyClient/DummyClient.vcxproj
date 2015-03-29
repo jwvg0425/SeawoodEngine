@@ -114,6 +114,7 @@
     <ClInclude Include="PlayingCamera.h" />
     <ClInclude Include="RoundLight.h" />
     <ClInclude Include="SecondScene.h" />
+    <ClInclude Include="testFunc.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

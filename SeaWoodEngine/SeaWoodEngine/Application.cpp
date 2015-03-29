@@ -33,6 +33,8 @@ bool Application::MakeWindow(TCHAR* title, int width, int height)
 {
 	_ASSERT(title != nullptr);
 
+	m_Title = title;
+
 	WNDCLASS WndClass;
 
 	WndClass.cbClsExtra = 0;
@@ -129,6 +131,17 @@ HINSTANCE SeaWood::Application::getInstanceHandle()
 float SeaWood::Application::getAspectRatio() const
 {
 	return m_ClientSize.m_Width / m_ClientSize.m_Height;
+}
+
+TCHAR* SeaWood::Application::getTitle()
+{
+	return m_Title;
+}
+
+void SeaWood::Application::setTitle(TCHAR* title)
+{
+	SetWindowText(m_WindowHandle, title);
+	m_Title = title;
 }
 
 const Size& Application::getClientSize() const

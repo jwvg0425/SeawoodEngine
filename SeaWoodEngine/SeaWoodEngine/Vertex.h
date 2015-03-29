@@ -13,6 +13,7 @@ namespace Vertex
 
 	struct PosNormal
 	{
+		PosNormal() : m_Pos(0, 0, 0), m_Normal(0, 0, 0){}
 		PosNormal(float x, float y, float z, float nx, float ny, float nz) :
 		m_Pos(x, y, z), m_Normal(nx, ny, nz){}
 

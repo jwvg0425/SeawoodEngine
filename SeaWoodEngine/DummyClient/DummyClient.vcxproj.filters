@@ -88,5 +88,8 @@
     <ClInclude Include="RoundLight.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="testFunc.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

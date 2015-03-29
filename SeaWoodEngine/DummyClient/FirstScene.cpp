@@ -5,6 +5,7 @@
 #include "SecondScene.h"
 #include "EyeLight.h"
 #include "RoundLight.h"
+#include "testFunc.h"
 
 USING_NS_SW;
 
@@ -35,19 +36,36 @@ bool FirstScene::init()
 
 	for (int i = 0; i < 100; i++)
 	{
-		auto randomBox = Box::create();
-		randomBox->setBoxWithRandomColor(1.0f + 0.1f * (rand() % 20), 1.0f + 0.1f * (rand() % 20), 1.0f + 0.1f * (rand() % 20));
-		randomBox->setPosition(-50 + rand() % 101, -50 + rand() % 101, -50 + rand() % 101);
-		randomBox->setRotate(0.1f * (rand() % 32), 0.1f * (rand() % 32), 0.1f * (rand() % 32));
-		addChild(randomBox);
+		auto sphere = Figure<SimpleLightEffect>::createWithEffect(
+												Effects::getSimpleLightEffect());
+
+		std::vector<Vertex::PosNormal> vertices;
+		std::vector<UINT> indices;
+
+		createSphere(2.0f + (rand() % 4), 30, 30, vertices, indices);
+
+		sphere->setBuffer(vertices, indices);
+		sphere->setInputLayout(InputLayouts::getPosNormal(), 
+			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		//재질 랜덤 설정
+		auto material = Material();
+		material.m_Ambient = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 1.0f);
+		material.m_Diffuse = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 1.0f);
+		material.m_Specular = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 16.0f);
+
+		sphere->setMaterial(material);
+		sphere->setPosition(-50 + rand() % 101, -50 + rand() % 101, -50 + rand() % 101);
+
+		addChild(sphere);
 	}
 
 	DirectionalLight directionalLight;
 
-	directionalLight.m_Ambient = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	directionalLight.m_Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	directionalLight.m_Specular = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	directionalLight.m_Direction = XMFLOAT3(1.0f, 1.0f, 0.0f);
+	directionalLight.m_Ambient = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.4f);
+	directionalLight.m_Diffuse = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.4f);
+	directionalLight.m_Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.4f);
+	directionalLight.m_Direction = XMFLOAT3(0.5f, 0.5f, 0.0f);
 
 	m_Light = Light<DirectionalLight>::createWithScene(this, directionalLight);
 	
@@ -98,10 +116,10 @@ void FirstScene::update(float dTime)
 
 			DirectionalLight directionalLight;
 
-			directionalLight.m_Ambient = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-			directionalLight.m_Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-			directionalLight.m_Specular = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-			directionalLight.m_Direction = XMFLOAT3(1.0f, 1.0f, 0.0f);
+			directionalLight.m_Ambient = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.4f);
+			directionalLight.m_Diffuse = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.4f);
+			directionalLight.m_Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.4f);
+			directionalLight.m_Direction = XMFLOAT3(0.5f, 0.5f, 0.0f);
 
 			m_Light = Light<DirectionalLight>::createWithScene(this, directionalLight);
 
