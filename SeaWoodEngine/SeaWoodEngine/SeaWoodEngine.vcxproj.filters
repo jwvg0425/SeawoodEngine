@@ -25,6 +25,12 @@
     <Filter Include="fx">
       <UniqueIdentifier>{8535f2fc-3e62-443e-94dd-11d23f7a8c15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="base\renderer\global\Effect">
+      <UniqueIdentifier>{231fb365-47f3-4289-8c6b-b88cb3ee4ef1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\renderer\global\InputLayout">
+      <UniqueIdentifier>{2818dda5-76d5-42fa-8cb1-535b79496233}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -76,14 +82,23 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>base\renderer</Filter>
     </ClCompile>
-    <ClCompile Include="InputLayout.cpp">
-      <Filter>base\renderer\global</Filter>
-    </ClCompile>
-    <ClCompile Include="Effect.cpp">
-      <Filter>base\renderer\global</Filter>
-    </ClCompile>
     <ClCompile Include="D3DNode.cpp">
       <Filter>node</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>base\renderer\global\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="InputLayout.cpp">
+      <Filter>base\renderer\global\InputLayout</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleColorEffect.cpp">
+      <Filter>base\renderer\global\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleLightEffect.cpp">
+      <Filter>base\renderer\global\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicEffect.cpp">
+      <Filter>base\renderer\global\Effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,12 +161,6 @@
     <ClInclude Include="Renderer.h">
       <Filter>base\renderer</Filter>
     </ClInclude>
-    <ClInclude Include="InputLayout.h">
-      <Filter>base\renderer\global</Filter>
-    </ClInclude>
-    <ClInclude Include="Effect.h">
-      <Filter>base\renderer\global</Filter>
-    </ClInclude>
     <ClInclude Include="Vertex.h">
       <Filter>base\renderer\global</Filter>
     </ClInclude>
@@ -167,6 +176,21 @@
     <ClInclude Include="LightNode.h">
       <Filter>node</Filter>
     </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>base\renderer\global\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="InputLayout.h">
+      <Filter>base\renderer\global\InputLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleColorEffect.h">
+      <Filter>base\renderer\global\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleLightEffect.h">
+      <Filter>base\renderer\global\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicEffect.h">
+      <Filter>base\renderer\global\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FX\color.fx">
@@ -176,6 +200,9 @@
       <Filter>fx</Filter>
     </FxCompile>
     <FxCompile Include="FX\LightHelper.fx">
+      <Filter>fx</Filter>
+    </FxCompile>
+    <FxCompile Include="FX\Basic.fx">
       <Filter>fx</Filter>
     </FxCompile>
   </ItemGroup>

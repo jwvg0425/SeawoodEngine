@@ -1,5 +1,7 @@
 ﻿#include "stdafx.h"
 #include "D3DNode.h"
+#include "Director.h"
+#include "D3DRenderer.h"
 
 USING_NS_SW;
 
@@ -14,11 +16,13 @@ SeaWood::D3DNode::D3DNode()
 	XMStoreFloat4x4(&m_Rotation, I);
 	XMStoreFloat4x4(&m_Translation, I);
 	XMStoreFloat4x4(&m_World, I);
+	XMStoreFloat4x4(&m_TextureTransform, I);
 }
 
 SeaWood::D3DNode::~D3DNode()
 {
 	SAFE_DELETE(m_Material);
+	ReleaseCOM(m_DiffuseMapSRV);
 }
 
 bool SeaWood::D3DNode::init()
@@ -149,4 +153,25 @@ void SeaWood::D3DNode::setMaterial(Material material)
 	}
 
 	*m_Material = material;
+}
+
+void SeaWood::D3DNode::setTexture(const std::wstring& fileName)
+{
+	HR(D3DX11CreateShaderResourceViewFromFile(GET_D3D_RENDERER()->getDevice(),
+		fileName.c_str(), nullptr, nullptr, &m_DiffuseMapSRV, nullptr));
+}
+
+ID3D11ShaderResourceView* SeaWood::D3DNode::getTexture()
+{
+	return m_DiffuseMapSRV;
+}
+
+XMFLOAT4X4 SeaWood::D3DNode::getTextureTransform()
+{
+	return m_TextureTransform;
+}
+
+void SeaWood::D3DNode::setTextureTransform(CXMMATRIX matrix)
+{
+	XMStoreFloat4x4(&m_TextureTransform, matrix);
 }

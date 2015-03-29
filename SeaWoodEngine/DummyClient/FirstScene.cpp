@@ -34,18 +34,39 @@ bool FirstScene::init()
 	m_Box->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);
 	addChild(m_Box);
 
+	auto box = Figure<BasicEffect>::createWithEffect(
+									Effects::getBasicEffect());
+
+	std::vector<Vertex::PosBasic> basicVertices;
+	std::vector<UINT> basicIndices;
+
+	createTextureBox(2.0f, 2.0f, 2.0f, basicVertices, basicIndices);
+	box->setBuffer(basicVertices, basicIndices);
+	box->setInputLayout(InputLayouts::getPosBasic(),
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	box->setTexture(L"Textures/WoodCrate01.dds");
+
+	auto mat = Material();
+	mat.m_Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+	mat.m_Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	mat.m_Specular = XMFLOAT4(0.6f, 0.6f, 0.6f, 16.0f);
+	box->setMaterial(mat);
+
+
+	addChild(box);
+
 	for (int i = 0; i < 100; i++)
 	{
-		auto sphere = Figure<SimpleLightEffect>::createWithEffect(
-												Effects::getSimpleLightEffect());
-
 		std::vector<Vertex::PosNormal> vertices;
 		std::vector<UINT> indices;
+
+		auto sphere = Figure<SimpleLightEffect>::createWithEffect(
+			Effects::getSimpleLightEffect());
 
 		createSphere(2.0f + (rand() % 4), 30, 30, vertices, indices);
 
 		sphere->setBuffer(vertices, indices);
-		sphere->setInputLayout(InputLayouts::getPosNormal(), 
+		sphere->setInputLayout(InputLayouts::getPosNormal(),
 			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		//재질 랜덤 설정

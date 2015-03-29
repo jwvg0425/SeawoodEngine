@@ -3,6 +3,9 @@
 #include "Effect.h"
 #include "Director.h"
 #include "D3DRenderer.h"
+#include "SimpleColorEffect.h"
+#include "SimpleLightEffect.h"
+#include "BasicEffect.h"
 
 USING_NS_SW;
 
@@ -18,14 +21,23 @@ const D3D11_INPUT_ELEMENT_DESC InputLayoutDesc::m_PosNormal[2] =
 	{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 };
 
+const D3D11_INPUT_ELEMENT_DESC InputLayoutDesc::m_PosBasic[3] =
+{
+	{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+};
+
 ID3D11InputLayout* InputLayouts::m_PosColor = nullptr;
 ID3D11InputLayout* InputLayouts::m_PosNormal = nullptr;
+ID3D11InputLayout* InputLayouts::m_PosBasic = nullptr;
 
 
 void InputLayouts::destroyAll()
 {
 	ReleaseCOM(m_PosColor);
 	ReleaseCOM(m_PosNormal);
+	ReleaseCOM(m_PosBasic);
 }
 
 ID3D11InputLayout* InputLayouts::getPosColor()
@@ -52,4 +64,17 @@ ID3D11InputLayout* SeaWood::InputLayouts::getPosNormal()
 	}
 
 	return m_PosNormal;
+}
+
+ID3D11InputLayout* SeaWood::InputLayouts::getPosBasic()
+{
+	if (m_PosBasic == nullptr)
+	{
+		D3DX11_PASS_DESC passDesc;
+		Effects::getBasicEffect()->getTech()->GetPassByIndex(0)->GetDesc(&passDesc);
+		HR(GET_D3D_RENDERER()->getDevice()->CreateInputLayout(InputLayoutDesc::m_PosBasic, 3, passDesc.pIAInputSignature,
+			passDesc.IAInputSignatureSize, &m_PosBasic));
+	}
+
+	return m_PosBasic;
 }

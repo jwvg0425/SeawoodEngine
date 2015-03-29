@@ -8,7 +8,12 @@
 #include "MouseEvent.h"
 #include "Camera.h"
 #include "Figure.h"
+//effects
 #include "Effect.h"
+#include "SimpleLightEffect.h"
+#include "SimpleColorEffect.h"
+#include "BasicEffect.h"
+//
 #include "InputLayout.h"
 #include "Vertex.h"
 #include "Light.h"

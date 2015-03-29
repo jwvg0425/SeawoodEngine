@@ -26,6 +26,11 @@ public:
 	const Material*	getMaterial();
 	void			setMaterial(Material material);
 
+	ID3D11ShaderResourceView* getTexture();
+	void			setTexture(const std::wstring& fileName);
+	void			setTextureTransform(CXMMATRIX matrix);
+	XMFLOAT4X4		getTextureTransform();
+
 protected:
 	void updateWorld();
 
@@ -34,10 +39,12 @@ protected:
 	XMFLOAT4X4	m_Scaling;
 	XMFLOAT4X4	m_Rotation;
 	XMFLOAT4X4	m_World;
-	float m_X, m_Y, m_Z;
-	float m_ScaleX, m_ScaleY, m_ScaleZ;
-	float m_AngleX, m_AngleY, m_AngleZ;
+	XMFLOAT4X4	m_TextureTransform;
+	float m_X = 0.0f, m_Y = 0.0f, m_Z = 0.0f;
+	float m_ScaleX = 0.0f, m_ScaleY = 0.0f, m_ScaleZ = 0.0f;
+	float m_AngleX = 0.0f, m_AngleY = 0.0f, m_AngleZ = 0.0f;
 	Material*	m_Material = nullptr;
+	ID3D11ShaderResourceView* m_DiffuseMapSRV = nullptr;
 };
 
 NS_SW_END

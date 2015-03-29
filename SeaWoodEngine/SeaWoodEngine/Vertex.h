@@ -20,6 +20,18 @@ namespace Vertex
 		XMFLOAT3 m_Pos;
 		XMFLOAT3 m_Normal;
 	};
+
+	struct PosBasic
+	{
+		PosBasic() : m_Pos(0, 0, 0), m_Normal(0, 0, 0), m_Tex(0,0){}
+		PosBasic(float x, float y, float z, float nx, float ny, float nz,
+			float tx, float ty) :
+			m_Pos(x, y, z), m_Normal(nx, ny, nz), m_Tex(tx, ty){}
+
+		XMFLOAT3 m_Pos;
+		XMFLOAT3 m_Normal;
+		XMFLOAT2 m_Tex;
+	};
 };
 
 NS_SW_END
