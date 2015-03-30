@@ -4,6 +4,8 @@
 #include "Camera.h"
 #include "InputLayout.h"
 #include "Effect.h"
+#include "Blend.h"
+#include "Rasterizer.h"
 
 USING_NS_SW;
 
@@ -26,6 +28,8 @@ SeaWood::D3DRenderer::~D3DRenderer()
 
 	InputLayouts::destroyAll();
 	Effects::destroyAll();
+	Blend::destroyAll();
+	Rasterizer::destroyAll();
 
 	ReleaseCOM(m_RenderTargetView);
 	ReleaseCOM(m_DepthStencilView);

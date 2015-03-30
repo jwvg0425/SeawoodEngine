@@ -27,7 +27,7 @@ protected:
 class SimpleColorEffect;
 class SimpleLightEffect;
 class BasicEffect;
-class Effects
+class Effects final
 {
 public:
 	static void destroyAll();

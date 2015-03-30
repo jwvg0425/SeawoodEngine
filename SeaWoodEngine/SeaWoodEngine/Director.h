@@ -67,7 +67,7 @@ protected:
 	static Director*	m_Instance;
 
 	Scene*				m_NowScene = nullptr;
-	Renderer*				m_Renderer = nullptr;
+	Renderer*			m_Renderer = nullptr;
 	KeyManager*			m_KeyManager = nullptr;
 	bool				m_IsQueryPerformance = false;
 	LARGE_INTEGER		m_TicksPerSecond;

@@ -24,7 +24,7 @@ bool FirstScene::init()
 	if (!Scene::init())
 	{
 		return false;
-	}	
+	}
 
 	//현재 scene에 맞는 카메라로 변경
 	auto camera = Camera::createWithPos(XMVectorSet(0.0f, 5.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
@@ -41,7 +41,7 @@ bool FirstScene::init()
 	earth->setBuffer(earthVertices, earthIndices);
 	earth->setInputLayout(InputLayouts::getPosBasic(),
 		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	
+
 	earth->setTexture(L"Textures/grass.dds");
 	earth->setTextureTransform(XMMatrixScaling(5.0f, 5.0f, 5.0f));
 
@@ -92,14 +92,13 @@ bool FirstScene::init()
 	directionalLight.m_Direction = XMFLOAT3(0.5f, 0.5f, 0.0f);
 
 	m_Light = Light<DirectionalLight>::createWithScene(this, directionalLight);
-	
+
 	addChild(m_Light);
 
 	m_Box = DynamicBox::create();
 	m_Box->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);
 	m_Box->setPosition(0.0f, 1.0f, 0.0f);
-	m_Box->setTexture(L"Textures/WireFence.dds");
-	m_Box->setRasterizerOption(RasterizerType::TRANSPARENCY);
+	m_Box->setTexture(L"Textures/Water2.dds");
 	addChild(m_Box);
 
 	//안개 설정

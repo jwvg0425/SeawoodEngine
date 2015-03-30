@@ -23,7 +23,8 @@ public:
 
 	void render() override;
 
-	void setRasterizerOption(RasterizerType type);
+	void setRasterizer(ID3D11RasterizerState* rasterizer);
+	void setBlend(ID3D11BlendState* blend, const FLOAT blendFactor[4]);
 
 	static Figure<E>* createWithEffect(E* effect);
 
@@ -42,28 +43,24 @@ protected:
 	D3D11_PRIMITIVE_TOPOLOGY m_Topology;
 	ID3D11InputLayout*	m_InputLayout = nullptr;
 	ID3D11RasterizerState* m_RasterizerState = nullptr;
+	ID3D11BlendState* m_BlendState = nullptr;
+	FLOAT m_BlendFactor[4];
 };
 
 template<typename E>
-void Figure<E>::setRasterizerOption(RasterizerType type)
+void Figure<E>::setBlend(ID3D11BlendState* blend, const FLOAT blendFactor[4])
 {
-	ReleaseCOM(m_RasterizerState);
+	m_BlendState = blend;
+	m_BlendFactor[0] = blendFactor[0];
+	m_BlendFactor[1] = blendFactor[1];
+	m_BlendFactor[2] = blendFactor[2];
+	m_BlendFactor[3] = blendFactor[3];
+}
 
-	D3D11_RASTERIZER_DESC rasterizerDesc;
-
-	ZeroMemory(&rasterizerDesc, sizeof(D3D11_RASTERIZER_DESC));
-
-	switch (type)
-	{
-	case RasterizerType::TRANSPARENCY:
-		rasterizerDesc.FillMode = D3D11_FILL_SOLID;
-		rasterizerDesc.CullMode = D3D11_CULL_NONE;
-		rasterizerDesc.FrontCounterClockwise = false;
-		rasterizerDesc.DepthClipEnable = true;
-		break;
-	}
-
-	HR(GET_D3D_RENDERER()->getDevice()->CreateRasterizerState(&rasterizerDesc, &m_RasterizerState));
+template<typename E>
+void Figure<E>::setRasterizer(ID3D11RasterizerState* rasterizer)
+{
+	m_RasterizerState = rasterizer;
 }
 
 template<typename E>
@@ -77,7 +74,6 @@ Figure<E>::~Figure()
 {
 	ReleaseCOM(m_VertexBuffer);
 	ReleaseCOM(m_IndexBuffer);
-	ReleaseCOM(m_RasterizerState);
 }
 
 template<typename E>
@@ -118,9 +114,15 @@ void Figure<E>::render()
 
 	GET_D3D_RENDERER()->getDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
 	GET_D3D_RENDERER()->getDeviceContext()->IASetIndexBuffer(m_IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+	
 	if (m_RasterizerState != nullptr)
 	{
 		GET_D3D_RENDERER()->getDeviceContext()->RSSetState(m_RasterizerState);
+	}
+
+	if (m_BlendState != nullptr)
+	{
+		GET_D3D_RENDERER()->getDeviceContext()->OMSetBlendState(m_BlendState, m_BlendFactor, 0xffffffff);
 	}
 
 	D3DX11_TECHNIQUE_DESC techDesc;
@@ -134,6 +136,11 @@ void Figure<E>::render()
 	if (m_RasterizerState != nullptr)
 	{
 		GET_D3D_RENDERER()->getDeviceContext()->RSSetState(nullptr);
+	}
+
+	if (m_BlendState != nullptr)
+	{
+		GET_D3D_RENDERER()->getDeviceContext()->OMSetBlendState(nullptr, m_BlendFactor, 0xffffffff);
 	}
 }
 

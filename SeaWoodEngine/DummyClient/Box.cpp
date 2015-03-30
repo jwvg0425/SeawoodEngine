@@ -40,7 +40,7 @@ void Box::setBox(float width, float height, float depth, const std::vector<XMFLO
 
 	auto material = Material(); 
 	material.m_Ambient = XMFLOAT4(0.1f, 0.2f, 0.3f, 1.0f);
-	material.m_Diffuse = XMFLOAT4(0.2f, 0.4f, 0.6f, 1.0f);
+	material.m_Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	material.m_Specular = XMFLOAT4(0.9f, 0.9f, 0.9f, 16.0f);
 
 	setMaterial(material);	

@@ -13,7 +13,11 @@
 #include "SimpleLightEffect.h"
 #include "SimpleColorEffect.h"
 #include "BasicEffect.h"
-//
+
+//blend, rasterizer
+#include "Blend.h"
+#include "Rasterizer.h"
+
 #include "InputLayout.h"
 #include "Vertex.h"
 #include "Light.h"

@@ -4,7 +4,7 @@
 NS_SW_BEGIN
 
 
-class InputLayoutDesc
+class InputLayoutDesc final
 {
 	friend class InputLayouts;
 
@@ -13,7 +13,7 @@ class InputLayoutDesc
 	static const D3D11_INPUT_ELEMENT_DESC m_PosBasic[3];
 };
 
-class InputLayouts
+class InputLayouts final
 {
 public:
 	static void destroyAll();

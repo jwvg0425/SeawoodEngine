@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="BasicEffect.h" />
+    <ClInclude Include="Blend.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="D3DNode.h" />
     <ClInclude Include="Figure.h" />
@@ -29,6 +30,7 @@
     <ClInclude Include="MouseEvent.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Point2.h" />
+    <ClInclude Include="Rasterizer.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="Ref.h" />
     <ClInclude Include="Scene.h" />
@@ -46,6 +48,7 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="BasicEffect.cpp" />
+    <ClCompile Include="Blend.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="D3DNode.cpp" />
     <ClCompile Include="D3DRenderer.cpp" />
@@ -58,6 +61,7 @@
     <ClCompile Include="MouseEvent.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Point2.cpp" />
+    <ClCompile Include="Rasterizer.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="Ref.cpp" />
     <ClCompile Include="Scene.cpp" />

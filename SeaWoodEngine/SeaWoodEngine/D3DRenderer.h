@@ -3,11 +3,6 @@
 
 NS_SW_BEGIN
 
-enum class RasterizerType
-{
-	TRANSPARENCY
-};
-
 class Camera;
 class D3DRenderer : public Renderer
 {

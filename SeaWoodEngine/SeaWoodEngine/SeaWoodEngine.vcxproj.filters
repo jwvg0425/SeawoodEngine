@@ -31,6 +31,12 @@
     <Filter Include="base\renderer\global\InputLayout">
       <UniqueIdentifier>{2818dda5-76d5-42fa-8cb1-535b79496233}</UniqueIdentifier>
     </Filter>
+    <Filter Include="base\renderer\global\Blend">
+      <UniqueIdentifier>{afb1c098-feaf-445a-8586-c1255a8e2e85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\renderer\global\Rasterize">
+      <UniqueIdentifier>{46c3b28e-beaa-40f2-967f-24e5f2b7a4d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -99,6 +105,12 @@
     </ClCompile>
     <ClCompile Include="BasicEffect.cpp">
       <Filter>base\renderer\global\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Blend.cpp">
+      <Filter>base\renderer\global\Blend</Filter>
+    </ClCompile>
+    <ClCompile Include="Rasterizer.cpp">
+      <Filter>base\renderer\global\Rasterize</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +202,12 @@
     </ClInclude>
     <ClInclude Include="BasicEffect.h">
       <Filter>base\renderer\global\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Blend.h">
+      <Filter>base\renderer\global\Blend</Filter>
+    </ClInclude>
+    <ClInclude Include="Rasterizer.h">
+      <Filter>base\renderer\global\Rasterize</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
