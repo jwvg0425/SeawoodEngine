@@ -128,3 +128,35 @@ const Scene::SLights& SeaWood::Scene::getSpotLight()
 {
 	return m_SpotLight;
 }
+
+void SeaWood::Scene::setFog(float fogStart, float fogRange, XMVECTOR fogColor)
+{
+	m_FogStart = fogStart;
+	m_FogRange = fogRange;
+	XMStoreFloat4(&m_FogColor, fogColor);
+}
+
+void SeaWood::Scene::setFogEnable(bool isEnable)
+{
+	m_IsFogEnabled = isEnable;
+}
+
+float SeaWood::Scene::getFogStart()
+{
+	return m_FogStart;
+}
+
+float SeaWood::Scene::getFogRange()
+{
+	return m_FogRange;
+}
+
+XMFLOAT4 SeaWood::Scene::getFogColor()
+{
+	return m_FogColor;
+}
+
+bool SeaWood::Scene::getFogEnable()
+{
+	return m_IsFogEnabled;
+}

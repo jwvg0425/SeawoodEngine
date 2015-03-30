@@ -16,6 +16,7 @@ cbuffer cbPerFrame
 	float  gFogStart;
 	float  gFogRange;
 	float4 gFogColor;
+	bool   gIsFogEnable;
 
 	int gDirLightNum;
 	int gPointLightNum;
@@ -75,7 +76,7 @@ VertexOut VS(VertexIn vin)
 	return vout;
 }
  
-float4 PS(VertexOut pin, uniform bool gUseTexure) : SV_Target
+float4 PS(VertexOut pin, uniform bool gUseTexture) : SV_Target
 {
 	// Interpolating normal can unnormalize it, so normalize it.
     pin.NormalW = normalize(pin.NormalW);
@@ -91,10 +92,12 @@ float4 PS(VertexOut pin, uniform bool gUseTexure) : SV_Target
 	
     // Default to multiplicative identity.
     float4 texColor = float4(1, 1, 1, 1);
-    if(gUseTexure)
+    if(gUseTexture)
 	{
 		// Sample texture.
 		texColor = gDiffuseMap.Sample( samAnisotropic, pin.Tex );
+
+		clip(texColor.a - 0.1f);
 	}
 	 
 	//
@@ -142,6 +145,13 @@ float4 PS(VertexOut pin, uniform bool gUseTexure) : SV_Target
 
 	// Modulate with late add.
 	float4 litColor = texColor*(ambient + diffuse) + spec;
+
+	if (gIsFogEnable)
+	{
+		float fogLerp = saturate((distToEye - gFogStart) / gFogRange);
+
+		litColor = lerp(litColor, gFogColor, fogLerp);
+	}
 
 	// Common to take alpha from diffuse material and texture.
 	litColor.a = gMaterial.Diffuse.a * texColor.a;

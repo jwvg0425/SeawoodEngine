@@ -30,26 +30,24 @@ bool FirstScene::init()
 	auto camera = Camera::createWithPos(XMVectorSet(0.0f, 5.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
 	GET_D3D_RENDERER()->changeCamera(camera);
 
-	m_Box = DynamicBox::create();
-	m_Box->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);
-	m_Box->setPosition(0.0f, 1.0f, 0.0f);
-	addChild(m_Box);
-
 	std::vector<Vertex::PosBasic> earthVertices;
 	std::vector<UINT> earthIndices;
 
 	auto earth = Figure<BasicEffect>::createWithEffect(
 		Effects::getBasicEffect());
 
-	GeometryGenerator::createGrid(100.0f, 100.0f, 100, 100, earthVertices, earthIndices);
+	GeometryGenerator::createGrid(100.0f, 100.0f, 10, 10, earthVertices, earthIndices);
 
 	earth->setBuffer(earthVertices, earthIndices);
 	earth->setInputLayout(InputLayouts::getPosBasic(),
 		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	
+	earth->setTexture(L"Textures/grass.dds");
+	earth->setTextureTransform(XMMatrixScaling(5.0f, 5.0f, 5.0f));
 
 	auto material = Material();
-	material.m_Ambient = XMFLOAT4(0.7f, 0.2f, 0.0f, 1.0f);
-	material.m_Diffuse = XMFLOAT4(0.7f, 0.2f, 0.0f, 1.0f);
+	material.m_Ambient = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
+	material.m_Diffuse = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
 	material.m_Specular = XMFLOAT4(0.2f, 0.2f, 0.2f, 16.0f);
 
 	earth->setMaterial(material);
@@ -80,6 +78,7 @@ bool FirstScene::init()
 		material.m_Specular = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 16.0f);
 
 		sphere->setMaterial(material);
+		sphere->setTexture(L"Textures/sphere.jpg");
 		sphere->setPosition(-50 + rand() % 101, radius, -50 + rand() % 101);
 
 		addChild(sphere);
@@ -95,6 +94,17 @@ bool FirstScene::init()
 	m_Light = Light<DirectionalLight>::createWithScene(this, directionalLight);
 	
 	addChild(m_Light);
+
+	m_Box = DynamicBox::create();
+	m_Box->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);
+	m_Box->setPosition(0.0f, 1.0f, 0.0f);
+	m_Box->setTexture(L"Textures/WireFence.dds");
+	m_Box->setBlendOption(BlendType::TRANSPARENCY);
+	addChild(m_Box);
+
+	//안개 설정
+	setFogEnable(true);
+	setFog(30.0f, 200.0f, XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f));
 
 	return true;
 }

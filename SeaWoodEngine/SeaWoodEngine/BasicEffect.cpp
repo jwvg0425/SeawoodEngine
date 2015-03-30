@@ -24,6 +24,12 @@ SeaWood::BasicEffect::BasicEffect()
 	m_PointNum = m_Fx->GetVariableByName("gPointLightNum");
 	m_SpotNum = m_Fx->GetVariableByName("gSpotLightNum");
 	m_DiffuseMap = m_Fx->GetVariableByName("gDiffuseMap")->AsShaderResource();
+
+	//fog
+	m_FogStart = m_Fx->GetVariableByName("gFogStart");
+	m_FogRange = m_Fx->GetVariableByName("gFogRange");
+	m_FogColor = m_Fx->GetVariableByName("gFogColor")->AsVector();
+	m_FogEnable = m_Fx->GetVariableByName("gIsFogEnable");
 }
 
 SeaWood::BasicEffect::~BasicEffect()
@@ -100,9 +106,10 @@ ID3DX11EffectTechnique* SeaWood::BasicEffect::getTech()
 
 void SeaWood::BasicEffect::updateByFrame()
 {
-	auto dirLight = Director::getInstance()->getRunningScene()->getDirectionalLight();
-	auto pointLight = Director::getInstance()->getRunningScene()->getPointLight();
-	auto spotLight = Director::getInstance()->getRunningScene()->getSpotLight();
+	auto scene = Director::getInstance()->getRunningScene();
+	auto dirLight = scene->getDirectionalLight();
+	auto pointLight = scene->getPointLight();
+	auto spotLight = scene->getSpotLight();
 	DirectionalLight dLight[3];
 	PointLight pLight[3];
 	SpotLight sLight[3];
@@ -129,6 +136,19 @@ void SeaWood::BasicEffect::updateByFrame()
 	setPointLightNum(pointLight.size());
 	setSpotLightNum(spotLight.size());
 	setEyePosW(GET_D3D_RENDERER()->getCamera()->getEyePosW());
+
+	//안개 설정된 경우
+	if (scene->getFogEnable())
+	{
+		setFogEnable(true);
+		setFogStart(scene->getFogStart());
+		setFogRange(scene->getFogRange());
+		setFogColor(scene->getFogColor());
+	}
+	else
+	{
+		setFogEnable(false);
+	}
 }
 
 void SeaWood::BasicEffect::updateByObject(D3DNode* object)
@@ -169,4 +189,24 @@ void SeaWood::BasicEffect::setDiffuseMap(ID3D11ShaderResourceView* tex)
 void SeaWood::BasicEffect::setTexTransform(CXMMATRIX M)
 {
 	m_TexTransform->SetMatrix(reinterpret_cast<const float*>(&M));
+}
+
+void SeaWood::BasicEffect::setFogStart(float start)
+{
+	m_FogStart->SetRawValue(&start, 0, sizeof(float));
+}
+
+void SeaWood::BasicEffect::setFogRange(float range)
+{
+	m_FogRange->SetRawValue(&range, 0, sizeof(float));
+}
+
+void SeaWood::BasicEffect::setFogEnable(bool enable)
+{
+	m_FogEnable->SetRawValue(&enable, 0, sizeof(bool));
+}
+
+void SeaWood::BasicEffect::setFogColor(const XMFLOAT4& v)
+{
+	m_FogColor->SetRawValue(&v, 0, sizeof(XMFLOAT4));
 }

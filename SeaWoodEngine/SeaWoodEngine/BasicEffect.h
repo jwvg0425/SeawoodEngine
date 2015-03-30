@@ -25,6 +25,11 @@ public:
 	void setDiffuseMap(ID3D11ShaderResourceView* tex);
 	void setTexTransform(CXMMATRIX M);
 
+	void setFogStart(float start);
+	void setFogRange(float range);
+	void setFogEnable(bool enable);
+	void setFogColor(const XMFLOAT4& v);
+
 	ID3DX11EffectTechnique*	getTech() override;
 
 	void updateByFrame() override;
@@ -47,6 +52,13 @@ protected:
 	ID3DX11EffectVariable*			m_PointNum = nullptr;
 	ID3DX11EffectVariable*			m_SpotNum = nullptr;
 
+	//fog
+	ID3DX11EffectVariable*			m_FogStart = nullptr;
+	ID3DX11EffectVariable*			m_FogRange = nullptr;
+	ID3DX11EffectVariable*			m_FogEnable = nullptr;
+	ID3DX11EffectVectorVariable*	m_FogColor = nullptr;
+
+	//texture
 	ID3DX11EffectShaderResourceVariable* m_DiffuseMap = nullptr;
 
 	bool							m_IsTexture = false;

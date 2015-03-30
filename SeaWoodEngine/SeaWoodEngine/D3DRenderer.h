@@ -3,6 +3,11 @@
 
 NS_SW_BEGIN
 
+enum class BlendType
+{
+	TRANSPARENCY
+};
+
 class Camera;
 class D3DRenderer : public Renderer
 {

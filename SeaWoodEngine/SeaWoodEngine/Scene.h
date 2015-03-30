@@ -31,16 +31,27 @@ public:
 	void			deleteLight(const PointLight* pointLight);
 	void			deleteLight(const SpotLight* spotLight);
 
-
 	const DLights&	getDirectionalLight();
 	const PLights&	getPointLight();
 	const SLights&	getSpotLight();
+
+	//안개 관련 처리
+	void			setFog(float fogStart, float fogRange, XMVECTOR fogColor);
+	void			setFogEnable(bool isEnable);
+	bool			getFogEnable();
+	float			getFogStart();
+	float			getFogRange();
+	XMFLOAT4		getFogColor();
 
 protected:
 	Childs		m_AddingChilds;
 	DLights		m_DirectionalLight;
 	PLights		m_PointLight;
 	SLights		m_SpotLight;
+	float		m_FogStart = 0.0f;
+	float		m_FogRange = 0.0f;
+	XMFLOAT4	m_FogColor;
+	bool		m_IsFogEnabled = false;
 };
 
 NS_SW_END
