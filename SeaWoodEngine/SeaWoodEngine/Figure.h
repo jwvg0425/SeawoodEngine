@@ -23,7 +23,7 @@ public:
 
 	void render() override;
 
-	void setBlendOption(BlendType type);
+	void setRasterizerOption(RasterizerType type);
 
 	static Figure<E>* createWithEffect(E* effect);
 
@@ -41,13 +41,13 @@ protected:
 
 	D3D11_PRIMITIVE_TOPOLOGY m_Topology;
 	ID3D11InputLayout*	m_InputLayout = nullptr;
-	ID3D11RasterizerState* m_BlendOption = nullptr;
+	ID3D11RasterizerState* m_RasterizerState = nullptr;
 };
 
 template<typename E>
-void Figure<E>::setBlendOption(BlendType type)
+void Figure<E>::setRasterizerOption(RasterizerType type)
 {
-	ReleaseCOM(m_BlendOption);
+	ReleaseCOM(m_RasterizerState);
 
 	D3D11_RASTERIZER_DESC rasterizerDesc;
 
@@ -55,7 +55,7 @@ void Figure<E>::setBlendOption(BlendType type)
 
 	switch (type)
 	{
-	case BlendType::TRANSPARENCY:
+	case RasterizerType::TRANSPARENCY:
 		rasterizerDesc.FillMode = D3D11_FILL_SOLID;
 		rasterizerDesc.CullMode = D3D11_CULL_NONE;
 		rasterizerDesc.FrontCounterClockwise = false;
@@ -63,7 +63,7 @@ void Figure<E>::setBlendOption(BlendType type)
 		break;
 	}
 
-	HR(GET_D3D_RENDERER()->getDevice()->CreateRasterizerState(&rasterizerDesc, &m_BlendOption));
+	HR(GET_D3D_RENDERER()->getDevice()->CreateRasterizerState(&rasterizerDesc, &m_RasterizerState));
 }
 
 template<typename E>
@@ -77,7 +77,7 @@ Figure<E>::~Figure()
 {
 	ReleaseCOM(m_VertexBuffer);
 	ReleaseCOM(m_IndexBuffer);
-	ReleaseCOM(m_BlendOption);
+	ReleaseCOM(m_RasterizerState);
 }
 
 template<typename E>
@@ -118,9 +118,9 @@ void Figure<E>::render()
 
 	GET_D3D_RENDERER()->getDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
 	GET_D3D_RENDERER()->getDeviceContext()->IASetIndexBuffer(m_IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
-	if (m_BlendOption != nullptr)
+	if (m_RasterizerState != nullptr)
 	{
-		GET_D3D_RENDERER()->getDeviceContext()->RSSetState(m_BlendOption);
+		GET_D3D_RENDERER()->getDeviceContext()->RSSetState(m_RasterizerState);
 	}
 
 	D3DX11_TECHNIQUE_DESC techDesc;
@@ -131,7 +131,7 @@ void Figure<E>::render()
 		GET_D3D_RENDERER()->getDeviceContext()->DrawIndexed(m_Indices.size(), 0, 0);
 	}
 
-	if (m_BlendOption != nullptr)
+	if (m_RasterizerState != nullptr)
 	{
 		GET_D3D_RENDERER()->getDeviceContext()->RSSetState(nullptr);
 	}

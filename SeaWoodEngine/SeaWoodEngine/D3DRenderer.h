@@ -3,7 +3,7 @@
 
 NS_SW_BEGIN
 
-enum class BlendType
+enum class RasterizerType
 {
 	TRANSPARENCY
 };

@@ -99,7 +99,7 @@ bool FirstScene::init()
 	m_Box->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);
 	m_Box->setPosition(0.0f, 1.0f, 0.0f);
 	m_Box->setTexture(L"Textures/WireFence.dds");
-	m_Box->setBlendOption(BlendType::TRANSPARENCY);
+	m_Box->setRasterizerOption(RasterizerType::TRANSPARENCY);
 	addChild(m_Box);
 
 	//안개 설정
