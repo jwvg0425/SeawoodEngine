@@ -128,7 +128,6 @@ void FirstScene::update(float dTime)
 	}
 
 	//dynamic box 계속 쫓아다님
-
 	if (GET_KEY_MANAGER()->getKeyState(VK_3) == KeyManager::PUSH)
 	{
 		auto camera = ChasingCamera::create();
@@ -147,7 +146,6 @@ void FirstScene::update(float dTime)
 		}
 		else
 		{
-
 			DirectionalLight directionalLight;
 
 			directionalLight.m_Ambient = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.4f);

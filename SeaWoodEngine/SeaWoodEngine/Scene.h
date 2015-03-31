@@ -18,7 +18,6 @@ public:
 
 	bool init() override;
 
-	void render() override;
 	void update(float dTime) override;
 
 	void addChild(Node* child) override;

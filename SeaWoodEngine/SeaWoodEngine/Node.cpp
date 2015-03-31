@@ -30,7 +30,10 @@ void Node::setPosition(Point2 position)
 
 void Node::render()
 {
-
+	for (auto& child : m_Childs)
+	{
+		child.second->render();
+	}
 }
 
 void Node::update(float dTime)

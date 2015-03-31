@@ -14,14 +14,6 @@ Scene::~Scene()
 	removeAllChilds();
 }
 
-void Scene::render()
-{
-	for (auto& child : m_Childs)
-	{
-		child.second->render();
-	}
-}
-
 void Scene::update(float dTime)
 {
 	for (auto& child : m_Childs)
