@@ -37,6 +37,9 @@
     <Filter Include="base\renderer\global\Rasterize">
       <UniqueIdentifier>{46c3b28e-beaa-40f2-967f-24e5f2b7a4d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="base\renderer\global\DepthStensil">
+      <UniqueIdentifier>{a26ad92b-ff07-4b01-b57d-82e1cf3214ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp">
@@ -111,6 +114,9 @@
     </ClCompile>
     <ClCompile Include="Rasterizer.cpp">
       <Filter>base\renderer\global\Rasterize</Filter>
+    </ClCompile>
+    <ClCompile Include="DepthStencil.cpp">
+      <Filter>base\renderer\global\DepthStensil</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="Rasterizer.h">
       <Filter>base\renderer\global\Rasterize</Filter>
+    </ClInclude>
+    <ClInclude Include="DepthStencil.h">
+      <Filter>base\renderer\global\DepthStensil</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

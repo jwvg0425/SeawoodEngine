@@ -5,18 +5,18 @@
 
 NS_SW_BEGIN
 
-template<typename E>
+template<typename VertexType>
 class Figure : public D3DNode
 {
 public:
-
-	using VertexType = typename E::VertexType;
+	using FigureVertex = VertexType;
+	using EffectType = typename VertexType::EffectType;
 	Figure();
 	~Figure() override;
 
 	bool init() override;
 
-	void setEffect(E* effect);
+	void setEffect(EffectType effect);
 	void setInputLayout(ID3D11InputLayout* inputLayout, D3D11_PRIMITIVE_TOPOLOGY topology);
 	void setBuffer(const std::vector<VertexType>& vertices,
 		const std::vector<UINT>& indices, bool isDynamic = false);
@@ -26,7 +26,7 @@ public:
 	void setRasterizer(ID3D11RasterizerState* rasterizer);
 	void setBlend(ID3D11BlendState* blend, const FLOAT blendFactor[4]);
 
-	static Figure<E>* createWithEffect(E* effect);
+	static Figure<VertexType>* createWithEffect(EffectType effect);
 
 protected:
 	void setVertices(const std::vector<VertexType>& vertices);
@@ -36,7 +36,7 @@ protected:
 	std::vector<VertexType> m_Vertices;
 	std::vector<UINT> m_Indices;
 
-	E* m_Effect = nullptr;
+	EffectType m_Effect = nullptr;
 	ID3D11Buffer* m_VertexBuffer = nullptr;
 	ID3D11Buffer* m_IndexBuffer = nullptr;
 
@@ -45,10 +45,12 @@ protected:
 	ID3D11RasterizerState* m_RasterizerState = nullptr;
 	ID3D11BlendState* m_BlendState = nullptr;
 	FLOAT m_BlendFactor[4];
+
+	bool m_IsReflect = false;
 };
 
-template<typename E>
-void Figure<E>::setBlend(ID3D11BlendState* blend, const FLOAT blendFactor[4])
+template<typename VertexType>
+void Figure<VertexType>::setBlend(ID3D11BlendState* blend, const FLOAT blendFactor[4])
 {
 	m_BlendState = blend;
 	m_BlendFactor[0] = blendFactor[0];
@@ -57,27 +59,27 @@ void Figure<E>::setBlend(ID3D11BlendState* blend, const FLOAT blendFactor[4])
 	m_BlendFactor[3] = blendFactor[3];
 }
 
-template<typename E>
-void Figure<E>::setRasterizer(ID3D11RasterizerState* rasterizer)
+template<typename VertexType>
+void Figure<VertexType>::setRasterizer(ID3D11RasterizerState* rasterizer)
 {
 	m_RasterizerState = rasterizer;
 }
 
-template<typename E>
-Figure<E>::Figure()
+template<typename VertexType>
+Figure<VertexType>::Figure()
 {
 	m_Effect = nullptr;
 }
 
-template<typename E>
-Figure<E>::~Figure()
+template<typename VertexType>
+Figure<VertexType>::~Figure()
 {
 	ReleaseCOM(m_VertexBuffer);
 	ReleaseCOM(m_IndexBuffer);
 }
 
-template<typename E>
-bool Figure<E>::init()
+template<typename VertexType>
+bool Figure<VertexType>::init()
 {
 	if (!D3DNode::init())
 	{
@@ -87,22 +89,22 @@ bool Figure<E>::init()
 	return true;
 }
 
-template<typename E>
-void Figure<E>::setEffect(E* effect)
+template<typename VertexType>
+void Figure<VertexType>::setEffect(EffectType effect)
 {
 	m_Effect = effect;
 }
 
-template<typename E>
-void Figure<E>::setBuffer(const std::vector<VertexType>& vertices, const std::vector<UINT>& indices, bool isDynamic)
+template<typename VertexType>
+void Figure<VertexType>::setBuffer(const std::vector<VertexType>& vertices, const std::vector<UINT>& indices, bool isDynamic)
 {
 	setVertices(vertices);
 	setIndices(indices);
 	buildBuffer(isDynamic);
 }
 
-template<typename E>
-void Figure<E>::render()
+template<typename VertexType>
+void Figure<VertexType>::render()
 {
 	m_Effect->updateByObject(this);
 
@@ -144,10 +146,10 @@ void Figure<E>::render()
 	}
 }
 
-template<typename E>
-Figure<E>* Figure<E>::createWithEffect(E* effect)
+template<typename VertexType>
+Figure<VertexType>* Figure<VertexType>::createWithEffect(EffectType effect)
 {
-	Figure<E>* node = new Figure<E>();
+	Figure<VertexType>* node = new Figure<VertexType>();
 
 	node->setEffect(effect);
 
@@ -163,20 +165,20 @@ Figure<E>* Figure<E>::createWithEffect(E* effect)
 	}
 }
 
-template<typename E>
-void Figure<E>::setVertices(const std::vector<VertexType>& vertices)
+template<typename VertexType>
+void Figure<VertexType>::setVertices(const std::vector<VertexType>& vertices)
 {
 	m_Vertices = vertices;
 }
 
-template<typename E>
-void Figure<E>::setIndices(const std::vector<UINT>& indices)
+template<typename VertexType>
+void Figure<VertexType>::setIndices(const std::vector<UINT>& indices)
 {
 	m_Indices = indices;
 }
 
-template<typename E>
-void Figure<E>::buildBuffer(bool isDynamic)
+template<typename VertexType>
+void Figure<VertexType>::buildBuffer(bool isDynamic)
 {
 	D3D11_BUFFER_DESC vbd;
 	if (isDynamic)
@@ -215,8 +217,8 @@ void Figure<E>::buildBuffer(bool isDynamic)
 	HR(GET_D3D_RENDERER()->getDevice()->CreateBuffer(&ibd, &iinitData, &m_IndexBuffer));
 }
 
-template<typename E>
-void Figure<E>::setInputLayout(ID3D11InputLayout* inputLayout, D3D11_PRIMITIVE_TOPOLOGY topology)
+template<typename VertexType>
+void Figure<VertexType>::setInputLayout(ID3D11InputLayout* inputLayout, D3D11_PRIMITIVE_TOPOLOGY topology)
 {
 	m_InputLayout = inputLayout;
 	m_Topology = topology;

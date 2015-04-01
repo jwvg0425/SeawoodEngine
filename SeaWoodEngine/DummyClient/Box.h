@@ -8,7 +8,7 @@ struct BoxVertex
 	XMFLOAT4 m_Color;
 };
 
-class Box : public SeaWood::Figure<SeaWood::BasicEffect>
+class Box : public SeaWood::Figure<SeaWood::Vertex::PosBasic>
 {
 public:
 	Box();

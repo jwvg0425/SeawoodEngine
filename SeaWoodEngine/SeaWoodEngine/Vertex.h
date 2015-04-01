@@ -3,16 +3,24 @@
 
 NS_SW_BEGIN
 
+class SimpleColorEffect;
+class SimpleLightEffect;
+class BasicEffect;
+
 namespace Vertex
 {
 	struct PosColor
 	{
+		using EffectType = SimpleColorEffect*;
+
 		XMFLOAT3 m_Pos;
 		XMFLOAT4 m_Color;
 	};
 
 	struct PosNormal
 	{
+		using EffectType = SimpleLightEffect*;
+
 		PosNormal() : m_Pos(0, 0, 0), m_Normal(0, 0, 0){}
 		PosNormal(float x, float y, float z, float nx, float ny, float nz) :
 		m_Pos(x, y, z), m_Normal(nx, ny, nz){}
@@ -23,6 +31,8 @@ namespace Vertex
 
 	struct PosBasic
 	{
+		using EffectType = BasicEffect*;
+
 		PosBasic() : m_Pos(0, 0, 0), m_Normal(0, 0, 0), m_Tex(0,0){}
 		PosBasic(float x, float y, float z, float nx, float ny, float nz,
 			float tx, float ty) :

@@ -6,7 +6,6 @@ NS_SW_BEGIN
 class SimpleLightEffect : public Effect
 {
 public:
-	using VertexType = Vertex::PosNormal;
 
 	SimpleLightEffect();
 	~SimpleLightEffect() override;

@@ -24,6 +24,9 @@ public:
 	static Director*	getInstance();
 	static void			releaseInstance();
 
+	Director(const Director& rhs) = delete;
+	Director& operator =(const Director& rhs) = delete;
+
 	void				gameLoop();
 
 	//프로그램 종료

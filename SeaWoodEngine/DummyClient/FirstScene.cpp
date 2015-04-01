@@ -6,6 +6,8 @@
 #include "EyeLight.h"
 #include "RoundLight.h"
 #include "GeometryGenerator.h"
+#include "PlayingBox.h"
+#include "PlayingCamera.h"
 
 USING_NS_SW;
 
@@ -33,7 +35,7 @@ bool FirstScene::init()
 	std::vector<Vertex::PosBasic> earthVertices;
 	std::vector<UINT> earthIndices;
 
-	auto earth = Figure<BasicEffect>::createWithEffect(
+	auto earth = Figure<Vertex::PosBasic>::createWithEffect(
 		Effects::getBasicEffect());
 
 	GeometryGenerator::createGrid(100.0f, 100.0f, 10, 10, earthVertices, earthIndices);
@@ -60,7 +62,7 @@ bool FirstScene::init()
 		std::vector<Vertex::PosBasic> vertices;
 		std::vector<UINT> indices;
 
-		auto sphere = Figure<BasicEffect>::createWithEffect(
+		auto sphere = Figure<Vertex::PosBasic>::createWithEffect(
 			Effects::getBasicEffect());
 
 		float radius = 2.0f + (rand() % 4);
@@ -95,7 +97,7 @@ bool FirstScene::init()
 
 	addChild(m_Light);
 
-	m_Box = DynamicBox::create();
+	m_Box = PlayingBox::create();
 	m_Box->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);
 	m_Box->setPosition(0.0f, 1.0f, 0.0f);
 	m_Box->setTexture(L"Textures/Water2.dds");
@@ -131,13 +133,21 @@ void FirstScene::update(float dTime)
 	if (GET_KEY_MANAGER()->getKeyState(VK_3) == KeyManager::PUSH)
 	{
 		auto camera = ChasingCamera::create();
-		camera->setChase(m_Box, XMVectorSet(0.0f, -5.0f, 20.0f, 0.0f));
+		camera->setChase(m_Box, XMVectorSet(0.0f,-10.0f,20.0f,0.0f));
+
+		GET_D3D_RENDERER()->changeCamera(camera);
+	}
+
+	if (GET_KEY_MANAGER()->getKeyState(VK_4) == KeyManager::PUSH)
+	{
+		auto camera = PlayingCamera::create();
+		camera->setChase(m_Box, 20);
 
 		GET_D3D_RENDERER()->changeCamera(camera);
 	}
 
 	//빛 변경 - 평행광 켜기 끄기
-	if (GET_KEY_MANAGER()->getKeyState(VK_4) == KeyManager::PUSH)
+	if (GET_KEY_MANAGER()->getKeyState(VK_5) == KeyManager::PUSH)
 	{
 		if (m_Light != nullptr)
 		{
@@ -160,7 +170,7 @@ void FirstScene::update(float dTime)
 	}
 
 	//빛 변경 - 점적광 켜기 끄기
-	if (GET_KEY_MANAGER()->getKeyState(VK_5) == KeyManager::PUSH)
+	if (GET_KEY_MANAGER()->getKeyState(VK_6) == KeyManager::PUSH)
 	{
 		if (m_Light2 != nullptr)
 		{
@@ -176,7 +186,7 @@ void FirstScene::update(float dTime)
 	}
 
 	//빛 변경 - 점광 켜기 끄기
-	if (GET_KEY_MANAGER()->getKeyState(VK_6) == KeyManager::PUSH)
+	if (GET_KEY_MANAGER()->getKeyState(VK_7) == KeyManager::PUSH)
 	{
 		if (m_Light3 != nullptr)
 		{

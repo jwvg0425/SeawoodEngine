@@ -164,7 +164,6 @@ technique11 Light
     pass P0
     {
         SetVertexShader( CompileShader( vs_5_0, VS() ) );
-		SetGeometryShader( NULL );
         SetPixelShader( CompileShader( ps_5_0, PS(false) ) );
     }
 }
@@ -174,7 +173,6 @@ technique11 Tex
 	pass P0
 	{
 		SetVertexShader(CompileShader(vs_5_0, VS()));
-		SetGeometryShader(NULL);
 		SetPixelShader(CompileShader(ps_5_0, PS(true)));
 	}
 }

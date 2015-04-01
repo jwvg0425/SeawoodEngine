@@ -6,7 +6,6 @@ NS_SW_BEGIN
 class SimpleColorEffect : public Effect
 {
 public:
-	using VertexType = Vertex::PosColor;
 
 	SimpleColorEffect();
 	~SimpleColorEffect() override;

@@ -14,9 +14,10 @@
 #include "SimpleColorEffect.h"
 #include "BasicEffect.h"
 
-//blend, rasterizer
+//blend, rasterizer, depthStencil
 #include "Blend.h"
 #include "Rasterizer.h"
+#include "DepthStencil.h"
 
 #include "InputLayout.h"
 #include "Vertex.h"

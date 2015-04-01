@@ -165,6 +165,15 @@ LRESULT CALLBACK SeaWood::Director::WndProc(HWND hWnd, UINT iMessage, WPARAM wPa
 	case WM_DESTROY:
 		end();
 		return 0;
+	case WM_SIZE:
+		Application::getInstance()->setClientSize(Size(LOWORD(lParam), HIWORD(lParam)));
+		return 0;
+	case WM_EXITSIZEMOVE:
+		if (GET_D3D_RENDERER() != nullptr)
+		{
+			GET_D3D_RENDERER()->initRenderTarget();
+		}
+		return 0;
 	}
 	return(DefWindowProc(hWnd, iMessage, wParam, lParam));
 }

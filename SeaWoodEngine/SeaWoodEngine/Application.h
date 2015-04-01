@@ -11,6 +11,7 @@ public:
 
 	HWND					getWindowHandle();
 	HINSTANCE				getInstanceHandle();
+	void					setClientSize(const Size& size);
 	const Size&				getClientSize() const;
 	float					getAspectRatio() const;
 	TCHAR*					getTitle();

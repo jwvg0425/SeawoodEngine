@@ -6,6 +6,7 @@
 #include "Effect.h"
 #include "Blend.h"
 #include "Rasterizer.h"
+#include "DepthStencil.h"
 
 USING_NS_SW;
 
@@ -30,6 +31,8 @@ SeaWood::D3DRenderer::~D3DRenderer()
 	Effects::destroyAll();
 	Blend::destroyAll();
 	Rasterizer::destroyAll();
+	DepthStencil::destroyAll();
+
 
 	ReleaseCOM(m_RenderTargetView);
 	ReleaseCOM(m_DepthStencilView);

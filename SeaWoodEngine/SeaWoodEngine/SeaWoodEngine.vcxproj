@@ -16,6 +16,7 @@
     <ClInclude Include="Blend.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="D3DNode.h" />
+    <ClInclude Include="DepthStencil.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="D3DRenderer.h" />
     <ClInclude Include="Director.h" />
@@ -52,6 +53,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="D3DNode.cpp" />
     <ClCompile Include="D3DRenderer.cpp" />
+    <ClCompile Include="DepthStencil.cpp" />
     <ClCompile Include="Director.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Event.cpp" />

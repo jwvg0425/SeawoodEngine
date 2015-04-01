@@ -144,6 +144,11 @@ void SeaWood::Application::setTitle(TCHAR* title)
 	m_Title = title;
 }
 
+void SeaWood::Application::setClientSize(const Size& size)
+{
+	m_ClientSize = size;
+}
+
 const Size& Application::getClientSize() const
 {
 	return m_ClientSize;

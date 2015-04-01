@@ -14,7 +14,7 @@ Box::~Box()
 
 bool Box::init()
 {
-	if (!Figure<BasicEffect>::init())
+	if (!Figure<Vertex::PosBasic>::init())
 	{
 		return false;
 	}
@@ -31,7 +31,7 @@ void Box::setBox(float width, float height, float depth, const std::vector<XMFLO
 	float h2 = height / 2;
 	float d2 = depth / 2;
 
-	std::vector<VertexType> vertices;
+	std::vector<FigureVertex> vertices;
 	std::vector<UINT> indices;
 
 	GeometryGenerator::createBox(width, height, depth, vertices, indices);
@@ -52,7 +52,7 @@ void Box::setBoxWithRandomColor(float width, float height, float depth)
 	float h2 = height / 2;
 	float d2 = depth / 2;
 
-	std::vector<VertexType> vertices;
+	std::vector<FigureVertex> vertices;
 	std::vector<UINT> indices;
 
 	GeometryGenerator::createBox(width, height, depth, vertices, indices);

@@ -6,7 +6,6 @@ NS_SW_BEGIN
 class BasicEffect : public Effect
 {
 public:
-	using VertexType = Vertex::PosBasic;
 
 	BasicEffect();
 	~BasicEffect() override;
