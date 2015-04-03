@@ -23,24 +23,6 @@
     <ClCompile Include="Box.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="DynamicBox.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="MouseCamera.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ChasingCamera.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SecondScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayingBox.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayingCamera.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="EyeLight.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -48,6 +30,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="GeometryGenerator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="movingCamera.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -61,24 +46,6 @@
     <ClInclude Include="Box.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="DynamicBox.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseCamera.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ChasingCamera.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="SecondScene.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayingBox.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayingCamera.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="EyeLight.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
@@ -86,6 +53,12 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="GeometryGenerator.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="movingCamera.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="RoundFigure.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

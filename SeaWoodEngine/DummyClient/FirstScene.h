@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "SWEngine.h"
 
-class PlayingBox;
+
 class FirstScene : public SeaWood::Scene
 {
 public:
@@ -14,8 +14,4 @@ public:
 	CREATE_FUNC(FirstScene);
 
 private:
-	PlayingBox* m_Box = nullptr;
-	Node*		m_Light = nullptr;
-	Node*		m_Light2 = nullptr;
-	Node*		m_Light3 = nullptr;
 };

@@ -268,6 +268,8 @@ void SeaWood::Renderer::registerCamera(Camera* camera)
 
 void SeaWood::Renderer::update(float dTime)
 {
+	_ASSERT(m_Camera != nullptr);
+
 	m_Camera->update(dTime);
 }
 

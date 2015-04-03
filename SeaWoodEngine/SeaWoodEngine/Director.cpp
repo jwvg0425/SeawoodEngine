@@ -151,9 +151,11 @@ LRESULT CALLBACK SeaWood::Director::WndProc(HWND hWnd, UINT iMessage, WPARAM wPa
 		return 0;
 	case WM_LBUTTONDOWN:
 		onMouseDown(MouseEvent::Status::LEFT);
+		SetCapture(hWnd);
 		return 0;
 	case WM_LBUTTONUP:
 		onMouseUp(MouseEvent::Status::LEFT);
+		ReleaseCapture();
 		return 0;
 	case WM_RBUTTONDOWN:
 		onMouseDown(MouseEvent::Status::RIGHT);

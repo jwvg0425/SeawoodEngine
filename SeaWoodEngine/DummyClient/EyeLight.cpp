@@ -31,12 +31,11 @@ bool EyeLight::init()
 
 void EyeLight::update(float dTime)
 {
-	m_Light.m_Position = GET_RENDERER()->getCamera()->getEyePosW();
+	m_Light.m_Position = GET_RENDERER()->getCamera()->getEyePos();
 	XMVECTOR pos = XMLoadFloat3(&m_Light.m_Position);
 	XMVectorSetW(pos, 1.0f);
-	XMVECTOR target = GET_RENDERER()->getCamera()->getTarget();
-	XMStoreFloat3(&m_Light.m_Direction,
-		XMVector3Normalize(target - pos));
+	XMVECTOR look = GET_RENDERER()->getCamera()->getLookVector();
+	XMStoreFloat3(&m_Light.m_Direction, look);
 }
 
 EyeLight* EyeLight::createWithScene(SeaWood::Scene* scene)

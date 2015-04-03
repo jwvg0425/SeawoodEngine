@@ -1,13 +1,10 @@
 ﻿#include "FirstScene.h"
-#include "DynamicBox.h"
-#include "MouseCamera.h"
-#include "ChasingCamera.h"
-#include "SecondScene.h"
 #include "EyeLight.h"
 #include "RoundLight.h"
 #include "GeometryGenerator.h"
-#include "PlayingBox.h"
-#include "PlayingCamera.h"
+#include "MovingCamera.h"
+#include "Box.h"
+#include "RoundFigure.h"
 
 USING_NS_SW;
 
@@ -28,84 +25,110 @@ bool FirstScene::init()
 		return false;
 	}
 
-	//현재 scene에 맞는 카메라로 변경
-	auto camera = Camera::createWithPos(XMVectorSet(0.0f, 5.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
+	auto camera = MovingCamera::createWithPos(XMVectorSet(0.0f, 0.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
 	GET_RENDERER()->registerCamera(camera);
 
-	std::vector<Vertex::PosBasic> earthVertices;
-	std::vector<UINT> earthIndices;
+	auto box = Box::create();
 
-	auto earth = Figure<Vertex::PosBasic>::createWithEffect(
-		Effects::getBasicEffect());
+	box->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);
 
-	GeometryGenerator::createGrid(100.0f, 100.0f, 10, 10, earthVertices, earthIndices);
+	box->setPosition(2.0f, 4.0f, -3.0f);
+	box->setScale(2.0f, 1.0f, 1.0f);
+	box->setRotate(0.3f, 0.7f, 0.2f);
+	box->setTexture(L"Textures/WoodCrate01.dds");
+	addChild(box);
 
-	earth->setBuffer(earthVertices, earthIndices);
-	earth->setInputLayout(InputLayouts::getPosBasic(),
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	earth->setTexture(L"Textures/grass.dds");
-	earth->setTextureTransform(XMMatrixScaling(5.0f, 5.0f, 5.0f));
-
-	auto material = Material();
-	material.m_Ambient = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
-	material.m_Diffuse = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
-	material.m_Specular = XMFLOAT4(0.2f, 0.2f, 0.2f, 16.0f);
-
-	earth->setMaterial(material);
-
-	addChild(earth);
-
-	for (int i = 0; i < 50; i++)
+	auto getRoundFigure = [](float radius) -> RoundFigure<Vertex::PosBasic>*
 	{
+		auto sphere = RoundFigure<Vertex::PosBasic>::createWithEffect(
+			Effects::getBasicEffect());
+
+		float xN = 0.1f;
+		float yN = 0.1f;
+		float zN = 0.1f;
+
+		if (rand() % 2)
+		{
+			xN = -xN;
+		}
+
+		if (rand() % 2)
+		{
+			yN = -yN;
+		}
+
+		if (rand() % 2)
+		{
+			zN = -zN;
+		}
+		sphere->setOption(5 + rand() % 10, XMFLOAT3(xN * (rand() % 10), yN * (rand() % 10), zN * (rand() % 10)), 1 + rand() % 5);
+
+		Material material;
+
+		material.m_Ambient = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 1.0f);
+		material.m_Diffuse = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.5f + 0.1f * (rand() % 4));
+		material.m_Specular = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 16.0f);
+		sphere->setMaterial(material);
+
 		std::vector<Vertex::PosBasic> vertices;
 		std::vector<UINT> indices;
 
-		auto sphere = Figure<Vertex::PosBasic>::createWithEffect(
-			Effects::getBasicEffect());
-
-		float radius = 2.0f + (rand() % 4);
-
-		GeometryGenerator::createSphere(radius, 30, 30, vertices, indices);
-
+		GeometryGenerator::createSphere(radius, 50, 50, vertices, indices);
 		sphere->setBuffer(vertices, indices);
+
 		sphere->setInputLayout(InputLayouts::getPosBasic(),
 			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-		//재질 랜덤 설정
-		auto material = Material();
-		material.m_Ambient = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 1.0f);
-		material.m_Diffuse = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 1.0f);
-		material.m_Specular = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 16.0f);
-
-		sphere->setMaterial(material);
 		sphere->setTexture(L"Textures/sphere.jpg");
-		sphere->setPosition(-50 + rand() % 101, radius, -50 + rand() % 101);
+		sphere->setPosition(-50 + rand() % 100, -50 + rand() % 100, -50 + rand() % 100);
+
+		return sphere;
+	};
+
+
+	for (int i = 0; i < 10; i++)
+	{
+		auto sphere = Figure<Vertex::PosBasic>::createWithEffect(
+			Effects::getBasicEffect());
+
+		Material material;
+
+		material.m_Ambient = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 1.0f);
+		material.m_Diffuse = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.5f + 0.1f * (rand() % 4));
+		material.m_Specular = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 16.0f);
+		sphere->setMaterial(material);
+
+		std::vector<Vertex::PosBasic> vertices;
+		std::vector<UINT> indices;
+
+		GeometryGenerator::createSphere(2.0f, 50, 50, vertices, indices);
+		sphere->setBuffer(vertices, indices);
+
+		sphere->setInputLayout(InputLayouts::getPosBasic(),
+			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		sphere->setTexture(L"Textures/sphere.jpg");
+		sphere->setPosition(-30 + rand() % 60, -30 + rand() % 60, -30 + rand() % 60);
 
 		addChild(sphere);
+
+		auto roundSphere = getRoundFigure(1.0f);
+		auto roundRound = getRoundFigure(0.5f);
+
+		sphere->addChild(roundSphere);
+		roundSphere->addChild(roundRound);
 	}
 
-	DirectionalLight directionalLight;
+	DirectionalLight light;
 
-	directionalLight.m_Ambient = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.4f);
-	directionalLight.m_Diffuse = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.4f);
-	directionalLight.m_Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.4f);
-	directionalLight.m_Direction = XMFLOAT3(0.5f, 0.5f, 0.0f);
+	light.m_Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
+	light.m_Diffuse = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+	light.m_Specular = XMFLOAT4(1.0f, 1.0f, 1.0f, 16.0f);
+	light.m_Direction = XMFLOAT3(0.4f, 0.0f, 1.0f);
 
-	m_Light = Light<DirectionalLight>::createWithScene(this, directionalLight);
+	auto lightNode = Light<DirectionalLight>::createWithScene(this, light);
 
-	addChild(m_Light);
-
-	m_Box = PlayingBox::create();
-	m_Box->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);
-	m_Box->setPosition(0.0f, 1.0f, 0.0f);
-	m_Box->setTexture(L"Textures/Water2.dds");
-	m_Box->setBlend(Blend::getTransparentBlend());
-	addChild(m_Box);
-
-	//안개 설정
-	setFogEnable(true);
-	setFog(30.0f, 200.0f, XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f));
+	addChild(lightNode);
 
 	return true;
 }
@@ -113,96 +136,4 @@ bool FirstScene::init()
 void FirstScene::update(float dTime)
 {
 	Scene::update(dTime);
-
-	//고정 카메라
-	if (GET_KEY_MANAGER()->getKeyState(VK_1) == KeyManager::PUSH)
-	{
-		GET_RENDERER()->changeCamera(Camera::createWithPos(XMVectorSet(0.0f, 5.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)));
-	}
-
-	//mouse로 시점 변환 가능한 카메라
-	if (GET_KEY_MANAGER()->getKeyState(VK_2) == KeyManager::PUSH)
-	{
-		auto camera = MouseCamera::create();
-		camera->setRadius(20.0f);
-
-		GET_RENDERER()->changeCamera(camera);
-	}
-
-	//dynamic box 계속 쫓아다님
-	if (GET_KEY_MANAGER()->getKeyState(VK_3) == KeyManager::PUSH)
-	{
-		auto camera = ChasingCamera::create();
-		camera->setChase(m_Box, XMVectorSet(0.0f,-10.0f,20.0f,0.0f));
-
-		GET_RENDERER()->changeCamera(camera);
-	}
-
-	if (GET_KEY_MANAGER()->getKeyState(VK_4) == KeyManager::PUSH)
-	{
-		auto camera = PlayingCamera::create();
-		camera->setChase(m_Box, 20);
-
-		GET_RENDERER()->changeCamera(camera);
-	}
-
-	//빛 변경 - 평행광 켜기 끄기
-	if (GET_KEY_MANAGER()->getKeyState(VK_5) == KeyManager::PUSH)
-	{
-		if (m_Light != nullptr)
-		{
-			removeChild(m_Light);
-			m_Light = nullptr;
-		}
-		else
-		{
-			DirectionalLight directionalLight;
-
-			directionalLight.m_Ambient = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.4f);
-			directionalLight.m_Diffuse = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.4f);
-			directionalLight.m_Specular = XMFLOAT4(0.4f, 0.4f, 0.4f, 0.4f);
-			directionalLight.m_Direction = XMFLOAT3(0.5f, 0.5f, 0.0f);
-
-			m_Light = Light<DirectionalLight>::createWithScene(this, directionalLight);
-
-			addChild(m_Light);
-		}
-	}
-
-	//빛 변경 - 점적광 켜기 끄기
-	if (GET_KEY_MANAGER()->getKeyState(VK_6) == KeyManager::PUSH)
-	{
-		if (m_Light2 != nullptr)
-		{
-			removeChild(m_Light2);
-			m_Light2 = nullptr;
-		}
-		else
-		{
-			m_Light2 = EyeLight::createWithScene(this);
-
-			addChild(m_Light2);
-		}
-	}
-
-	//빛 변경 - 점광 켜기 끄기
-	if (GET_KEY_MANAGER()->getKeyState(VK_7) == KeyManager::PUSH)
-	{
-		if (m_Light3 != nullptr)
-		{
-			removeChild(m_Light3);
-			m_Light3 = nullptr;
-		}
-		else
-		{
-			m_Light3 = RoundLight::createWithScene(this);
-			addChild(m_Light3);
-		}
-	}
-
-	//다음 씬으로 넘어가기
-	if(GET_KEY_MANAGER()->getKeyState(VK_F) == KeyManager::PUSH)
-	{
-		Director::getInstance()->changeScene(SecondScene::create());
-	}
 }

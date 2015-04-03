@@ -113,7 +113,7 @@ void SeaWood::SimpleLightEffect::updateByFrame()
 	setDirLightNum(dirLight.size());
 	setPointLightNum(pointLight.size());
 	setSpotLightNum(spotLight.size());
-	setEyePosW(GET_RENDERER()->getCamera()->getEyePosW());
+	setEyePosW(GET_RENDERER()->getCamera()->getEyePos());
 }
 
 void SeaWood::SimpleLightEffect::setPointLight(PointLight* light)

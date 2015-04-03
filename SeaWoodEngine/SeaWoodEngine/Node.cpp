@@ -190,7 +190,10 @@ void Node::render()
 
 void Node::update(float dTime)
 {
-
+	for (auto& child : m_Childs)
+	{
+		child.second->update(dTime);
+	}
 }
 
 void Node::addChild(Node* child)
@@ -293,7 +296,7 @@ XMMATRIX SeaWood::Node::getParentWorld() const
 
 float SeaWood::Node::getDistanceToCamera(Camera* camera) const
 {
-	XMFLOAT3 cameraPos = camera->getEyePosW();
+	XMFLOAT3 cameraPos = camera->getEyePos();
 	XMVECTOR worldPointV = XMLoadFloat4(&XMFLOAT4(m_CenterPos.x, m_CenterPos.y, m_CenterPos.z, 1.0f));
 	XMMATRIX world = getWorld() * getParentWorld();
 

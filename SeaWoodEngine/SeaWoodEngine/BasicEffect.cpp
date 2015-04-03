@@ -135,7 +135,7 @@ void SeaWood::BasicEffect::updateByFrame()
 	setDirLightNum(dirLight.size());
 	setPointLightNum(pointLight.size());
 	setSpotLightNum(spotLight.size());
-	setEyePosW(GET_RENDERER()->getCamera()->getEyePosW());
+	setEyePosW(GET_RENDERER()->getCamera()->getEyePos());
 
 	//안개 설정된 경우
 	if (scene->getFogEnable())

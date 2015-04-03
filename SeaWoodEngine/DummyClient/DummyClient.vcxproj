@@ -83,18 +83,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Box.cpp" />
-    <ClCompile Include="ChasingCamera.cpp" />
-    <ClCompile Include="DynamicBox.cpp" />
     <ClCompile Include="EyeLight.cpp" />
     <ClCompile Include="FirstScene.cpp" />
     <ClCompile Include="GeometryGenerator.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MouseCamera.cpp" />
+    <ClCompile Include="movingCamera.cpp" />
     <ClCompile Include="MyApplication.cpp" />
-    <ClCompile Include="PlayingBox.cpp" />
-    <ClCompile Include="PlayingCamera.cpp" />
     <ClCompile Include="RoundLight.cpp" />
-    <ClCompile Include="SecondScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SeaWoodEngine\SeaWoodEngine.vcxproj">
@@ -103,17 +98,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box.h" />
-    <ClInclude Include="ChasingCamera.h" />
-    <ClInclude Include="DynamicBox.h" />
     <ClInclude Include="EyeLight.h" />
     <ClInclude Include="FirstScene.h" />
     <ClInclude Include="GeometryGenerator.h" />
-    <ClInclude Include="MouseCamera.h" />
+    <ClInclude Include="movingCamera.h" />
     <ClInclude Include="MyApplication.h" />
-    <ClInclude Include="PlayingBox.h" />
-    <ClInclude Include="PlayingCamera.h" />
+    <ClInclude Include="RoundFigure.h" />
     <ClInclude Include="RoundLight.h" />
-    <ClInclude Include="SecondScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

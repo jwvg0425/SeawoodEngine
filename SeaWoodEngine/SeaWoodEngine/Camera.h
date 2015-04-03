@@ -14,7 +14,6 @@ public:
 	bool				init() override;
 
 	void				setEyePos(XMVECTOR eyePos);
-	void				setTargetPos(XMVECTOR targetPos);
 	void				setUpVector(XMVECTOR up);
 	void				setLens(FLOAT fovAngleY, FLOAT aspect, FLOAT nearZ, FLOAT farZ);
 
@@ -22,9 +21,14 @@ public:
 	XMMATRIX			getProjection() const;
 	XMMATRIX			getViewProj() const;
 
-	XMFLOAT3			getEyePosW();
+	XMFLOAT3			getEyePos();
+	
+	XMVECTOR			getLookVector();
 
-	XMVECTOR			getTarget();
+	void				walk(float d);
+	void				strafe(float d);
+	void				pitch(float angle);
+	void				rotateY(float angle);
 
 	CREATE_FUNC(Camera);
 	static Camera*		createWithPos(XMVECTOR eyePos, XMVECTOR targetPos, XMVECTOR up);
@@ -33,9 +37,10 @@ protected:
 	void		updateView();
 	void		updateProjection();
 
-	XMFLOAT4	m_EyePos;
-	XMFLOAT4	m_TargetPos;
-	XMFLOAT4	m_Up;
+	XMFLOAT3	m_Pos;
+	XMFLOAT3	m_Right; //x
+	XMFLOAT3	m_Up; //y
+	XMFLOAT3	m_Look; //z
 	XMFLOAT4X4	m_View;
 	XMFLOAT4X4	m_Projection;
 	FLOAT		m_FovAngleY = 0.0f;
