@@ -24,7 +24,6 @@ void MyApplication::onCreate()
 	FLOAT color[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 	renderer->setBackgroundColor(color);
-	renderer->registerCamera(camera);
 
 	Director::getInstance()->registerRenderer(renderer);
 

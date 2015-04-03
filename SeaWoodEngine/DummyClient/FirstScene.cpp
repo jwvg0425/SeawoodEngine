@@ -30,7 +30,7 @@ bool FirstScene::init()
 
 	//현재 scene에 맞는 카메라로 변경
 	auto camera = Camera::createWithPos(XMVectorSet(0.0f, 5.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
-	GET_D3D_RENDERER()->changeCamera(camera);
+	GET_D3D_RENDERER()->registerCamera(camera);
 
 	std::vector<Vertex::PosBasic> earthVertices;
 	std::vector<UINT> earthIndices;
@@ -55,7 +55,6 @@ bool FirstScene::init()
 	earth->setMaterial(material);
 
 	addChild(earth);
-
 
 	for (int i = 0; i < 50; i++)
 	{

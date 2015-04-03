@@ -15,7 +15,7 @@
     <ClInclude Include="BasicEffect.h" />
     <ClInclude Include="Blend.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="D3DNode.h" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="DepthStencil.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="D3DRenderer.h" />
@@ -29,7 +29,6 @@
     <ClInclude Include="LightNode.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="MouseEvent.h" />
-    <ClInclude Include="Node.h" />
     <ClInclude Include="Point2.h" />
     <ClInclude Include="Rasterizer.h" />
     <ClInclude Include="Rect.h" />
@@ -51,7 +50,7 @@
     <ClCompile Include="BasicEffect.cpp" />
     <ClCompile Include="Blend.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="D3DNode.cpp" />
+    <ClCompile Include="Node.cpp" />
     <ClCompile Include="D3DRenderer.cpp" />
     <ClCompile Include="DepthStencil.cpp" />
     <ClCompile Include="Director.cpp" />
@@ -61,7 +60,6 @@
     <ClCompile Include="InputLayout.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="MouseEvent.cpp" />
-    <ClCompile Include="Node.cpp" />
     <ClCompile Include="Point2.cpp" />
     <ClCompile Include="Rasterizer.cpp" />
     <ClCompile Include="Rect.cpp" />

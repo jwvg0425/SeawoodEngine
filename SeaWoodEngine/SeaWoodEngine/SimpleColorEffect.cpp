@@ -2,7 +2,7 @@
 #include "SimpleColorEffect.h"
 #include "Director.h"
 #include "D3DRenderer.h"
-#include "D3DNode.h"
+#include "Node.h"
 #include "Camera.h"
 
 USING_NS_SW;
@@ -29,7 +29,7 @@ ID3DX11EffectTechnique* SeaWood::SimpleColorEffect::getTech()
 	return m_Tech;
 }
 
-void SeaWood::SimpleColorEffect::updateByObject(D3DNode* object)
+void SeaWood::SimpleColorEffect::updateByObject(Node* object)
 {
 	auto world = object->getWorld();
 	auto viewProj = GET_D3D_RENDERER()->getCamera()->getViewProj();

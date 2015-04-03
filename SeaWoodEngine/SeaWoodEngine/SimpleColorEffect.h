@@ -13,7 +13,7 @@ public:
 	void setWorldViewProj(CXMMATRIX M);
 	ID3DX11EffectTechnique* getTech() override;
 
-	void updateByObject(D3DNode* object) override;
+	void updateByObject(Node* object) override;
 
 protected:
 	ID3DX11EffectTechnique* m_Tech = nullptr;

@@ -2,7 +2,7 @@
 #include "DepthStencil.h"
 #include "Director.h"
 #include "D3DRenderer.h"
-#include "D3DNode.h"
+#include "Node.h"
 #include "Camera.h"
 #include "Scene.h"
 

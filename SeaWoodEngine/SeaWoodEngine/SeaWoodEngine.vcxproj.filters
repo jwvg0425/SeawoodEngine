@@ -58,9 +58,6 @@
     <ClCompile Include="Size.cpp">
       <Filter>base\structure</Filter>
     </ClCompile>
-    <ClCompile Include="Node.cpp">
-      <Filter>node</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>node</Filter>
     </ClCompile>
@@ -91,9 +88,6 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>base\renderer</Filter>
     </ClCompile>
-    <ClCompile Include="D3DNode.cpp">
-      <Filter>node</Filter>
-    </ClCompile>
     <ClCompile Include="Effect.cpp">
       <Filter>base\renderer\global\Effect</Filter>
     </ClCompile>
@@ -118,6 +112,9 @@
     <ClCompile Include="DepthStencil.cpp">
       <Filter>base\renderer\global\DepthStensil</Filter>
     </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>node</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -141,9 +138,6 @@
     </ClInclude>
     <ClInclude Include="Size.h">
       <Filter>base\structure</Filter>
-    </ClInclude>
-    <ClInclude Include="Node.h">
-      <Filter>node</Filter>
     </ClInclude>
     <ClInclude Include="structure.h">
       <Filter>base\structure</Filter>
@@ -185,9 +179,6 @@
     <ClInclude Include="Figure.h">
       <Filter>node</Filter>
     </ClInclude>
-    <ClInclude Include="D3DNode.h">
-      <Filter>node</Filter>
-    </ClInclude>
     <ClInclude Include="Light.h">
       <Filter>base\renderer\global</Filter>
     </ClInclude>
@@ -217,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="DepthStencil.h">
       <Filter>base\renderer\global\DepthStensil</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>node</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

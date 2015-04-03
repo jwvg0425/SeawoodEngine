@@ -2,7 +2,7 @@
 #include "BasicEffect.h"
 #include "Director.h"
 #include "D3DRenderer.h"
-#include "D3DNode.h"
+#include "Node.h"
 #include "Camera.h"
 #include "Scene.h"
 
@@ -151,7 +151,7 @@ void SeaWood::BasicEffect::updateByFrame()
 	}
 }
 
-void SeaWood::BasicEffect::updateByObject(D3DNode* object)
+void SeaWood::BasicEffect::updateByObject(Node* object)
 {
 	auto world = object->getWorld();
 	auto viewProj = GET_D3D_RENDERER()->getCamera()->getViewProj();

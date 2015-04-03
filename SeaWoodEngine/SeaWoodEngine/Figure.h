@@ -1,12 +1,12 @@
 ﻿#pragma once
 #include "Effect.h"
 #include "InputLayout.h"
-#include "D3DNode.h"
+#include "Node.h"
 
 NS_SW_BEGIN
 
 template<typename VertexType>
-class Figure : public D3DNode
+class Figure : public Node
 {
 public:
 	using FigureVertex = VertexType;
@@ -81,7 +81,7 @@ Figure<VertexType>::~Figure()
 template<typename VertexType>
 bool Figure<VertexType>::init()
 {
-	if (!D3DNode::init())
+	if (!Node::init())
 	{
 		return false;
 	}

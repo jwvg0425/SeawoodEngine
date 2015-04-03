@@ -1,5 +1,4 @@
 ﻿#include "PlayingBox.h"
-#include "Missile.h"
 
 USING_NS_SW;
 
@@ -27,8 +26,6 @@ bool PlayingBox::init()
 	XMStoreFloat4(&m_View, view);
 
 	Director::getInstance()->registerEvent(EventType::MOUSE_MOVE, this);
-	Director::getInstance()->registerEvent(EventType::MOUSE_UP, this);
-	Director::getInstance()->registerEvent(EventType::MOUSE_DOWN, this);
 
 	return true;
 }
@@ -75,26 +72,6 @@ void PlayingBox::update(float dTime)
 
 		setPosition(x, y, z, true);
 	}
-
-	//미사일 발사
-	m_Delay += dTime;
-
-	if (m_IsClick)
-	{
-		//0.2초마다 한 번씩 발싸!
-
-		if (m_Delay >= 0.2f)
-		{
-			auto missile = Missile::create();
-
-			missile->setPosition(m_X, m_Y, m_Z);
-			missile->setDirection(getView(), 100.0f);
-
-			getParent()->addChild(missile);
-
-			m_Delay = 0.0f;
-		}
-	}
 }
 
 void PlayingBox::setSpeed(float speed)
@@ -122,20 +99,4 @@ XMVECTOR PlayingBox::getView()
 	XMMATRIX rotate = XMMatrixRotationY(m_Theta);
 
 	return XMVector4Transform(view, rotate);
-}
-
-void PlayingBox::onMouseDown(SeaWood::MouseEvent e)
-{
-	if (e.m_Status & MouseEvent::LEFT)
-	{
-		m_IsClick = true;
-	}
-}
-
-void PlayingBox::onMouseUp(SeaWood::MouseEvent e)
-{
-	if (!(e.m_Status & MouseEvent::LEFT))
-	{
-		m_IsClick = false;
-	}
 }

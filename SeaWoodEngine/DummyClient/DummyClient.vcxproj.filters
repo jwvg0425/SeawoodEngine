@@ -41,9 +41,6 @@
     <ClCompile Include="PlayingCamera.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Missile.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="EyeLight.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -80,9 +77,6 @@
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="PlayingCamera.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Missile.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
     <ClInclude Include="EyeLight.h">

@@ -4,7 +4,7 @@
 #include "Vertex.h"
 
 NS_SW_BEGIN
-class D3DNode;
+class Node;
 class Effect
 {
 public:
@@ -18,7 +18,7 @@ public:
 
 	virtual void updateByFrame();
 
-	virtual void updateByObject(D3DNode* object);
+	virtual void updateByObject(Node* object);
 
 protected:
 	ID3DX11Effect* m_Fx = nullptr;

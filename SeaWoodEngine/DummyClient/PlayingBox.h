@@ -12,9 +12,7 @@ public:
 
 	void setSpeed(float speed);
 
-	void onMouseDown(SeaWood::MouseEvent e) override;
 	void onMouseMove(SeaWood::MouseEvent e) override;
-	void onMouseUp(SeaWood::MouseEvent e) override;
 
 	XMVECTOR getView();
 
@@ -24,7 +22,5 @@ private:
 	XMFLOAT4 m_View;
 	float m_Speed = 10.0f;
 	float m_Theta = 0.0f;
-	float m_Delay = 0.0f;
-	bool m_IsClick = false;
 	SeaWood::Point2 m_PrevMouse;
 };

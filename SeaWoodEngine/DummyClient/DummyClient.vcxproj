@@ -89,7 +89,6 @@
     <ClCompile Include="FirstScene.cpp" />
     <ClCompile Include="GeometryGenerator.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Missile.cpp" />
     <ClCompile Include="MouseCamera.cpp" />
     <ClCompile Include="MyApplication.cpp" />
     <ClCompile Include="PlayingBox.cpp" />
@@ -109,7 +108,6 @@
     <ClInclude Include="EyeLight.h" />
     <ClInclude Include="FirstScene.h" />
     <ClInclude Include="GeometryGenerator.h" />
-    <ClInclude Include="Missile.h" />
     <ClInclude Include="MouseCamera.h" />
     <ClInclude Include="MyApplication.h" />
     <ClInclude Include="PlayingBox.h" />
