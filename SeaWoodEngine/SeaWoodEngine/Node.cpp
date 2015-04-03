@@ -285,6 +285,18 @@ void SeaWood::Node::removeFromParent()
 	m_Parent->removeChild(this);
 }
 
+XMMATRIX SeaWood::Node::getParentWorld()
+{
+	if (m_Parent == nullptr)
+	{
+		return XMMatrixIdentity();
+	}
+	else
+	{
+		return m_Parent->getWorld() * m_Parent->getParentWorld();
+	}
+}
+
 void Node::removeChild(Node* child)
 {
 	_ASSERT(child != nullptr);

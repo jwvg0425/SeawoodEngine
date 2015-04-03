@@ -23,6 +23,7 @@ public:
 	void getRotate(float* angleX, float* angleY, float* angleZ);
 
 	XMMATRIX getWorld();
+	XMMATRIX getParentWorld();
 
 	const Material*	getMaterial();
 	void			setMaterial(Material material);

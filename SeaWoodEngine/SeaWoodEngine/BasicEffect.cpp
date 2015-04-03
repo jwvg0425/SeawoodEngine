@@ -153,7 +153,7 @@ void SeaWood::BasicEffect::updateByFrame()
 
 void SeaWood::BasicEffect::updateByObject(Node* object)
 {
-	auto world = object->getWorld();
+	auto world = object->getWorld() * object->getParentWorld();
 	auto viewProj = GET_RENDERER()->getCamera()->getViewProj();
 	auto worldViewProj = world * viewProj;
 	auto meterial = object->getMaterial();
