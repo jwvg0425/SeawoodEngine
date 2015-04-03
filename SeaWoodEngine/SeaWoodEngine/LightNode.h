@@ -73,6 +73,7 @@ SeaWood::Light<LightType>::~Light()
 template<typename LightType>
 SeaWood::Light<LightType>::Light(Scene* scene)
 {
+	m_IsRender = false;
 	m_Scene = scene;
 	m_Scene->registerLight(&m_Light);
 }

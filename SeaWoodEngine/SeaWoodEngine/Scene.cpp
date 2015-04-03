@@ -1,5 +1,8 @@
 ﻿#include "stdafx.h"
 #include "Scene.h"
+#include "Director.h"
+#include "Renderer.h"
+#include <algorithm>
 
 USING_NS_SW;
 
@@ -151,4 +154,69 @@ XMFLOAT4 SeaWood::Scene::getFogColor()
 bool SeaWood::Scene::getFogEnable()
 {
 	return m_IsFogEnabled;
+}
+
+void SeaWood::Scene::render()
+{
+	std::vector<Node*> drawNodes;
+
+	std::function<void(Node*node)> getAllChilds = [&](Node* node)
+	{
+		//그리지 않는 대상인 경우 그 자식들까지 싹 다 제외
+		if (!node->isRender())
+		{
+			return;
+		}
+
+		//자기 자신은 포함하지 않는다.
+		if(node != this)
+			drawNodes.push_back(node);
+
+		auto childs = node->getChildList();
+
+		if (childs.size() == 0)
+		{
+			return;
+		}
+		else
+		{
+			for (auto& child : childs)
+			{
+				getAllChilds(child.second);
+			}
+		}
+	};
+
+	getAllChilds(this);
+
+	std::sort(drawNodes.begin(), drawNodes.end(), [](Node* lhs, Node* rhs)
+	{
+		auto compareDistance = [&]()
+		{
+			auto camera = GET_RENDERER()->getCamera();
+			float lDistance = lhs->getDistanceToCamera(camera);
+			float rDistance = rhs->getDistanceToCamera(camera);
+
+			return lDistance > rDistance;
+		};
+
+		bool lBlend = (lhs->getBlend() != nullptr);
+		bool rBlend = (rhs->getBlend() != nullptr);
+
+		if (lBlend ^ rBlend)
+		{
+			//하나는 blend, 하나는 blend가 아니라면 blend가 아닌 걸 무조건 앞으로 보낸다(먼저 그린다)
+			return rBlend;
+		}
+		else
+		{
+			//둘다 blend거나 둘다 blend가 아니라면 거리를 기준으로 정렬한다
+			return compareDistance();
+		}
+	});
+
+	for (auto& node : drawNodes)
+	{
+		node->render();
+	}
 }

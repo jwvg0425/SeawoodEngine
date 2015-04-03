@@ -5,9 +5,13 @@
 
 NS_SW_BEGIN
 
+class Camera;
 class Node : public Ref
 {
 public:
+	using Nodes = std::vector<Node*>;
+	using ChildPair = std::pair<std::string, Node*>;
+	using Childs = std::vector<ChildPair>;
 	Node();
 	~Node() override;
 
@@ -22,8 +26,8 @@ public:
 	void getScale(float* scaleX, float* scaleY, float* scaleZ);
 	void getRotate(float* angleX, float* angleY, float* angleZ);
 
-	XMMATRIX getWorld();
-	XMMATRIX getParentWorld();
+	XMMATRIX getWorld() const;
+	XMMATRIX getParentWorld() const;
 
 	const Material*	getMaterial();
 	void			setMaterial(Material material);
@@ -33,9 +37,6 @@ public:
 	void			setTextureTransform(CXMMATRIX matrix);
 	XMFLOAT4X4		getTextureTransform();
 
-	using Nodes = std::vector<Node*>;
-	const			Point2& getPosition();
-	void			setPosition(Point2 position);
 	int				getRefCount();
 
 	//그리기 함수.
@@ -48,6 +49,7 @@ public:
 	virtual void	addChild(Node* child);
 	void			addChild(Node* child, std::string name);
 	Node*			getChild(std::string name);
+	const Childs&	getChildList();
 	//childs 배열에 해당 이름과 같은 이름을 가진 자식들을 전부 담아서 리턴
 	void			getChilds(std::string name, Nodes* childs);
 	Node*			getParent();
@@ -56,6 +58,12 @@ public:
 	void			removeAllChilds();
 	void			removeFromParent();
 
+	//렌더 스테이트 관련
+	void				setInputLayout(ID3D11InputLayout* inputLayout, D3D11_PRIMITIVE_TOPOLOGY topology);
+	void				setRasterizer(ID3D11RasterizerState* rasterizer);
+	void				setBlend(ID3D11BlendState* blend, const FLOAT* blendFactor = nullptr);
+	ID3D11BlendState*	getBlend() const;
+
 	//이벤트 관련 함수
 	virtual void	onMouseDown(MouseEvent e);
 	virtual void	onMouseMove(MouseEvent e);
@@ -63,15 +71,17 @@ public:
 
 	void			setEvent(EventType e);
 
+	float			getDistanceToCamera(Camera* camera) const;
+
+	//render 대상인지 확인.
+	bool			isRender();
+
 protected:
 	void updateWorld();
 
-	using Childs = std::vector<std::pair<std::string, Node*>>;
-
 	Childs		m_Childs;
-	Point2		m_Position;
-	Size		m_Size;
 	Node*		m_Parent = nullptr;
+	bool		m_IsRender = true;
 
 	std::vector<EventType> m_Events;
 
@@ -81,11 +91,19 @@ protected:
 	XMFLOAT4X4	m_Rotation;
 	XMFLOAT4X4	m_World;
 	XMFLOAT4X4	m_TextureTransform;
+	XMFLOAT4	m_CenterPos;
 	float m_X = 0.0f, m_Y = 0.0f, m_Z = 0.0f;
 	float m_ScaleX = 0.0f, m_ScaleY = 0.0f, m_ScaleZ = 0.0f;
 	float m_AngleX = 0.0f, m_AngleY = 0.0f, m_AngleZ = 0.0f;
 	Material*	m_Material = nullptr;
 	ID3D11ShaderResourceView* m_DiffuseMapSRV = nullptr;
+
+	//render state 관련
+	D3D11_PRIMITIVE_TOPOLOGY m_Topology;
+	ID3D11InputLayout*	m_InputLayout = nullptr;
+	ID3D11RasterizerState* m_RasterizerState = nullptr;
+	ID3D11BlendState* m_BlendState = nullptr;
+	FLOAT m_BlendFactor[4];
 };
 
 NS_SW_END

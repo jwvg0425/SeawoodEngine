@@ -17,14 +17,10 @@ public:
 	bool init() override;
 
 	void setEffect(EffectType effect);
-	void setInputLayout(ID3D11InputLayout* inputLayout, D3D11_PRIMITIVE_TOPOLOGY topology);
 	void setBuffer(const std::vector<VertexType>& vertices,
 		const std::vector<UINT>& indices, bool isDynamic = false);
 
 	void render() override;
-
-	void setRasterizer(ID3D11RasterizerState* rasterizer);
-	void setBlend(ID3D11BlendState* blend, const FLOAT blendFactor[4]);
 
 	static Figure<VertexType>* createWithEffect(EffectType effect);
 
@@ -40,30 +36,8 @@ protected:
 	ID3D11Buffer* m_VertexBuffer = nullptr;
 	ID3D11Buffer* m_IndexBuffer = nullptr;
 
-	D3D11_PRIMITIVE_TOPOLOGY m_Topology;
-	ID3D11InputLayout*	m_InputLayout = nullptr;
-	ID3D11RasterizerState* m_RasterizerState = nullptr;
-	ID3D11BlendState* m_BlendState = nullptr;
-	FLOAT m_BlendFactor[4];
-
 	bool m_IsReflect = false;
 };
-
-template<typename VertexType>
-void Figure<VertexType>::setBlend(ID3D11BlendState* blend, const FLOAT blendFactor[4])
-{
-	m_BlendState = blend;
-	m_BlendFactor[0] = blendFactor[0];
-	m_BlendFactor[1] = blendFactor[1];
-	m_BlendFactor[2] = blendFactor[2];
-	m_BlendFactor[3] = blendFactor[3];
-}
-
-template<typename VertexType>
-void Figure<VertexType>::setRasterizer(ID3D11RasterizerState* rasterizer)
-{
-	m_RasterizerState = rasterizer;
-}
 
 template<typename VertexType>
 Figure<VertexType>::Figure()
@@ -169,6 +143,21 @@ template<typename VertexType>
 void Figure<VertexType>::setVertices(const std::vector<VertexType>& vertices)
 {
 	m_Vertices = vertices;
+
+	m_CenterPos.x = 0;
+	m_CenterPos.y = 0;
+	m_CenterPos.z = 0;
+
+	for (auto& vertex : m_Vertices)
+	{
+		m_CenterPos.x += vertex.m_Pos.x;
+		m_CenterPos.y += vertex.m_Pos.y;
+		m_CenterPos.z += vertex.m_Pos.z;
+	}
+
+	m_CenterPos.x /= m_Vertices.size();
+	m_CenterPos.y /= m_Vertices.size();
+	m_CenterPos.z /= m_Vertices.size();
 }
 
 template<typename VertexType>
@@ -215,13 +204,6 @@ void Figure<VertexType>::buildBuffer(bool isDynamic)
 	D3D11_SUBRESOURCE_DATA iinitData;
 	iinitData.pSysMem = &m_Indices[0];
 	HR(GET_RENDERER()->getDevice()->CreateBuffer(&ibd, &iinitData, &m_IndexBuffer));
-}
-
-template<typename VertexType>
-void Figure<VertexType>::setInputLayout(ID3D11InputLayout* inputLayout, D3D11_PRIMITIVE_TOPOLOGY topology)
-{
-	m_InputLayout = inputLayout;
-	m_Topology = topology;
 }
 
 NS_SW_END

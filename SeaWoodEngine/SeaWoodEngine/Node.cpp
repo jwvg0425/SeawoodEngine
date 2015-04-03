@@ -2,6 +2,7 @@
 #include "Node.h"
 #include "Director.h"
 #include "Renderer.h"
+#include "Camera.h"
 
 USING_NS_SW;
 
@@ -101,7 +102,7 @@ void SeaWood::Node::getRotate(float* angleX, float* angleY, float* angleZ)
 	*angleZ = m_AngleZ;
 }
 
-XMMATRIX SeaWood::Node::getWorld()
+XMMATRIX SeaWood::Node::getWorld() const
 {
 	return XMLoadFloat4x4(&m_World);
 }
@@ -153,7 +154,7 @@ void SeaWood::Node::setTextureTransform(CXMMATRIX matrix)
 }
 
 
-Node::Node() : m_Position(Point2::ZERO), m_Size(Size::ZERO)
+Node::Node() : m_CenterPos(0.0f,0.0f,0.0f,1.0f)
 {
 	XMMATRIX I = XMMatrixIdentity();
 
@@ -169,21 +170,14 @@ Node::Node() : m_Position(Point2::ZERO), m_Size(Size::ZERO)
 
 Node::~Node()
 {
+	SAFE_DELETE(m_Material);
+	ReleaseCOM(m_DiffuseMapSRV);
+
 	removeAllChilds();
 	for (auto& e : m_Events)
 	{
 		Director::getInstance()->clearEvent(e, this);
 	}
-}
-
-const Point2& Node::getPosition()
-{
-	return m_Position;
-}
-
-void Node::setPosition(Point2 position)
-{
-	m_Position = position;
 }
 
 void Node::render()
@@ -285,7 +279,7 @@ void SeaWood::Node::removeFromParent()
 	m_Parent->removeChild(this);
 }
 
-XMMATRIX SeaWood::Node::getParentWorld()
+XMMATRIX SeaWood::Node::getParentWorld() const
 {
 	if (m_Parent == nullptr)
 	{
@@ -295,6 +289,66 @@ XMMATRIX SeaWood::Node::getParentWorld()
 	{
 		return m_Parent->getWorld() * m_Parent->getParentWorld();
 	}
+}
+
+float SeaWood::Node::getDistanceToCamera(Camera* camera) const
+{
+	XMFLOAT3 cameraPos = camera->getEyePosW();
+	XMVECTOR worldPointV = XMLoadFloat4(&XMFLOAT4(m_CenterPos.x, m_CenterPos.y, m_CenterPos.z, 1.0f));
+	XMMATRIX world = getWorld() * getParentWorld();
+
+	worldPointV = XMVector4Transform(worldPointV, world);
+
+	XMFLOAT4 worldPoint;
+
+	XMStoreFloat4(&worldPoint, worldPointV);
+
+	worldPoint.x -= cameraPos.x;
+	worldPoint.y -= cameraPos.y;
+	worldPoint.z -= cameraPos.z;
+
+	float distance = sqrt(worldPoint.x*worldPoint.x + worldPoint.y*worldPoint.y + worldPoint.z*worldPoint.z);
+
+	return distance;
+}
+
+bool SeaWood::Node::isRender()
+{
+	return m_IsRender;
+}
+
+const Node::Childs& SeaWood::Node::getChildList()
+{
+	return m_Childs;
+}
+
+void SeaWood::Node::setInputLayout(ID3D11InputLayout* inputLayout, D3D11_PRIMITIVE_TOPOLOGY topology)
+{
+	m_InputLayout = inputLayout;
+	m_Topology = topology;
+}
+
+void SeaWood::Node::setRasterizer(ID3D11RasterizerState* rasterizer)
+{
+	m_RasterizerState = rasterizer;
+}
+
+void SeaWood::Node::setBlend(ID3D11BlendState* blend, const FLOAT* blendFactor /*= nullptr*/)
+{
+	m_BlendState = blend;
+
+	if (blendFactor != nullptr)
+	{
+		m_BlendFactor[0] = blendFactor[0];
+		m_BlendFactor[1] = blendFactor[1];
+		m_BlendFactor[2] = blendFactor[2];
+		m_BlendFactor[3] = blendFactor[3];
+	}
+}
+
+ID3D11BlendState* SeaWood::Node::getBlend() const
+{
+	return m_BlendState;
 }
 
 void Node::removeChild(Node* child)

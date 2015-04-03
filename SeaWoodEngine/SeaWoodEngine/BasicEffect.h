@@ -6,6 +6,7 @@ NS_SW_BEGIN
 class BasicEffect : public Effect
 {
 public:
+	static const int LIGHT_NUM = 3;
 
 	BasicEffect();
 	~BasicEffect() override;

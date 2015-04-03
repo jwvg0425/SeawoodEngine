@@ -59,17 +59,17 @@ void SeaWood::BasicEffect::setEyePosW(const XMFLOAT3& v)
 
 void SeaWood::BasicEffect::setDirLight(DirectionalLight* light)
 {
-	m_DirLight->SetRawValue(light, 0, sizeof(DirectionalLight)* 3);
+	m_DirLight->SetRawValue(light, 0, sizeof(DirectionalLight)* LIGHT_NUM);
 }
 
 void SeaWood::BasicEffect::setPointLight(PointLight* light)
 {
-	m_PointLight->SetRawValue(light, 0, sizeof(PointLight)* 3);
+	m_PointLight->SetRawValue(light, 0, sizeof(PointLight)* LIGHT_NUM);
 }
 
 void SeaWood::BasicEffect::setSpotLight(SpotLight* light)
 {
-	m_SpotLight->SetRawValue(light, 0, sizeof(SpotLight)* 3);
+	m_SpotLight->SetRawValue(light, 0, sizeof(SpotLight)* LIGHT_NUM);
 }
 
 void SeaWood::BasicEffect::setMaterial(const Material& mat)
@@ -110,9 +110,9 @@ void SeaWood::BasicEffect::updateByFrame()
 	auto dirLight = scene->getDirectionalLight();
 	auto pointLight = scene->getPointLight();
 	auto spotLight = scene->getSpotLight();
-	DirectionalLight dLight[3];
-	PointLight pLight[3];
-	SpotLight sLight[3];
+	DirectionalLight dLight[LIGHT_NUM];
+	PointLight pLight[LIGHT_NUM];
+	SpotLight sLight[LIGHT_NUM];
 
 	for (int i = 0; i < dirLight.size(); i++)
 	{

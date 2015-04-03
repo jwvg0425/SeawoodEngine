@@ -100,6 +100,7 @@ bool FirstScene::init()
 	m_Box->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);
 	m_Box->setPosition(0.0f, 1.0f, 0.0f);
 	m_Box->setTexture(L"Textures/Water2.dds");
+	m_Box->setBlend(Blend::getTransparentBlend());
 	addChild(m_Box);
 
 	//안개 설정
