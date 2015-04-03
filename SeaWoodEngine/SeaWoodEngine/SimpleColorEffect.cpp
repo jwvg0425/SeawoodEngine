@@ -1,14 +1,14 @@
 ﻿#include "stdafx.h"
 #include "SimpleColorEffect.h"
 #include "Director.h"
-#include "D3DRenderer.h"
+#include "Renderer.h"
 #include "Node.h"
 #include "Camera.h"
 
 USING_NS_SW;
 
 SeaWood::SimpleColorEffect::SimpleColorEffect()
-: Effect(GET_D3D_RENDERER()->getDevice(), L"fx/color.cso")
+: Effect(GET_RENDERER()->getDevice(), L"fx/color.cso")
 {
 	m_Tech = m_Fx->GetTechniqueByName("ColorTech");
 	m_FxWorldViewProj = m_Fx->GetVariableByName("gWorldViewProj")->AsMatrix();
@@ -32,7 +32,7 @@ ID3DX11EffectTechnique* SeaWood::SimpleColorEffect::getTech()
 void SeaWood::SimpleColorEffect::updateByObject(Node* object)
 {
 	auto world = object->getWorld();
-	auto viewProj = GET_D3D_RENDERER()->getCamera()->getViewProj();
+	auto viewProj = GET_RENDERER()->getCamera()->getViewProj();
 	auto worldViewProj = world * viewProj;
 	setWorldViewProj(worldViewProj);
 }

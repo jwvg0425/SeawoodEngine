@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "Node.h"
 #include "Director.h"
-#include "D3DRenderer.h"
+#include "Renderer.h"
 
 USING_NS_SW;
 
@@ -133,7 +133,7 @@ void SeaWood::Node::setMaterial(Material material)
 
 void SeaWood::Node::setTexture(const std::wstring& fileName)
 {
-	HR(D3DX11CreateShaderResourceViewFromFile(GET_D3D_RENDERER()->getDevice(),
+	HR(D3DX11CreateShaderResourceViewFromFile(GET_RENDERER()->getDevice(),
 		fileName.c_str(), nullptr, nullptr, &m_DiffuseMapSRV, nullptr));
 }
 

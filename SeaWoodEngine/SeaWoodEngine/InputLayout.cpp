@@ -2,7 +2,7 @@
 #include "InputLayout.h"
 #include "Effect.h"
 #include "Director.h"
-#include "D3DRenderer.h"
+#include "Renderer.h"
 #include "SimpleColorEffect.h"
 #include "SimpleLightEffect.h"
 #include "BasicEffect.h"
@@ -46,7 +46,7 @@ ID3D11InputLayout* InputLayouts::getPosColor()
 	{
 		D3DX11_PASS_DESC passDesc;
 		Effects::getSimpleColorEffect()->getTech()->GetPassByIndex(0)->GetDesc(&passDesc);
-		HR(GET_D3D_RENDERER()->getDevice()->CreateInputLayout(InputLayoutDesc::m_PosColor, 2, passDesc.pIAInputSignature,
+		HR(GET_RENDERER()->getDevice()->CreateInputLayout(InputLayoutDesc::m_PosColor, 2, passDesc.pIAInputSignature,
 			passDesc.IAInputSignatureSize, &m_PosColor));
 	}
 
@@ -59,7 +59,7 @@ ID3D11InputLayout* SeaWood::InputLayouts::getPosNormal()
 	{
 		D3DX11_PASS_DESC passDesc;
 		Effects::getSimpleLightEffect()->getTech()->GetPassByIndex(0)->GetDesc(&passDesc);
-		HR(GET_D3D_RENDERER()->getDevice()->CreateInputLayout(InputLayoutDesc::m_PosNormal, 2, passDesc.pIAInputSignature,
+		HR(GET_RENDERER()->getDevice()->CreateInputLayout(InputLayoutDesc::m_PosNormal, 2, passDesc.pIAInputSignature,
 			passDesc.IAInputSignatureSize, &m_PosNormal));
 	}
 
@@ -72,7 +72,7 @@ ID3D11InputLayout* SeaWood::InputLayouts::getPosBasic()
 	{
 		D3DX11_PASS_DESC passDesc;
 		Effects::getBasicEffect()->getTech()->GetPassByIndex(0)->GetDesc(&passDesc);
-		HR(GET_D3D_RENDERER()->getDevice()->CreateInputLayout(InputLayoutDesc::m_PosBasic, 3, passDesc.pIAInputSignature,
+		HR(GET_RENDERER()->getDevice()->CreateInputLayout(InputLayoutDesc::m_PosBasic, 3, passDesc.pIAInputSignature,
 			passDesc.IAInputSignatureSize, &m_PosBasic));
 	}
 

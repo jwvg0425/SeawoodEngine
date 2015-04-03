@@ -3,8 +3,6 @@
 #include "KeyManager.h"
 #define GET_KEY_MANAGER() SeaWood::Director::getInstance()->getKeyManager()
 #define GET_RENDERER() SeaWood::Director::getInstance()->getRenderer()
-#define GET_D3D_RENDERER() SeaWood::Director::getInstance()->getD3DRenderer()
-#define GET_GDI_RENDERER() SeaWood::Director::getInstance()->getGdiRenderer()
 
 NS_SW_BEGIN
 
@@ -12,7 +10,7 @@ class Scene;
 class Renderer;
 class Node;
 class Ref;
-class D3DRenderer;
+class Renderer;
 class GdiRenderer;
 class Director
 {
@@ -41,8 +39,6 @@ public:
 
 	void					registerRenderer(Renderer* renderer);
 	Renderer*				getRenderer();
-	D3DRenderer*			getD3DRenderer();
-	GdiRenderer*			getGdiRenderer();
 
 	//input 관련
 	KeyManager*			getKeyManager();

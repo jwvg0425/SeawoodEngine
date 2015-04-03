@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "DepthStencil.h"
 #include "Director.h"
-#include "D3DRenderer.h"
+#include "Renderer.h"
 #include "Node.h"
 #include "Camera.h"
 #include "Scene.h"
@@ -42,7 +42,7 @@ ID3D11DepthStencilState* SeaWood::DepthStencil::getMarkMirror()
 		mirrorDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_REPLACE;
 		mirrorDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
-		HR(GET_D3D_RENDERER()->getDevice()->CreateDepthStencilState(&mirrorDesc, &m_MarkMirror));
+		HR(GET_RENDERER()->getDevice()->CreateDepthStencilState(&mirrorDesc, &m_MarkMirror));
 	}
 
 	return m_MarkMirror;
@@ -71,7 +71,7 @@ ID3D11DepthStencilState* SeaWood::DepthStencil::getDrawReflection()
 		drawReflectionDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 		drawReflectionDesc.BackFace.StencilFunc = D3D11_COMPARISON_EQUAL;
 
-		HR(GET_D3D_RENDERER()->getDevice()->CreateDepthStencilState(&drawReflectionDesc, &m_DrawReflection));
+		HR(GET_RENDERER()->getDevice()->CreateDepthStencilState(&drawReflectionDesc, &m_DrawReflection));
 	}
 
 	return m_DrawReflection;
@@ -100,7 +100,7 @@ ID3D11DepthStencilState* SeaWood::DepthStencil::getNoDoubleBlend()
 		noDoubleBlendDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_INCR;
 		noDoubleBlendDesc.BackFace.StencilFunc = D3D11_COMPARISON_EQUAL;
 
-		HR(GET_D3D_RENDERER()->getDevice()->CreateDepthStencilState(&noDoubleBlendDesc, &m_NoDoubleBlend));
+		HR(GET_RENDERER()->getDevice()->CreateDepthStencilState(&noDoubleBlendDesc, &m_NoDoubleBlend));
 	}
 
 	return m_NoDoubleBlend;

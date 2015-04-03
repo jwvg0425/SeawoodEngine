@@ -108,41 +108,41 @@ void Figure<VertexType>::render()
 {
 	m_Effect->updateByObject(this);
 
-	GET_D3D_RENDERER()->setInputLayout(m_InputLayout);
-	GET_D3D_RENDERER()->setPrimitiveTopology(m_Topology);
+	GET_RENDERER()->setInputLayout(m_InputLayout);
+	GET_RENDERER()->setPrimitiveTopology(m_Topology);
 
 	UINT stride = sizeof(VertexType);
 	UINT offset = 0;
 
-	GET_D3D_RENDERER()->getDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
-	GET_D3D_RENDERER()->getDeviceContext()->IASetIndexBuffer(m_IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+	GET_RENDERER()->getDeviceContext()->IASetVertexBuffers(0, 1, &m_VertexBuffer, &stride, &offset);
+	GET_RENDERER()->getDeviceContext()->IASetIndexBuffer(m_IndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	
 	if (m_RasterizerState != nullptr)
 	{
-		GET_D3D_RENDERER()->getDeviceContext()->RSSetState(m_RasterizerState);
+		GET_RENDERER()->getDeviceContext()->RSSetState(m_RasterizerState);
 	}
 
 	if (m_BlendState != nullptr)
 	{
-		GET_D3D_RENDERER()->getDeviceContext()->OMSetBlendState(m_BlendState, m_BlendFactor, 0xffffffff);
+		GET_RENDERER()->getDeviceContext()->OMSetBlendState(m_BlendState, m_BlendFactor, 0xffffffff);
 	}
 
 	D3DX11_TECHNIQUE_DESC techDesc;
 	m_Effect->getTech()->GetDesc(&techDesc);
 	for (UINT p = 0; p < techDesc.Passes; ++p)
 	{
-		m_Effect->getTech()->GetPassByIndex(p)->Apply(0, GET_D3D_RENDERER()->getDeviceContext());
-		GET_D3D_RENDERER()->getDeviceContext()->DrawIndexed(m_Indices.size(), 0, 0);
+		m_Effect->getTech()->GetPassByIndex(p)->Apply(0, GET_RENDERER()->getDeviceContext());
+		GET_RENDERER()->getDeviceContext()->DrawIndexed(m_Indices.size(), 0, 0);
 	}
 
 	if (m_RasterizerState != nullptr)
 	{
-		GET_D3D_RENDERER()->getDeviceContext()->RSSetState(nullptr);
+		GET_RENDERER()->getDeviceContext()->RSSetState(nullptr);
 	}
 
 	if (m_BlendState != nullptr)
 	{
-		GET_D3D_RENDERER()->getDeviceContext()->OMSetBlendState(nullptr, m_BlendFactor, 0xffffffff);
+		GET_RENDERER()->getDeviceContext()->OMSetBlendState(nullptr, m_BlendFactor, 0xffffffff);
 	}
 }
 
@@ -204,7 +204,7 @@ void Figure<VertexType>::buildBuffer(bool isDynamic)
 	vbd.MiscFlags = 0;
 	D3D11_SUBRESOURCE_DATA vinitData;
 	vinitData.pSysMem = &m_Vertices[0];
-	HR(GET_D3D_RENDERER()->getDevice()->CreateBuffer(&vbd, &vinitData, &m_VertexBuffer));
+	HR(GET_RENDERER()->getDevice()->CreateBuffer(&vbd, &vinitData, &m_VertexBuffer));
 
 	D3D11_BUFFER_DESC ibd;
 	ibd.Usage = D3D11_USAGE_IMMUTABLE;
@@ -214,7 +214,7 @@ void Figure<VertexType>::buildBuffer(bool isDynamic)
 	ibd.MiscFlags = 0;
 	D3D11_SUBRESOURCE_DATA iinitData;
 	iinitData.pSysMem = &m_Indices[0];
-	HR(GET_D3D_RENDERER()->getDevice()->CreateBuffer(&ibd, &iinitData, &m_IndexBuffer));
+	HR(GET_RENDERER()->getDevice()->CreateBuffer(&ibd, &iinitData, &m_IndexBuffer));
 }
 
 template<typename VertexType>

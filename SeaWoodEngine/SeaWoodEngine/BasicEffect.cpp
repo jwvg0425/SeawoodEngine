@@ -1,13 +1,13 @@
 ﻿#include "stdafx.h"
 #include "BasicEffect.h"
 #include "Director.h"
-#include "D3DRenderer.h"
+#include "Renderer.h"
 #include "Node.h"
 #include "Camera.h"
 #include "Scene.h"
 
 SeaWood::BasicEffect::BasicEffect()
-: Effect(GET_D3D_RENDERER()->getDevice(), L"fx/Basic.cso")
+: Effect(GET_RENDERER()->getDevice(), L"fx/Basic.cso")
 {
 	m_Tech = m_Fx->GetTechniqueByName("Light");
 	m_TexTech = m_Fx->GetTechniqueByName("Tex");
@@ -135,7 +135,7 @@ void SeaWood::BasicEffect::updateByFrame()
 	setDirLightNum(dirLight.size());
 	setPointLightNum(pointLight.size());
 	setSpotLightNum(spotLight.size());
-	setEyePosW(GET_D3D_RENDERER()->getCamera()->getEyePosW());
+	setEyePosW(GET_RENDERER()->getCamera()->getEyePosW());
 
 	//안개 설정된 경우
 	if (scene->getFogEnable())
@@ -154,7 +154,7 @@ void SeaWood::BasicEffect::updateByFrame()
 void SeaWood::BasicEffect::updateByObject(Node* object)
 {
 	auto world = object->getWorld();
-	auto viewProj = GET_D3D_RENDERER()->getCamera()->getViewProj();
+	auto viewProj = GET_RENDERER()->getCamera()->getViewProj();
 	auto worldViewProj = world * viewProj;
 	auto meterial = object->getMaterial();
 	auto texture = object->getTexture();

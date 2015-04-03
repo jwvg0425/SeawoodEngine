@@ -18,11 +18,9 @@
     <ClInclude Include="Node.h" />
     <ClInclude Include="DepthStencil.h" />
     <ClInclude Include="Figure.h" />
-    <ClInclude Include="D3DRenderer.h" />
     <ClInclude Include="Director.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="Event.h" />
-    <ClInclude Include="GdiRenderer.h" />
     <ClInclude Include="InputLayout.h" />
     <ClInclude Include="KeyManager.h" />
     <ClInclude Include="Light.h" />
@@ -51,12 +49,10 @@
     <ClCompile Include="Blend.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Node.cpp" />
-    <ClCompile Include="D3DRenderer.cpp" />
     <ClCompile Include="DepthStencil.cpp" />
     <ClCompile Include="Director.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Event.cpp" />
-    <ClCompile Include="GdiRenderer.cpp" />
     <ClCompile Include="InputLayout.cpp" />
     <ClCompile Include="KeyManager.cpp" />
     <ClCompile Include="MouseEvent.cpp" />

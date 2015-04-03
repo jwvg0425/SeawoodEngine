@@ -31,10 +31,10 @@ bool EyeLight::init()
 
 void EyeLight::update(float dTime)
 {
-	m_Light.m_Position = GET_D3D_RENDERER()->getCamera()->getEyePosW();
+	m_Light.m_Position = GET_RENDERER()->getCamera()->getEyePosW();
 	XMVECTOR pos = XMLoadFloat3(&m_Light.m_Position);
 	XMVectorSetW(pos, 1.0f);
-	XMVECTOR target = GET_D3D_RENDERER()->getCamera()->getTarget();
+	XMVECTOR target = GET_RENDERER()->getCamera()->getTarget();
 	XMStoreFloat3(&m_Light.m_Direction,
 		XMVector3Normalize(target - pos));
 }

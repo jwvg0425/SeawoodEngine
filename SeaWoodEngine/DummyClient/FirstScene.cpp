@@ -30,7 +30,7 @@ bool FirstScene::init()
 
 	//현재 scene에 맞는 카메라로 변경
 	auto camera = Camera::createWithPos(XMVectorSet(0.0f, 5.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
-	GET_D3D_RENDERER()->registerCamera(camera);
+	GET_RENDERER()->registerCamera(camera);
 
 	std::vector<Vertex::PosBasic> earthVertices;
 	std::vector<UINT> earthIndices;
@@ -116,7 +116,7 @@ void FirstScene::update(float dTime)
 	//고정 카메라
 	if (GET_KEY_MANAGER()->getKeyState(VK_1) == KeyManager::PUSH)
 	{
-		GET_D3D_RENDERER()->changeCamera(Camera::createWithPos(XMVectorSet(0.0f, 5.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)));
+		GET_RENDERER()->changeCamera(Camera::createWithPos(XMVectorSet(0.0f, 5.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f)));
 	}
 
 	//mouse로 시점 변환 가능한 카메라
@@ -125,7 +125,7 @@ void FirstScene::update(float dTime)
 		auto camera = MouseCamera::create();
 		camera->setRadius(20.0f);
 
-		GET_D3D_RENDERER()->changeCamera(camera);
+		GET_RENDERER()->changeCamera(camera);
 	}
 
 	//dynamic box 계속 쫓아다님
@@ -134,7 +134,7 @@ void FirstScene::update(float dTime)
 		auto camera = ChasingCamera::create();
 		camera->setChase(m_Box, XMVectorSet(0.0f,-10.0f,20.0f,0.0f));
 
-		GET_D3D_RENDERER()->changeCamera(camera);
+		GET_RENDERER()->changeCamera(camera);
 	}
 
 	if (GET_KEY_MANAGER()->getKeyState(VK_4) == KeyManager::PUSH)
@@ -142,7 +142,7 @@ void FirstScene::update(float dTime)
 		auto camera = PlayingCamera::create();
 		camera->setChase(m_Box, 20);
 
-		GET_D3D_RENDERER()->changeCamera(camera);
+		GET_RENDERER()->changeCamera(camera);
 	}
 
 	//빛 변경 - 평행광 켜기 끄기

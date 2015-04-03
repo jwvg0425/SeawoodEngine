@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "Effect.h"
 #include "Director.h"
-#include "D3DRenderer.h"
+#include "Renderer.h"
 #include "Node.h"
 #include "Camera.h"
 #include "Scene.h"

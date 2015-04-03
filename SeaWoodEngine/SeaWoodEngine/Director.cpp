@@ -2,8 +2,7 @@
 #include "Director.h"
 #include "Scene.h"
 #include "Application.h"
-#include "D3DRenderer.h"
-#include "GdiRenderer.h"
+#include "Renderer.h"
 #include "MouseEvent.h"
 #include <time.h>
 #include <iostream>
@@ -169,9 +168,9 @@ LRESULT CALLBACK SeaWood::Director::WndProc(HWND hWnd, UINT iMessage, WPARAM wPa
 		Application::getInstance()->setClientSize(Size(LOWORD(lParam), HIWORD(lParam)));
 		return 0;
 	case WM_EXITSIZEMOVE:
-		if (GET_D3D_RENDERER() != nullptr)
+		if (GET_RENDERER() != nullptr)
 		{
-			GET_D3D_RENDERER()->initRenderTarget();
+			GET_RENDERER()->initRenderTarget();
 		}
 		return 0;
 	}
@@ -286,30 +285,6 @@ void SeaWood::Director::end()
 KeyManager* SeaWood::Director::getKeyManager()
 {
 	return m_KeyManager;
-}
-
-D3DRenderer* SeaWood::Director::getD3DRenderer()
-{
-	if (m_Renderer->getType() == Renderer::ViewType::D3_DX)
-	{
-		return static_cast<D3DRenderer*>(m_Renderer);
-	}
-	else
-	{
-		return nullptr;
-	}
-}
-
-GdiRenderer* SeaWood::Director::getGdiRenderer()
-{
-	if (m_Renderer->getType() == Renderer::ViewType::D2_GDI)
-	{
-		return static_cast<GdiRenderer*>(m_Renderer);
-	}
-	else
-	{
-		return nullptr;
-	}
 }
 
 void SeaWood::Director::clearEvent(EventType type, Node* node)

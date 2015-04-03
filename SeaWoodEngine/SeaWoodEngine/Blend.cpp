@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "Blend.h"
 #include "Director.h"
-#include "D3DRenderer.h"
+#include "Renderer.h"
 #include "Node.h"
 #include "Camera.h"
 #include "Scene.h"
@@ -37,7 +37,7 @@ ID3D11BlendState* SeaWood::Blend::getTransparentBlend()
 		transparentDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 		transparentDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-		HR(GET_D3D_RENDERER()->getDevice()->CreateBlendState(&transparentDesc, &m_TransparentBlend));
+		HR(GET_RENDERER()->getDevice()->CreateBlendState(&transparentDesc, &m_TransparentBlend));
 	}
 
 	return m_TransparentBlend;
@@ -60,7 +60,7 @@ ID3D11BlendState* SeaWood::Blend::getRenderTargetNoWrite()
 		noRenderTargetWritesDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 		noRenderTargetWritesDesc.RenderTarget[0].RenderTargetWriteMask = 0;
 
-		HR(GET_D3D_RENDERER()->getDevice()->CreateBlendState(&noRenderTargetWritesDesc, &m_RenderTargetNoWrite));
+		HR(GET_RENDERER()->getDevice()->CreateBlendState(&noRenderTargetWritesDesc, &m_RenderTargetNoWrite));
 	}
 
 	return m_RenderTargetNoWrite;
@@ -76,7 +76,7 @@ ID3D11BlendState* SeaWood::Blend::getAlphaToCoverage()
 		alphaToCoverageDesc.RenderTarget[0].BlendEnable = false;
 		alphaToCoverageDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-		HR(GET_D3D_RENDERER()->getDevice()->CreateBlendState(&alphaToCoverageDesc, &m_AlphaToCoverage));
+		HR(GET_RENDERER()->getDevice()->CreateBlendState(&alphaToCoverageDesc, &m_AlphaToCoverage));
 	}
 
 	return m_AlphaToCoverage;

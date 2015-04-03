@@ -79,12 +79,6 @@
     <ClCompile Include="Camera.cpp">
       <Filter>base\renderer</Filter>
     </ClCompile>
-    <ClCompile Include="D3DRenderer.cpp">
-      <Filter>base\renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="GdiRenderer.cpp">
-      <Filter>base\renderer</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>base\renderer</Filter>
     </ClCompile>
@@ -162,12 +156,6 @@
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>base\renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="D3DRenderer.h">
-      <Filter>base\renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="GdiRenderer.h">
       <Filter>base\renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">

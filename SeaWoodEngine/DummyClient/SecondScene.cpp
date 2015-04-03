@@ -23,7 +23,7 @@ bool SecondScene::init()
 
 	const FLOAT color[] = { 0.0f, 0.6f, 0.3f, 1.0f };
 
-	GET_D3D_RENDERER()->setBackgroundColor(color);
+	GET_RENDERER()->setBackgroundColor(color);
 
 	auto box = PlayingBox::create();
 	box->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);
@@ -42,7 +42,7 @@ bool SecondScene::init()
 	auto camera = PlayingCamera::create();
 	camera->setChase(box, 10.0f);
 
-	GET_D3D_RENDERER()->changeCamera(camera);
+	GET_RENDERER()->changeCamera(camera);
 
 	DirectionalLight directionalLight;
 

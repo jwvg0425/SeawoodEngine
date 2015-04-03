@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "SimpleLightEffect.h"
 #include "Director.h"
-#include "D3DRenderer.h"
+#include "Renderer.h"
 #include "Node.h"
 #include "Camera.h"
 #include "Scene.h"
@@ -10,7 +10,7 @@ USING_NS_SW;
 
 
 SeaWood::SimpleLightEffect::SimpleLightEffect()
-: Effect(GET_D3D_RENDERER()->getDevice(), L"fx/light.cso")
+: Effect(GET_RENDERER()->getDevice(), L"fx/light.cso")
 {
 	m_Tech = m_Fx->GetTechniqueByName("Light");
 	m_WorldViewProj = m_Fx->GetVariableByName("gWorldViewProj")->AsMatrix();
@@ -68,7 +68,7 @@ ID3DX11EffectTechnique* SeaWood::SimpleLightEffect::getTech()
 void SeaWood::SimpleLightEffect::updateByObject(Node* object)
 {
 	auto world = object->getWorld();
-	auto viewProj = GET_D3D_RENDERER()->getCamera()->getViewProj();
+	auto viewProj = GET_RENDERER()->getCamera()->getViewProj();
 	auto worldViewProj = world * viewProj;
 	auto meterial = object->getMaterial();
 
@@ -113,7 +113,7 @@ void SeaWood::SimpleLightEffect::updateByFrame()
 	setDirLightNum(dirLight.size());
 	setPointLightNum(pointLight.size());
 	setSpotLightNum(spotLight.size());
-	setEyePosW(GET_D3D_RENDERER()->getCamera()->getEyePosW());
+	setEyePosW(GET_RENDERER()->getCamera()->getEyePosW());
 }
 
 void SeaWood::SimpleLightEffect::setPointLight(PointLight* light)
