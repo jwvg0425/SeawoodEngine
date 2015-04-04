@@ -182,18 +182,10 @@ Node::~Node()
 
 void Node::render()
 {
-	for (auto& child : m_Childs)
-	{
-		child.second->render();
-	}
 }
 
 void Node::update(float dTime)
 {
-	for (auto& child : m_Childs)
-	{
-		child.second->update(dTime);
-	}
 }
 
 void Node::addChild(Node* child)
@@ -352,6 +344,11 @@ void SeaWood::Node::setBlend(ID3D11BlendState* blend, const FLOAT* blendFactor /
 ID3D11BlendState* SeaWood::Node::getBlend() const
 {
 	return m_BlendState;
+}
+
+void SeaWood::Node::scheduleUpdate()
+{
+	Director::getInstance()->registerEvent(EventType::UPDATE_FRAME, this);
 }
 
 void Node::removeChild(Node* child)

@@ -69,10 +69,13 @@ void Director::gameLoop()
 	//input device 갱신
 	m_KeyManager->update(dTime);
 
-	// 화면 갱신
-	m_NowScene->update(dTime);
+	//업데이트 등록된 노드들 업데이트 작업
+	for (auto& node : m_EventNodes[EventType::UPDATE_FRAME])
+	{
+		node->update(dTime);
+	}
 
-	draw();
+	render();
 
 	//autorelease 작업
 	for (auto& ref : m_ReleasePool)
@@ -87,7 +90,7 @@ void Director::gameLoop()
 	m_Tick = nowTick;
 }
 
-void Director::draw()
+void Director::render()
 {
 	if (m_NowScene == nullptr)
 	{

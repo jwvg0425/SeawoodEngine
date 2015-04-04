@@ -118,12 +118,12 @@ void Application::onCreate()
 
 }
 
-HWND SeaWood::Application::getWindowHandle()
+HWND SeaWood::Application::getWindowHandle() const
 {
 	return m_WindowHandle;
 }
 
-HINSTANCE SeaWood::Application::getInstanceHandle()
+HINSTANCE SeaWood::Application::getInstanceHandle() const
 {
 	return m_InstanceHandle;
 }
@@ -133,7 +133,7 @@ float SeaWood::Application::getAspectRatio() const
 	return m_ClientSize.m_Width / m_ClientSize.m_Height;
 }
 
-TCHAR* SeaWood::Application::getTitle()
+TCHAR* SeaWood::Application::getTitle() const
 {
 	return m_Title;
 }

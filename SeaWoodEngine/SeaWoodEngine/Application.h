@@ -9,12 +9,12 @@ public:
 	bool					init(TCHAR* title, int width, int height);
 	int						run();
 
-	HWND					getWindowHandle();
-	HINSTANCE				getInstanceHandle();
+	HWND					getWindowHandle() const;
+	HINSTANCE				getInstanceHandle() const;
 	void					setClientSize(const Size& size);
 	const Size&				getClientSize() const;
 	float					getAspectRatio() const;
-	TCHAR*					getTitle();
+	TCHAR*					getTitle() const;
 	void					setTitle(TCHAR* title);
 
 							Application();

@@ -37,6 +37,8 @@ bool MovingCamera::init()
 
 	Director::getInstance()->registerEvent(EventType::MOUSE_MOVE, this);
 
+	scheduleUpdate();
+
 	return true;
 }
 

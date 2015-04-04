@@ -19,17 +19,6 @@ Scene::~Scene()
 
 void Scene::update(float dTime)
 {
-	for (auto& child : m_Childs)
-	{
-		child.second->update(dTime);
-	}
-
-	for (auto& child : m_AddingChilds)
-	{
-		m_Childs.push_back(child);
-	}
-
-	m_AddingChilds.clear();
 }
 
 bool SeaWood::Scene::init()
@@ -46,7 +35,7 @@ void SeaWood::Scene::addChild(Node* child)
 {
 	child->setParent(this);
 	child->retain();
-	m_AddingChilds.push_back(std::make_pair("NO_NAME", child));
+	m_Childs.push_back(std::make_pair("NO_NAME", child));
 }
 
 void SeaWood::Scene::registerLight(const DirectionalLight* directionalLight)

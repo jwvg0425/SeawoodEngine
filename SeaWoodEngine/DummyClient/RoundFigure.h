@@ -9,6 +9,8 @@ public:
 	RoundFigure();
 	~RoundFigure() override;
 
+	bool init() override;
+
 	void update(float dTime) override;
 
 	void setOption(float radius, XMFLOAT3 direction, float speed);
@@ -21,6 +23,19 @@ private:
 	XMFLOAT3	m_Direction;
 	float		m_Theta = 0;
 };
+
+template <typename VertexType>
+bool RoundFigure<VertexType>::init()
+{
+	if (!Figure<VertexType>::init())
+	{
+		return false;
+	}
+
+	scheduleUpdate();
+
+	return true;
+}
 
 template<typename VertexType>
 void RoundFigure<VertexType>::setOption(float radius, XMFLOAT3 direction, float speed)
@@ -52,11 +67,11 @@ RoundFigure<VertexType>* RoundFigure<VertexType>::createWithEffect(EffectType ef
 template<typename VertexType>
 void RoundFigure<VertexType>::update(float dTime)
 {
-	Node::update(dTime);
-
 	m_Theta += m_Speed*dTime;
 	
 	auto dirVector = XMLoadFloat3(&m_Direction);
+
+	dirVector = XMVector3Normalize(dirVector);
 
 	auto axisCross = m_Radius * XMVector3Cross(dirVector, XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f));
 

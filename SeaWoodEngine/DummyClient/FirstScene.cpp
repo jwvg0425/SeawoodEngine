@@ -86,7 +86,7 @@ bool FirstScene::init()
 	};
 
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		auto sphere = Figure<Vertex::PosBasic>::createWithEffect(
 			Effects::getBasicEffect());
@@ -129,6 +129,9 @@ bool FirstScene::init()
 	auto lightNode = Light<DirectionalLight>::createWithScene(this, light);
 
 	addChild(lightNode);
+
+	setFogEnable(true);
+	setFog(20.0f, 100.0f, XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f));
 
 	return true;
 }

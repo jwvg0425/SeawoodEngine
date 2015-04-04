@@ -10,8 +10,6 @@ class Scene;
 class Renderer;
 class Node;
 class Ref;
-class Renderer;
-class GdiRenderer;
 class Director
 {
 public:
@@ -31,14 +29,14 @@ public:
 	void				end();
 
 	//등록된 개체들을 모두 그림
-	void				draw();
+	void				render();
 
 	void				startScene(Scene* scene);
 	void				changeScene(Scene* scene);
 	Scene*				getRunningScene();
 
-	void					registerRenderer(Renderer* renderer);
-	Renderer*				getRenderer();
+	void				registerRenderer(Renderer* renderer);
+	Renderer*			getRenderer();
 
 	//input 관련
 	KeyManager*			getKeyManager();
@@ -48,20 +46,21 @@ public:
 	void				registerEvent(EventType type, Node* node);
 	void				clearEvent(EventType type, Node* node);
 	
-	void				onMouseDown(MouseEvent::Status status);
-	void				onMouseMove(int x, int y);
-	void				onMouseUp(MouseEvent::Status status);
 	void				autorelease(Ref* ref);
 
 	LRESULT CALLBACK	WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 
-protected:
+private:
 	Director();
 	~Director();
 
 	long long int		getTick();
 	long long int		getTicksPerSecond();
 	void				calculateFPS(float dTime);
+
+	void				onMouseDown(MouseEvent::Status status);
+	void				onMouseMove(int x, int y);
+	void				onMouseUp(MouseEvent::Status status);
 
 	static Director*	m_Instance;
 

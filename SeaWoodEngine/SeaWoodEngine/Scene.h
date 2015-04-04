@@ -44,7 +44,6 @@ public:
 	XMFLOAT4		getFogColor();
 
 protected:
-	Childs		m_AddingChilds;
 	DLights		m_DirectionalLight;
 	PLights		m_PointLight;
 	SLights		m_SpotLight;

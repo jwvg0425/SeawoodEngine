@@ -71,6 +71,9 @@ public:
 
 	void			setEvent(EventType e);
 
+	//업데이트 등록
+	void			scheduleUpdate();
+
 	float			getDistanceToCamera(Camera* camera) const;
 
 	//render 대상인지 확인.
