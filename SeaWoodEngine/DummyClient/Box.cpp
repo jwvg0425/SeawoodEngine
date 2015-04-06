@@ -25,27 +25,6 @@ bool Box::init()
 	return true;
 }
 
-void Box::setBox(float width, float height, float depth, const std::vector<XMFLOAT4>& colors)
-{
-	float w2 = width / 2;
-	float h2 = height / 2;
-	float d2 = depth / 2;
-
-	std::vector<FigureVertex> vertices;
-	std::vector<UINT> indices;
-
-	GeometryGenerator::createBox(width, height, depth, vertices, indices);
-
-	setBuffer(vertices, indices);
-
-	auto material = Material(); 
-	material.m_Ambient = XMFLOAT4(0.1f, 0.2f, 0.3f, 1.0f);
-	material.m_Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	material.m_Specular = XMFLOAT4(0.9f, 0.9f, 0.9f, 16.0f);
-
-	setMaterial(material);	
-}
-
 void Box::setBoxWithRandomColor(float width, float height, float depth)
 {
 	float w2 = width / 2;
@@ -67,4 +46,20 @@ void Box::setBoxWithRandomColor(float width, float height, float depth)
 	setMaterial(material);
 
 	
+}
+
+void Box::setBoxWithMaterial(float width, float height, float depth, SeaWood::Material material)
+{
+	float w2 = width / 2;
+	float h2 = height / 2;
+	float d2 = depth / 2;
+
+	std::vector<FigureVertex> vertices;
+	std::vector<UINT> indices;
+
+	GeometryGenerator::createBox(width, height, depth, vertices, indices);
+
+	setBuffer(vertices, indices);
+
+	setMaterial(material);
 }

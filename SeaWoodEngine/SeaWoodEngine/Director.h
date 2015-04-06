@@ -70,7 +70,7 @@ private:
 	bool				m_IsQueryPerformance = false;
 	LARGE_INTEGER		m_TicksPerSecond;
 	long long int		m_Tick = 0;
-	MouseEvent*			m_Mouse;
+	MouseEvent*			m_Mouse = nullptr;
 	EventNodes			m_EventNodes;
 	int					m_FPS = 0;
 	Refs				m_ReleasePool;

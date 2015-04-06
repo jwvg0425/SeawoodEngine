@@ -15,7 +15,6 @@ FirstScene::FirstScene()
 
 FirstScene::~FirstScene()
 {
-
 }
 
 bool FirstScene::init()
@@ -28,9 +27,46 @@ bool FirstScene::init()
 	auto camera = MovingCamera::createWithPos(XMVectorSet(0.0f, 0.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
 	GET_RENDERER()->registerCamera(camera);
 
+	//test
+	ModelInfo body;
+	ModelInfo track;
+
+	modelLoader("test.swm", track);
+	modelLoader("test2.swm", body);
+
+	auto test2 = Figure<Vertex::PosBasic>::createWithEffect(
+		Effects::getBasicEffect());
+
+	test2->setBuffer(track.m_Vertices, track.m_Indices);
+	test2->setMaterial(track.m_Material);
+	test2->setInputLayout(InputLayouts::getPosBasic(),
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	test2->setScale(0.1f, 0.1f, 0.1f);
+
+	addChild(test2);
+
+	auto test = Figure<Vertex::PosBasic>::createWithEffect(
+		Effects::getBasicEffect());
+
+	test->setBuffer(body.m_Vertices, body.m_Indices);
+	test->setMaterial(body.m_Material);
+	test->setInputLayout(InputLayouts::getPosBasic(),
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	test->setScale(0.1f, 0.1f, 0.1f);
+
+	addChild(test);
+
+	Material boxMaterial;
+
+	boxMaterial.m_Ambient = XMFLOAT4(0.4f, 0.4f, 0.4f, 1.0f);
+	boxMaterial.m_Diffuse = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
+	boxMaterial.m_Specular = XMFLOAT4(0.1f, 0.1f, 0.1f, 200.0f);
+
 	auto box = Box::create();
 
-	box->setBoxWithRandomColor(2.0f, 2.0f, 2.0f);
+	box->setBoxWithMaterial(2.0f, 2.0f, 2.0f, boxMaterial);
 
 	box->setPosition(2.0f, 4.0f, -3.0f);
 	box->setScale(2.0f, 1.0f, 1.0f);
@@ -121,10 +157,10 @@ bool FirstScene::init()
 
 	DirectionalLight light;
 
-	light.m_Ambient = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
-	light.m_Diffuse = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+	light.m_Ambient = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
+	light.m_Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	light.m_Specular = XMFLOAT4(1.0f, 1.0f, 1.0f, 16.0f);
-	light.m_Direction = XMFLOAT3(0.4f, 0.0f, 1.0f);
+	light.m_Direction = XMFLOAT3(1.0f, 1.0f, 0.0f);
 
 	auto lightNode = Light<DirectionalLight>::createWithScene(this, light);
 
@@ -134,9 +170,4 @@ bool FirstScene::init()
 	setFog(20.0f, 100.0f, XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f));
 
 	return true;
-}
-
-void FirstScene::update(float dTime)
-{
-	Scene::update(dTime);
 }

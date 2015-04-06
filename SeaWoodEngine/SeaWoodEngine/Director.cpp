@@ -61,6 +61,7 @@ void Director::gameLoop()
 {
 	auto nowTick = getTick();
 
+	//TODO : dTime 매 오브젝트별로 갱신가능하도록
 	float dTime = static_cast<float>(nowTick - m_Tick) / getTicksPerSecond();
 
 	//view 갱신

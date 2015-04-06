@@ -15,7 +15,7 @@ public:
 	~Box() override;
 
 	bool init() override;
-	void setBox(float width, float height, float depth, const std::vector<XMFLOAT4>& colors);
+	void setBoxWithMaterial(float width, float height, float depth, SeaWood::Material material);
 	void setBoxWithRandomColor(float width, float height, float depth);
 
 	CREATE_FUNC(Box);

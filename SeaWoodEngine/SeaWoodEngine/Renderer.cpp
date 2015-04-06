@@ -262,6 +262,8 @@ ID3D11DeviceContext* SeaWood::Renderer::getDeviceContext()
 
 void SeaWood::Renderer::registerCamera(Camera* camera)
 {
+	_ASSERT(m_Camera == nullptr);
+
 	camera->retain();
 	m_Camera = camera;
 }

@@ -17,7 +17,7 @@ void MyApplication::onCreate()
 {
 	auto renderer = Renderer::create();
 
-	FLOAT color[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+	FLOAT color[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 
 	renderer->setBackgroundColor(color);
 

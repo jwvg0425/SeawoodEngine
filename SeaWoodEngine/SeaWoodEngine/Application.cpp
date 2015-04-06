@@ -70,7 +70,7 @@ bool Application::init(TCHAR* title, int width, int height)
 {
 	_ASSERT(title != nullptr);
 
-	m_InstanceHandle = GetModuleHandle(0);
+	m_InstanceHandle = GetModuleHandle(nullptr);
 
 	m_ClientSize.m_Width = width;
 	m_ClientSize.m_Height = height;

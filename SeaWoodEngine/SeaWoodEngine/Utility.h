@@ -23,4 +23,6 @@ static T clamp(const T& x, const T& low, const T& high)
 	return x < low ? low : (x > high ? high : x);
 }
 
+void modelLoader(const std::string& fileName, ModelInfo& info);
+
 NS_SW_END

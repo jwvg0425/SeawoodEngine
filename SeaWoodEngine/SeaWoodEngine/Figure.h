@@ -11,6 +11,7 @@ class Figure : public Node
 public:
 	using FigureVertex = VertexType;
 	using EffectType = typename VertexType::EffectType;
+
 	Figure();
 	~Figure() override;
 
