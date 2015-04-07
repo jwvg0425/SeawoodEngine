@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SeaWoodEngine", "SeaWoodEng
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DummyClient", "DummyClient\DummyClient.vcxproj", "{2FE74CC2-2465-46E7-A91E-5BF7DD6A3C24}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Converter", "Converter\Converter.vcxproj", "{16D23D22-CDE0-429D-931D-537F18BFBA62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -21,6 +23,10 @@ Global
 		{2FE74CC2-2465-46E7-A91E-5BF7DD6A3C24}.Debug|Win32.Build.0 = Debug|Win32
 		{2FE74CC2-2465-46E7-A91E-5BF7DD6A3C24}.Release|Win32.ActiveCfg = Release|Win32
 		{2FE74CC2-2465-46E7-A91E-5BF7DD6A3C24}.Release|Win32.Build.0 = Release|Win32
+		{16D23D22-CDE0-429D-931D-537F18BFBA62}.Debug|Win32.ActiveCfg = Debug|Win32
+		{16D23D22-CDE0-429D-931D-537F18BFBA62}.Debug|Win32.Build.0 = Debug|Win32
+		{16D23D22-CDE0-429D-931D-537F18BFBA62}.Release|Win32.ActiveCfg = Release|Win32
+		{16D23D22-CDE0-429D-931D-537F18BFBA62}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
