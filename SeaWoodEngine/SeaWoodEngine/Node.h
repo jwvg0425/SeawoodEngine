@@ -34,6 +34,7 @@ public:
 
 	ID3D11ShaderResourceView* getTexture();
 	void			setTexture(const std::wstring& fileName);
+	void			setTexture(const std::string& fileName);
 	void			setTextureTransform(CXMMATRIX matrix);
 	XMFLOAT4X4		getTextureTransform();
 

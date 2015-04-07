@@ -26,6 +26,8 @@ bool EyeLight::init()
 	m_Light.m_Spot = 20.0f;
 	m_Light.m_Range = 10000.0f;
 
+	scheduleUpdate();
+
 	return true;
 }
 

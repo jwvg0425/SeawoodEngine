@@ -27,36 +27,14 @@ bool FirstScene::init()
 	auto camera = MovingCamera::createWithPos(XMVectorSet(0.0f, 0.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
 	GET_RENDERER()->registerCamera(camera);
 
-	//test
-	ModelInfo body;
-	ModelInfo track;
+	auto body = Model::createWithFile("body.swm");
+	body->setScale(0.1, 0.1, 0.1);
 
-	modelLoader("test.swm", track);
-	modelLoader("test2.swm", body);
+	auto track = Model::createWithFile("track.swm");
+	track->setScale(0.1, 0.1, 0.1);
 
-	auto test2 = Figure<Vertex::PosBasic>::createWithEffect(
-		Effects::getBasicEffect());
-
-	test2->setBuffer(track.m_Vertices, track.m_Indices);
-	test2->setMaterial(track.m_Material);
-	test2->setInputLayout(InputLayouts::getPosBasic(),
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	test2->setScale(0.1f, 0.1f, 0.1f);
-
-	addChild(test2);
-
-	auto test = Figure<Vertex::PosBasic>::createWithEffect(
-		Effects::getBasicEffect());
-
-	test->setBuffer(body.m_Vertices, body.m_Indices);
-	test->setMaterial(body.m_Material);
-	test->setInputLayout(InputLayouts::getPosBasic(),
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	test->setScale(0.1f, 0.1f, 0.1f);
-
-	addChild(test);
+	addChild(body);
+	addChild(track);
 
 	Material boxMaterial;
 
@@ -68,7 +46,7 @@ bool FirstScene::init()
 
 	box->setBoxWithMaterial(2.0f, 2.0f, 2.0f, boxMaterial);
 
-	box->setPosition(2.0f, 4.0f, -3.0f);
+	box->setPosition(20.0f, 40.0f, -30.0f);
 	box->setScale(2.0f, 1.0f, 1.0f);
 	box->setRotate(0.3f, 0.7f, 0.2f);
 	box->setTexture(L"Textures/WoodCrate01.dds");
@@ -155,19 +133,13 @@ bool FirstScene::init()
 		roundSphere->addChild(roundRound);
 	}
 
-	DirectionalLight light;
+	auto light = EyeLight::createWithScene(this);
 
-	light.m_Ambient = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	light.m_Diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
-	light.m_Specular = XMFLOAT4(1.0f, 1.0f, 1.0f, 16.0f);
-	light.m_Direction = XMFLOAT3(1.0f, 1.0f, 0.0f);
-
-	auto lightNode = Light<DirectionalLight>::createWithScene(this, light);
-
-	addChild(lightNode);
+	addChild(light);
 
 	setFogEnable(true);
 	setFog(20.0f, 100.0f, XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f));
+
 
 	return true;
 }

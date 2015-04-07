@@ -7,6 +7,7 @@
 #include <time.h>
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #pragma comment(lib, "winmm.lib")
 
 USING_NS_SW;
@@ -311,4 +312,98 @@ void SeaWood::Director::clearEvent(EventType type, Node* node)
 Scene* SeaWood::Director::getRunningScene()
 {
 	return m_NowScene;
+}
+
+void SeaWood::Director::cacheModel(const std::string& fileName)
+{
+	if (m_ModelInfo.find(fileName) != m_ModelInfo.end())
+	{
+		return;
+	}
+
+	ModelInfo info;
+
+	loadModel(fileName, info);
+
+	m_ModelInfo[fileName] = info;
+}
+
+void SeaWood::Director::loadModel(const std::string& fileName, ModelInfo& info)
+{
+	if (m_ModelInfo.find(fileName) != m_ModelInfo.end())
+	{
+		info = m_ModelInfo[fileName];
+
+		return;
+	}
+
+	std::ifstream file;
+
+	file.open(fileName, std::ios_base::in | std::ios_base::binary);
+
+	if (!file.is_open())
+	{
+		return;
+	}
+
+	int size;
+
+	file.read((char*)&size, sizeof(size_t));
+
+	for (int i = 0; i < size; i++)
+	{
+		Vertex::PosBasic vertex;
+
+		file.read((char*)&vertex.m_Pos.x, sizeof(float));
+		file.read((char*)&vertex.m_Pos.y, sizeof(float));
+		file.read((char*)&vertex.m_Pos.z, sizeof(float));
+
+		file.read((char*)&vertex.m_Normal.x, sizeof(float));
+		file.read((char*)&vertex.m_Normal.y, sizeof(float));
+		file.read((char*)&vertex.m_Normal.z, sizeof(float));
+
+		file.read((char*)&vertex.m_Tex.x, sizeof(float));
+		file.read((char*)&vertex.m_Tex.y, sizeof(float));
+
+		info.m_Vertices.push_back(vertex);
+	}
+
+	file.read((char*)&size, sizeof(size_t));
+
+	for (int i = 0; i < size; i++)
+	{
+		UINT idx;
+
+		file.read((char*)&idx, sizeof(unsigned));
+
+		info.m_Indices.push_back(idx);
+	}
+
+	file.read((char*)&info.m_Material.m_Ambient.x, sizeof(float));
+	file.read((char*)&info.m_Material.m_Ambient.y, sizeof(float));
+	file.read((char*)&info.m_Material.m_Ambient.z, sizeof(float));
+	file.read((char*)&info.m_Material.m_Ambient.w, sizeof(float));
+
+	file.read((char*)&info.m_Material.m_Diffuse.x, sizeof(float));
+	file.read((char*)&info.m_Material.m_Diffuse.y, sizeof(float));
+	file.read((char*)&info.m_Material.m_Diffuse.z, sizeof(float));
+	file.read((char*)&info.m_Material.m_Diffuse.w, sizeof(float));
+
+	file.read((char*)&info.m_Material.m_Specular.x, sizeof(float));
+	file.read((char*)&info.m_Material.m_Specular.y, sizeof(float));
+	file.read((char*)&info.m_Material.m_Specular.z, sizeof(float));
+	file.read((char*)&info.m_Material.m_Specular.w, sizeof(float));
+
+	file.read((char*)&info.m_UTile, sizeof(float));
+	file.read((char*)&info.m_VTile, sizeof(float));
+
+	file.read((char*)&size, sizeof(size_t));
+
+	char buffer[512];
+
+	file.read(buffer, sizeof(char)*size);
+
+	buffer[size] = '\0';
+
+	info.m_Texture = buffer;
 }

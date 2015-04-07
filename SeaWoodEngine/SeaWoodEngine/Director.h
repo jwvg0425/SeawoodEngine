@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "MouseEvent.h"
 #include "KeyManager.h"
+#include "structure.h"
 #define GET_KEY_MANAGER() SeaWood::Director::getInstance()->getKeyManager()
 #define GET_RENDERER() SeaWood::Director::getInstance()->getRenderer()
 
@@ -47,6 +48,8 @@ public:
 	void				clearEvent(EventType type, Node* node);
 	
 	void				autorelease(Ref* ref);
+	void				cacheModel(const std::string& fileName);
+	void				loadModel(const std::string& fileName, ModelInfo& info);
 
 	LRESULT CALLBACK	WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 
@@ -74,6 +77,7 @@ private:
 	EventNodes			m_EventNodes;
 	int					m_FPS = 0;
 	Refs				m_ReleasePool;
+	std::map<std::string, ModelInfo> m_ModelInfo;
 	
 };
 

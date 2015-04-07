@@ -109,6 +109,9 @@
     <ClCompile Include="Node.cpp">
       <Filter>node</Filter>
     </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>node</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -198,6 +201,9 @@
       <Filter>base\renderer\global\DepthStensil</Filter>
     </ClInclude>
     <ClInclude Include="Node.h">
+      <Filter>node</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
       <Filter>node</Filter>
     </ClInclude>
   </ItemGroup>

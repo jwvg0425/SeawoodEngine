@@ -138,6 +138,15 @@ void SeaWood::Node::setTexture(const std::wstring& fileName)
 		fileName.c_str(), nullptr, nullptr, &m_DiffuseMapSRV, nullptr));
 }
 
+void SeaWood::Node::setTexture(const std::string& fileName)
+{
+	std::wstring file = L"";
+
+	file.assign(fileName.begin(), fileName.end());
+
+	setTexture(file);
+}
+
 ID3D11ShaderResourceView* SeaWood::Node::getTexture()
 {
 	return m_DiffuseMapSRV;

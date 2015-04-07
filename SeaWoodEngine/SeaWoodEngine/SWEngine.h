@@ -6,7 +6,7 @@
 #include "Renderer.h"
 #include "MouseEvent.h"
 #include "Camera.h"
-#include "Figure.h"
+#include "Model.h"
 //effects
 #include "Effect.h"
 #include "SimpleLightEffect.h"

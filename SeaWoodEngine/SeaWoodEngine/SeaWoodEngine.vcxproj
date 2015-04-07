@@ -15,6 +15,7 @@
     <ClInclude Include="BasicEffect.h" />
     <ClInclude Include="Blend.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="DepthStencil.h" />
     <ClInclude Include="Figure.h" />
@@ -48,6 +49,7 @@
     <ClCompile Include="BasicEffect.cpp" />
     <ClCompile Include="Blend.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Model.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="DepthStencil.cpp" />
     <ClCompile Include="Director.cpp" />
