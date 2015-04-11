@@ -31,6 +31,8 @@ public:
 
 	const Material*	getMaterial();
 	void			setMaterial(Material material);
+	void			useRimLight(bool isUse);
+	bool			isUsingRimLight();
 
 	ID3D11ShaderResourceView* getTexture();
 	void			setTexture(const std::wstring& fileName);
@@ -86,6 +88,7 @@ protected:
 	Childs		m_Childs;
 	Node*		m_Parent = nullptr;
 	bool		m_IsRender = true;
+	bool		m_UseRimLight = false;
 
 	std::vector<EventType> m_Events;
 

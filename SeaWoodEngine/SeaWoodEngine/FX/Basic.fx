@@ -76,7 +76,7 @@ VertexOut VS(VertexIn vin)
 	return vout;
 }
  
-float4 PS(VertexOut pin, uniform bool gUseTexture) : SV_Target
+float4 PS(VertexOut pin, uniform bool gUseTexture, uniform bool gUseRimLight) : SV_Target
 {
 	// Interpolating normal can unnormalize it, so normalize it.
     pin.NormalW = normalize(pin.NormalW);
@@ -92,6 +92,7 @@ float4 PS(VertexOut pin, uniform bool gUseTexture) : SV_Target
 	
     // Default to multiplicative identity.
     float4 texColor = float4(1, 1, 1, 1);
+
     if(gUseTexture)
 	{
 		// Sample texture.
@@ -107,44 +108,48 @@ float4 PS(VertexOut pin, uniform bool gUseTexture) : SV_Target
 	// Start with a sum of zero. 
 	float4 ambient = float4(0.0f, 0.0f, 0.0f, 0.0f);
 	float4 diffuse = float4(0.0f, 0.0f, 0.0f, 0.0f);
-	float4 spec    = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	float4 spec = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	float4 rim = float4(0.0f, 0.0f, 0.0f, 0.0f);
 
 	[unroll]
 	for (int i = 0; i < gDirLightNum; ++i)
 	{
-		float4 A, D, S;
-		ComputeDirectionalLight(gMaterial, gDirLight[i], pin.NormalW, toEye,
-			A, D, S);
+		float4 A, D, S, R;
+		ComputeDirectionalLight(gMaterial, gDirLight[i], pin.NormalW, toEye, gUseRimLight,
+			A, D, S, R);
 
 		ambient += A;
 		diffuse += D;
 		spec += S;
+		rim += R;
 	}
 
 	[unroll]
 	for (int j = 0; j < gPointLightNum; ++j)
 	{
-		float4 A, D, S;
-		ComputePointLight(gMaterial, gPointLight[j], pin.PosW, pin.NormalW, toEye,
-			A, D, S);
+		float4 A, D, S, R;
+		ComputePointLight(gMaterial, gPointLight[j], pin.PosW, pin.NormalW, toEye, gUseRimLight,
+			A, D, S, R);
 		ambient += A;
 		diffuse += D;
 		spec += S;
+		rim += R;
 	}
 
 	[unroll]
 	for (int k = 0; k < gSpotLightNum; ++k)
 	{
-		float4 A, D, S;
-		ComputeSpotLight(gMaterial, gSpotLight[k], pin.PosW, pin.NormalW, toEye,
-			A, D, S);
+		float4 A, D, S, R;
+		ComputeSpotLight(gMaterial, gSpotLight[k], pin.PosW, pin.NormalW, toEye, gUseRimLight,
+			A, D, S, R);
 		ambient += A;
 		diffuse += D;
 		spec += S;
+		rim += R;
 	}
 
 	// Modulate with late add.
-	float4 litColor = texColor*(ambient + diffuse) + spec;
+	float4 litColor = texColor*(ambient + diffuse) + spec + rim;
 
 	if (gIsFogEnable)
 	{
@@ -164,7 +169,7 @@ technique11 Light
     pass P0
     {
         SetVertexShader( CompileShader( vs_5_0, VS() ) );
-        SetPixelShader( CompileShader( ps_5_0, PS(false) ) );
+        SetPixelShader( CompileShader( ps_5_0, PS(false, false) ) );
     }
 }
 
@@ -173,6 +178,24 @@ technique11 Tex
 	pass P0
 	{
 		SetVertexShader(CompileShader(vs_5_0, VS()));
-		SetPixelShader(CompileShader(ps_5_0, PS(true)));
+		SetPixelShader(CompileShader(ps_5_0, PS(true, false)));
+	}
+}
+
+technique11 Rim
+{
+	pass P0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS()));
+		SetPixelShader(CompileShader(ps_5_0, PS(false, true)));
+	}
+}
+
+technique11 TexRim
+{
+	pass P0
+	{
+		SetVertexShader(CompileShader(vs_5_0, VS()));
+		SetPixelShader(CompileShader(ps_5_0, PS(true, true)));
 	}
 }

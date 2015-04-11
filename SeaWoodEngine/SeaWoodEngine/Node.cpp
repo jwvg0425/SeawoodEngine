@@ -360,6 +360,16 @@ void SeaWood::Node::scheduleUpdate()
 	Director::getInstance()->registerEvent(EventType::UPDATE_FRAME, this);
 }
 
+void SeaWood::Node::useRimLight(bool isUse)
+{
+	m_UseRimLight = isUse;
+}
+
+bool SeaWood::Node::isUsingRimLight()
+{
+	return m_UseRimLight;
+}
+
 void Node::removeChild(Node* child)
 {
 	_ASSERT(child != nullptr);

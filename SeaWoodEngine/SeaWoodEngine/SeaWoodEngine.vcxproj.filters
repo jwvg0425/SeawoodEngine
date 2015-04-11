@@ -40,14 +40,11 @@
     <Filter Include="base\renderer\global\DepthStensil">
       <UniqueIdentifier>{a26ad92b-ff07-4b01-b57d-82e1cf3214ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="base\main">
+      <UniqueIdentifier>{43c1423d-1870-4f76-862a-12d97afeb2bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Application.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
-    <ClCompile Include="Director.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="Point2.cpp">
       <Filter>base\structure</Filter>
@@ -61,9 +58,6 @@
     <ClCompile Include="Scene.cpp">
       <Filter>node</Filter>
     </ClCompile>
-    <ClCompile Include="Utility.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="Event.cpp">
       <Filter>base\event</Filter>
     </ClCompile>
@@ -72,9 +66,6 @@
     </ClCompile>
     <ClCompile Include="Ref.cpp">
       <Filter>node</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyManager.cpp">
-      <Filter>base</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>base\renderer</Filter>
@@ -112,20 +103,20 @@
     <ClCompile Include="Model.cpp">
       <Filter>node</Filter>
     </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>base\main</Filter>
+    </ClCompile>
+    <ClCompile Include="Director.cpp">
+      <Filter>base\main</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>base\main</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility.cpp">
+      <Filter>base\main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="Director.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="Macro.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="SeaWood.h">
-      <Filter>base</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Point2.h">
       <Filter>base\structure</Filter>
@@ -142,9 +133,6 @@
     <ClInclude Include="Scene.h">
       <Filter>node</Filter>
     </ClInclude>
-    <ClInclude Include="Utility.h">
-      <Filter>base</Filter>
-    </ClInclude>
     <ClInclude Include="SWEngine.h" />
     <ClInclude Include="Event.h">
       <Filter>base\event</Filter>
@@ -154,9 +142,6 @@
     </ClInclude>
     <ClInclude Include="Ref.h">
       <Filter>node</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyManager.h">
-      <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>base\renderer</Filter>
@@ -205,6 +190,24 @@
     </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>node</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>base\main</Filter>
+    </ClInclude>
+    <ClInclude Include="Director.h">
+      <Filter>base\main</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>base\main</Filter>
+    </ClInclude>
+    <ClInclude Include="Macro.h">
+      <Filter>base\main</Filter>
+    </ClInclude>
+    <ClInclude Include="SeaWood.h">
+      <Filter>base\main</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>base\main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

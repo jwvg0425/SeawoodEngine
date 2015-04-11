@@ -110,6 +110,7 @@ void Figure<VertexType>::render()
 		GET_RENDERER()->getDeviceContext()->DrawIndexed(m_Indices.size(), 0, 0);
 	}
 
+	//설정했던 상태 해제
 	if (m_RasterizerState != nullptr)
 	{
 		GET_RENDERER()->getDeviceContext()->RSSetState(nullptr);

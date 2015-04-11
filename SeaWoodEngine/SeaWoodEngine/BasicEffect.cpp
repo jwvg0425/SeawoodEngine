@@ -9,8 +9,13 @@
 SeaWood::BasicEffect::BasicEffect()
 : Effect(GET_RENDERER()->getDevice(), L"fx/Basic.cso")
 {
+	//tech
 	m_Tech = m_Fx->GetTechniqueByName("Light");
 	m_TexTech = m_Fx->GetTechniqueByName("Tex");
+	m_RimTech = m_Fx->GetTechniqueByName("Rim");
+	m_TexRimTech = m_Fx->GetTechniqueByName("TexRim");
+
+	//values
 	m_WorldViewProj = m_Fx->GetVariableByName("gWorldViewProj")->AsMatrix();
 	m_World = m_Fx->GetVariableByName("gWorld")->AsMatrix();
 	m_WorldInvTranspose = m_Fx->GetVariableByName("gWorldInvTranspose")->AsMatrix();
@@ -96,11 +101,25 @@ ID3DX11EffectTechnique* SeaWood::BasicEffect::getTech()
 {
 	if (m_IsTexture)
 	{
-		return m_TexTech;
+		if (m_UseRimLight)
+		{
+			return m_TexRimTech;
+		}
+		else
+		{
+			return m_TexTech;
+		}
 	}
 	else
 	{
-		return m_Tech;
+		if (m_UseRimLight)
+		{
+			return m_RimTech;
+		}
+		else
+		{
+			return m_Tech;
+		}
 	}
 }
 
@@ -179,6 +198,15 @@ void SeaWood::BasicEffect::updateByObject(Node* object)
 	{
 		m_IsTexture = false;
 	}
+
+	if (object->isUsingRimLight())
+	{
+		m_UseRimLight = true;
+	}
+	else
+	{
+		m_UseRimLight = false;
+	}
 }
 
 void SeaWood::BasicEffect::setDiffuseMap(ID3D11ShaderResourceView* tex)
@@ -209,4 +237,9 @@ void SeaWood::BasicEffect::setFogEnable(bool enable)
 void SeaWood::BasicEffect::setFogColor(const XMFLOAT4& v)
 {
 	m_FogColor->SetRawValue(&v, 0, sizeof(XMFLOAT4));
+}
+
+void SeaWood::BasicEffect::setRimLight(bool useRimLight)
+{
+	m_UseRimLight = useRimLight;
 }

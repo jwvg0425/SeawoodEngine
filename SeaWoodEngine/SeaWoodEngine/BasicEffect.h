@@ -24,6 +24,7 @@ public:
 	void setSpotLightNum(int n);
 	void setDiffuseMap(ID3D11ShaderResourceView* tex);
 	void setTexTransform(CXMMATRIX M);
+	void setRimLight(bool useRimLight);
 
 	void setFogStart(float start);
 	void setFogRange(float range);
@@ -38,6 +39,8 @@ public:
 protected:
 	ID3DX11EffectTechnique*			m_Tech = nullptr;
 	ID3DX11EffectTechnique*			m_TexTech = nullptr;
+	ID3DX11EffectTechnique*			m_RimTech = nullptr;
+	ID3DX11EffectTechnique*			m_TexRimTech = nullptr;
 
 	ID3DX11EffectMatrixVariable*	m_WorldViewProj = nullptr;
 	ID3DX11EffectMatrixVariable*	m_World = nullptr;
@@ -62,6 +65,7 @@ protected:
 	ID3DX11EffectShaderResourceVariable* m_DiffuseMap = nullptr;
 
 	bool							m_IsTexture = false;
+	bool							m_UseRimLight = false;
 };
 
 

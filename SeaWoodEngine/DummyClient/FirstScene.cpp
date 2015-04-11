@@ -5,6 +5,7 @@
 #include "MovingCamera.h"
 #include "Box.h"
 #include "RoundFigure.h"
+#include <atomic>
 
 USING_NS_SW;
 
@@ -28,10 +29,10 @@ bool FirstScene::init()
 	GET_RENDERER()->registerCamera(camera);
 
 	auto body = Model::createWithFile("body.swm");
-	body->setScale(0.1, 0.1, 0.1);
+	body->setScale(0.1f, 0.1f, 0.1f);
 
 	auto track = Model::createWithFile("track.swm");
-	track->setScale(0.1, 0.1, 0.1);
+	track->setScale(0.1f, 0.1f, 0.1f);
 
 	addChild(body);
 	addChild(track);
@@ -110,6 +111,7 @@ bool FirstScene::init()
 		material.m_Ambient = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 1.0f);
 		material.m_Diffuse = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.5f + 0.1f * (rand() % 4));
 		material.m_Specular = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 16.0f);
+		material.m_RimLight = XMFLOAT4(1.0f, 1.0f, 1.0f, 5.0f);
 		sphere->setMaterial(material);
 
 		std::vector<Vertex::PosBasic> vertices;
@@ -123,6 +125,7 @@ bool FirstScene::init()
 
 		sphere->setTexture(L"Textures/sphere.jpg");
 		sphere->setPosition(-30 + rand() % 60, -30 + rand() % 60, -30 + rand() % 60);
+		sphere->useRimLight(true);
 
 		addChild(sphere);
 
@@ -136,6 +139,17 @@ bool FirstScene::init()
 	auto light = EyeLight::createWithScene(this);
 
 	addChild(light);
+
+	auto direct = DirectionalLight();
+
+	direct.m_Ambient = XMFLOAT4(0.5f, 0.5f, 0.5f, 1.0f);
+	direct.m_Diffuse = XMFLOAT4(0.7f, 0.7f, 0.7f, 1.0f);
+	direct.m_Specular = XMFLOAT4(0.3f, 0.3f, 0.3f, 1.0f);
+	direct.m_Direction = XMFLOAT3(0.3f, 0.7f, 0.5f);
+
+	auto light2 = Light<DirectionalLight>::createWithScene(this, direct);
+
+	addChild(light2);
 
 	setFogEnable(true);
 	setFog(20.0f, 100.0f, XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f));

@@ -63,6 +63,7 @@ struct Material
 	XMFLOAT4 m_Diffuse;
 	XMFLOAT4 m_Specular; // w = SpecPower
 	XMFLOAT4 m_Reflect;
+	XMFLOAT4 m_RimLight;
 };
 
 NS_SW_END

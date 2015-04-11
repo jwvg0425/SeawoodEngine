@@ -4,11 +4,19 @@
 
 struct AseFloat4
 {
+	AseFloat4(){}
+	AseFloat4(float r_, float g_, float b_, float w_)
+	:r(r_), g(g_), b(b_), w(w_){}
+
 	float r = 0, g = 0, b = 0, w = 0;
 };
 
 struct AseFloat3
 {
+	AseFloat3(){}
+	AseFloat3(float r_, float g_, float b_)
+	:r(r_), g(g_), b(b_){}
+
 	float r = 0, g = 0, b = 0;
 };
 
@@ -31,8 +39,18 @@ struct AseVertex
 
 struct AseMesh
 {
+	AseMesh()
+	: translation(0,0,0),scale(1,1,1),rotateAxis(0,0,0),rotateAngle(0)
+	{}
+
 	std::vector<AseVertex> vertices;
 	std::vector<unsigned> indices;
+
+	AseMesh* parent = nullptr;
+	AseFloat3 translation;
+	AseFloat3 scale;
+	AseFloat3 rotateAxis;
+	float rotateAngle;
 };
 
 class Converter
@@ -61,6 +79,7 @@ private:
 	void parseTVertex(std::vector<AseFloat3>& tVertices);
 	void parseTFace(AseMesh& mesh, const std::vector<AseFloat3>& tVertices);
 	void parseNormal(AseMesh& mesh);
+	void parseAnimation(AseMesh& mesh);
 
 
 	using Tokens = std::vector<std::string>;

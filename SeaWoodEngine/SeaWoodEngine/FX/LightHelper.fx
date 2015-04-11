@@ -48,6 +48,7 @@ struct Material
 	float4 Diffuse;
 	float4 Specular; // w = SpecPower
 	float4 Reflect;
+	float4 RimColor;
 };
 
 //---------------------------------------------------------------------------------------
@@ -56,15 +57,17 @@ struct Material
 // later we will modify the individual terms.
 //---------------------------------------------------------------------------------------
 void ComputeDirectionalLight(Material mat, DirectionalLight L, 
-                             float3 normal, float3 toEye,
+                             float3 normal, float3 toEye, bool useRimLight,
 					         out float4 ambient,
 						     out float4 diffuse,
-						     out float4 spec)
+						     out float4 spec,
+							 out float4 rim)
 {
 	// Initialize outputs.
 	ambient = float4(0.0f, 0.0f, 0.0f, 0.0f);
 	diffuse = float4(0.0f, 0.0f, 0.0f, 0.0f);
 	spec    = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	rim = float4(0.0f, 0.0f, 0.0f, 0.0f);
 
 	// The light vector aims opposite the direction the light rays travel.
 	float3 lightVec = -L.Direction;
@@ -75,7 +78,7 @@ void ComputeDirectionalLight(Material mat, DirectionalLight L,
 	// Add diffuse and specular term, provided the surface is in 
 	// the line of site of the light.
 	
-	float diffuseFactor = dot(lightVec, normal);
+	float diffuseFactor = (dot(lightVec, normal) + 1) / 2;
 
 	// Flatten to avoid dynamic branching.
 	[flatten]
@@ -86,6 +89,14 @@ void ComputeDirectionalLight(Material mat, DirectionalLight L,
 					
 		diffuse = diffuseFactor * mat.Diffuse * L.Diffuse;
 		spec    = specFactor * mat.Specular * L.Specular;
+	}
+
+	//lim light 계산
+	[flatten]
+	if (useRimLight)
+	{
+		float intensity = smoothstep(0.0f, 1.0f, 1 - max(0, dot(normal, toEye)));
+		rim = mat.RimColor * max(0, dot(toEye,-lightVec)) * intensity;
 	}
 }
 
@@ -94,13 +105,14 @@ void ComputeDirectionalLight(Material mat, DirectionalLight L,
 // from a point light.  We need to output the terms separately because
 // later we will modify the individual terms.
 //---------------------------------------------------------------------------------------
-void ComputePointLight(Material mat, PointLight L, float3 pos, float3 normal, float3 toEye,
-				   out float4 ambient, out float4 diffuse, out float4 spec)
+void ComputePointLight(Material mat, PointLight L, float3 pos, float3 normal, float3 toEye, bool useRimLight,
+				   out float4 ambient, out float4 diffuse, out float4 spec, out float4 rim)
 {
 	// Initialize outputs.
 	ambient = float4(0.0f, 0.0f, 0.0f, 0.0f);
 	diffuse = float4(0.0f, 0.0f, 0.0f, 0.0f);
 	spec    = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	rim = float4(0.0f, 0.0f, 0.0f, 0.0f);
 
 	// The vector from the surface to the light.
 	float3 lightVec = L.Position - pos;
@@ -121,7 +133,7 @@ void ComputePointLight(Material mat, PointLight L, float3 pos, float3 normal, fl
 	// Add diffuse and specular term, provided the surface is in 
 	// the line of site of the light.
 
-	float diffuseFactor = dot(lightVec, normal);
+	float diffuseFactor = (dot(lightVec, normal) + 1) / 2;
 
 	// Flatten to avoid dynamic branching.
 	[flatten]
@@ -134,11 +146,21 @@ void ComputePointLight(Material mat, PointLight L, float3 pos, float3 normal, fl
 		spec    = specFactor * mat.Specular * L.Specular;
 	}
 
+	//lim light 계산
+	[flatten]
+	if (useRimLight)
+	{
+		float intensity = smoothstep(0.0f, 1.0f, 1 - max(0, dot(normal, toEye)));
+		rim = mat.RimColor * max(0, dot(toEye, -lightVec)) * intensity;
+	}
+
 	// Attenuate
 	float att = 1.0f / dot(L.Att, float3(1.0f, d, d*d));
 
 	diffuse *= att;
 	spec    *= att;
+	rim		*= att;
+
 }
 
 //---------------------------------------------------------------------------------------
@@ -146,13 +168,14 @@ void ComputePointLight(Material mat, PointLight L, float3 pos, float3 normal, fl
 // from a spotlight.  We need to output the terms separately because
 // later we will modify the individual terms.
 //---------------------------------------------------------------------------------------
-void ComputeSpotLight(Material mat, SpotLight L, float3 pos, float3 normal, float3 toEye,
-				  out float4 ambient, out float4 diffuse, out float4 spec)
+void ComputeSpotLight(Material mat, SpotLight L, float3 pos, float3 normal, float3 toEye, bool useRimLight,
+				  out float4 ambient, out float4 diffuse, out float4 spec, out float4 rim)
 {
 	// Initialize outputs.
 	ambient = float4(0.0f, 0.0f, 0.0f, 0.0f);
 	diffuse = float4(0.0f, 0.0f, 0.0f, 0.0f);
 	spec    = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	rim = float4(0.0f, 0.0f, 0.0f, 0.0f);
 
 	// The vector from the surface to the light.
 	float3 lightVec = L.Position - pos;
@@ -173,7 +196,7 @@ void ComputeSpotLight(Material mat, SpotLight L, float3 pos, float3 normal, floa
 	// Add diffuse and specular term, provided the surface is in 
 	// the line of site of the light.
 
-	float diffuseFactor = dot(lightVec, normal);
+	float diffuseFactor = (dot(lightVec, normal) + 1) / 2;
 
 	// Flatten to avoid dynamic branching.
 	[flatten]
@@ -184,6 +207,14 @@ void ComputeSpotLight(Material mat, SpotLight L, float3 pos, float3 normal, floa
 					
 		diffuse = diffuseFactor * mat.Diffuse * L.Diffuse;
 		spec    = specFactor * mat.Specular * L.Specular;
+	}
+
+	//lim light 계산
+	[flatten]
+	if (useRimLight)
+	{
+		float intensity = smoothstep(0.0f, 1.0f, 1 - max(0, dot(normal, toEye)));
+		rim = mat.RimColor * max(0, dot(toEye, -lightVec)) * intensity;
 	}
 	
 	// Scale by spotlight factor and attenuate.
@@ -195,7 +226,5 @@ void ComputeSpotLight(Material mat, SpotLight L, float3 pos, float3 normal, floa
 	ambient *= spot;
 	diffuse *= att;
 	spec    *= att;
+	rim		*= att;
 }
-
- 
- 

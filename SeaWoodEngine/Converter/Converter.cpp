@@ -278,6 +278,10 @@ void Converter::parseMaterial()
 		{
 			parseTexture(material);
 		}
+		else if (tokens[idx] == "*MAP_GENERIC")
+		{
+			parseTexture(material);
+		}
 		else if (tokens[idx] == "*SUBMATERIAL")
 		{
 			idx += 3;
@@ -303,6 +307,15 @@ void Converter::parseMesh()
 			name = tokens[idx + 1];
 			idx += 1;
 		}
+		else if (tokens[idx] == "*NODE_PARENT")
+		{
+			std::string parentName = tokens[idx + 1];
+
+			if (meshes.find(parentName) != meshes.end())
+			{
+				mesh.parent = &meshes[parentName];
+			}
+		}
 		else if (tokens[idx] == "*NODE_TM")
 		{
 			while (tokens[idx] != "}")
@@ -314,6 +327,11 @@ void Converter::parseMesh()
 		{
 			idx += 2;
 			parseMeshInfo(mesh);
+		}
+		else if (tokens[idx] == "*TM_ANIMATION")
+		{
+			idx += 2;
+			parseAnimation(mesh);
 		}
 
 		idx++;
@@ -408,7 +426,7 @@ void Converter::parseFace(AseMesh& mesh)
 			mesh.indices.push_back(atoi(tokens[idx + 3].c_str()));
 			mesh.indices.push_back(atoi(tokens[idx + 7].c_str()));
 			mesh.indices.push_back(atoi(tokens[idx + 5].c_str()));
-			idx += 17;
+			idx += 13;
 		}
 
 		idx++;
@@ -472,6 +490,14 @@ void Converter::parseNormal(AseMesh& mesh)
 			idx += 4;
 		}
 
+		idx++;
+	}
+}
+
+void Converter::parseAnimation(AseMesh& mesh)
+{
+	while (tokens[idx] != "}")
+	{
 		idx++;
 	}
 }
