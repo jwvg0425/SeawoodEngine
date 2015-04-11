@@ -95,7 +95,8 @@ void ComputeDirectionalLight(Material mat, DirectionalLight L,
 	[flatten]
 	if (useRimLight)
 	{
-		float intensity = smoothstep(0.0f, 1.0f, 1 - max(0, dot(normal, toEye)));
+		float intensity = 
+			pow(smoothstep(0.0f, 1.0f, 1 - max(0, dot(normal, toEye))), mat.RimColor.w);
 		rim = mat.RimColor * max(0, dot(toEye,-lightVec)) * intensity;
 	}
 }
@@ -150,7 +151,8 @@ void ComputePointLight(Material mat, PointLight L, float3 pos, float3 normal, fl
 	[flatten]
 	if (useRimLight)
 	{
-		float intensity = smoothstep(0.0f, 1.0f, 1 - max(0, dot(normal, toEye)));
+		float intensity =
+			pow(smoothstep(0.0f, 1.0f, 1 - max(0, dot(normal, toEye))), mat.RimColor.w);
 		rim = mat.RimColor * max(0, dot(toEye, -lightVec)) * intensity;
 	}
 
@@ -213,7 +215,8 @@ void ComputeSpotLight(Material mat, SpotLight L, float3 pos, float3 normal, floa
 	[flatten]
 	if (useRimLight)
 	{
-		float intensity = smoothstep(0.0f, 1.0f, 1 - max(0, dot(normal, toEye)));
+		float intensity =
+			pow(smoothstep(0.0f, 1.0f, 1 - max(0, dot(normal, toEye))), mat.RimColor.w);
 		rim = mat.RimColor * max(0, dot(toEye, -lightVec)) * intensity;
 	}
 	

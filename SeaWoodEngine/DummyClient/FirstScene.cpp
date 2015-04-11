@@ -111,7 +111,7 @@ bool FirstScene::init()
 		material.m_Ambient = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 1.0f);
 		material.m_Diffuse = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.5f + 0.1f * (rand() % 4));
 		material.m_Specular = XMFLOAT4(0.01f * (rand() % 100), 0.01f * (rand() % 100), 0.01f * (rand() % 100), 16.0f);
-		material.m_RimLight = XMFLOAT4(1.0f, 1.0f, 1.0f, 5.0f);
+		material.m_RimLight = XMFLOAT4(0.7f, 0.7f, 0.7f, 5.0f);
 		sphere->setMaterial(material);
 
 		std::vector<Vertex::PosBasic> vertices;
