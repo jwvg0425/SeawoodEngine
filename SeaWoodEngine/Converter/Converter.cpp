@@ -1,5 +1,5 @@
 ﻿#include "Converter.h"
-#include <fstream>
+
 #include <iostream>
 
 Converter::Converter()
@@ -22,6 +22,9 @@ bool Converter::parse(const std::string& fileName)
 	{
 		return false;
 	}
+
+	nodes.clear();
+	materials.clear();
 
 	const size_t BUFFER_SIZE = 1024;
 	char buffer[BUFFER_SIZE];
@@ -49,7 +52,7 @@ bool Converter::parse(const std::string& fileName)
 		else if (tokens[idx] == "*GEOMOBJECT")
 		{
 			idx += 2;
-			parseMesh();
+			parseNode();
 		}
 
 		idx++;
@@ -60,24 +63,16 @@ bool Converter::parse(const std::string& fileName)
 
 void Converter::printInfo()
 {
-	std::cout << std::endl << " *** Material *** " << std::endl << std::endl;
-
-	for (auto& material : materials)
+	for (auto& node : nodes)
 	{
-		std::cout << material.first << std::endl;
+		if (node.second.parentName == "")
+		{
+			std::cout << node.second.name << std::endl;
+		}
 	}
-
-	std::cout << std::endl << " *** Mesh *** " << std::endl << std::endl;
-
-	for (auto& mesh : meshes)
-	{
-		std::cout << mesh.first << std::endl;
-	}
-
-	std::cout << std::endl;
 }
 
-bool Converter::out(const std::string& fileName, const std::string& meshName, const std::string& materialName)
+bool Converter::out(const std::string& fileName, const std::string& nodeName)
 {
 	std::ofstream file;
 
@@ -88,59 +83,12 @@ bool Converter::out(const std::string& fileName, const std::string& meshName, co
 		return false;
 	}
 
-	AseMesh mesh = meshes[meshName];
-	AseMaterial material = materials[materialName];
-	int size = mesh.vertices.size();
-
-	file.write((const char*)&size, sizeof(size_t));
-
-	for (auto& vertex : mesh.vertices)
+	for (auto& material : materials)
 	{
-		file.write((const char*)&vertex.pos.r, sizeof(float));
-		file.write((const char*)&vertex.pos.g, sizeof(float));
-		file.write((const char*)&vertex.pos.b, sizeof(float));
-
-		file.write((const char*)&vertex.normal.r, sizeof(float));
-		file.write((const char*)&vertex.normal.g, sizeof(float));
-		file.write((const char*)&vertex.normal.b, sizeof(float));
-
-		file.write((const char*)&vertex.texPos.r, sizeof(float));
-		file.write((const char*)&vertex.texPos.g, sizeof(float));
+		outMaterial(file, material.first);
 	}
 
-	size = mesh.indices.size();
-
-	file.write((const char*)&size, sizeof(size_t));
-
-	for (auto index : mesh.indices)
-	{
-		file.write((const char*)&index, sizeof(unsigned));
-	}
-
-	file.write((const char*)&material.ambient.r, sizeof(float));
-	file.write((const char*)&material.ambient.g, sizeof(float));
-	file.write((const char*)&material.ambient.b, sizeof(float));
-	file.write((const char*)&material.ambient.w, sizeof(float));
-
-	file.write((const char*)&material.diffuse.r, sizeof(float));
-	file.write((const char*)&material.diffuse.g, sizeof(float));
-	file.write((const char*)&material.diffuse.b, sizeof(float));
-	file.write((const char*)&material.diffuse.w, sizeof(float));
-
-	file.write((const char*)&material.specular.r, sizeof(float));
-	file.write((const char*)&material.specular.g, sizeof(float));
-	file.write((const char*)&material.specular.b, sizeof(float));
-	file.write((const char*)&material.specular.w, sizeof(float));
-
-	file.write((const char*)&material.uTile, sizeof(float));
-	file.write((const char*)&material.vTile, sizeof(float));
-
-	size = material.texture.size();
-
-	file.write((const char*)&size, sizeof(size_t));
-
-	file.write(material.texture.c_str(), sizeof(char)*size);
-
+	outNode(file, nodeName);
 
 	return true;
 }
@@ -220,16 +168,18 @@ void Converter::parseMaterialList()
 		if (tokens[idx] == "*MATERIAL")
 		{
 			idx += 3;
-			parseMaterial();
+			parseMaterial("");
 		}
 		idx++;
 	}
 }
 
-void Converter::parseMaterial()
+void Converter::parseMaterial(const std::string& parent)
 {
 	std::string name;
 	AseMaterial material;
+
+	material.parentName = parent;
 
 	while (tokens[idx] != "}")
 	{
@@ -285,7 +235,7 @@ void Converter::parseMaterial()
 		else if (tokens[idx] == "*SUBMATERIAL")
 		{
 			idx += 3;
-			parseMaterial();
+			parseMaterial(name);
 		}
 
 		idx++;
@@ -295,26 +245,24 @@ void Converter::parseMaterial()
 }
 
 
-void Converter::parseMesh()
+void Converter::parseNode()
 {
 	std::string name;
-	AseMesh mesh;
+	AseNode node;
 
 	while (tokens[idx] != "}")
 	{
 		if (tokens[idx] == "*NODE_NAME")
 		{
 			name = tokens[idx + 1];
+			node.name = name;
 			idx += 1;
 		}
 		else if (tokens[idx] == "*NODE_PARENT")
 		{
 			std::string parentName = tokens[idx + 1];
 
-			if (meshes.find(parentName) != meshes.end())
-			{
-				mesh.parent = &meshes[parentName];
-			}
+			node.parentName = parentName;
 		}
 		else if (tokens[idx] == "*NODE_TM")
 		{
@@ -326,18 +274,23 @@ void Converter::parseMesh()
 		else if (tokens[idx] == "*MESH")
 		{
 			idx += 2;
-			parseMeshInfo(mesh);
+			parseMesh(node);
 		}
 		else if (tokens[idx] == "*TM_ANIMATION")
 		{
 			idx += 2;
-			parseAnimation(mesh);
+			parseAnimation(node);
+		}
+		else if (tokens[idx] == "*MATERIAL_REF")
+		{
+			node.materialIndex = atoi(tokens[idx + 1].c_str());
+			idx++;
 		}
 
 		idx++;
 	}
 
-	meshes[name] = mesh;
+	nodes[name] = node;
 }
 
 void Converter::parseTexture(AseMaterial& mat)
@@ -363,8 +316,9 @@ void Converter::parseTexture(AseMaterial& mat)
 	}
 }
 
-void Converter::parseMeshInfo(AseMesh& mesh)
+void Converter::parseMesh(AseNode& node)
 {
+	AseMesh mesh;
 	std::vector<AseFloat3> tVertices;
 	while (tokens[idx] != "}")
 	{
@@ -396,6 +350,8 @@ void Converter::parseMeshInfo(AseMesh& mesh)
 
 		idx++;
 	}
+
+	node.meshes.push_back(mesh);
 }
 
 void Converter::parseVertex(AseMesh& mesh)
@@ -494,10 +450,115 @@ void Converter::parseNormal(AseMesh& mesh)
 	}
 }
 
-void Converter::parseAnimation(AseMesh& mesh)
+void Converter::parseAnimation(AseNode& node)
 {
 	while (tokens[idx] != "}")
 	{
 		idx++;
+	}
+}
+
+void Converter::outMaterial(std::ofstream& file, const std::string& materialName)
+{
+	auto material = materials[materialName];
+
+
+	//material name
+	int size = materialName.size();
+	file.write((const char*)&size, sizeof(size_t));
+	file.write(materialName.c_str(), sizeof(char) * size);
+
+	//material parent name
+	size = material.parentName.size();
+	file.write((const char*)&size, sizeof(size_t));
+	file.write(material.parentName.c_str(), sizeof(char) * size);
+
+	//material info
+
+	//color
+	file.write((const char*)&material.ambient.r, sizeof(float));
+	file.write((const char*)&material.ambient.g, sizeof(float));
+	file.write((const char*)&material.ambient.b, sizeof(float));
+	file.write((const char*)&material.ambient.w, sizeof(float));
+
+	file.write((const char*)&material.diffuse.r, sizeof(float));
+	file.write((const char*)&material.diffuse.g, sizeof(float));
+	file.write((const char*)&material.diffuse.b, sizeof(float));
+	file.write((const char*)&material.diffuse.w, sizeof(float));
+
+	file.write((const char*)&material.specular.r, sizeof(float));
+	file.write((const char*)&material.specular.g, sizeof(float));
+	file.write((const char*)&material.specular.b, sizeof(float));
+	file.write((const char*)&material.specular.w, sizeof(float));
+
+
+	//texture
+	size = material.texture.size();
+	file.write((const char*)&size, sizeof(size_t));
+	file.write(material.texture.c_str(), sizeof(char)*size);
+
+	file.write((const char*)&material.uTile, sizeof(float));
+	file.write((const char*)&material.vTile, sizeof(float));
+}
+
+void Converter::outNode(std::ofstream& file, const std::string& nodeName)
+{
+	AseNode node = nodes[nodeName];
+	int size;
+
+	//자기 이름
+	size = node.name.size();
+	file.write((const char*)&size, sizeof(size_t));
+	file.write(node.name.c_str(), sizeof(char)*size);
+
+	//부모 이름
+	size = node.parentName.size();
+	file.write((const char*)&size, sizeof(size_t));
+	file.write(node.parentName.c_str(), sizeof(char)*size);
+
+	//메테리얼 정보
+	file.write((const char*)&node.materialIndex, sizeof(size_t));
+
+	//메쉬 개수
+	size = node.meshes.size();
+	file.write((const char*)&size, sizeof(size_t));
+
+	//메쉬 정보 저장
+
+	for (auto& mesh : node.meshes)
+	{
+		//vertex 정보
+		for (auto& vertex : mesh.vertices)
+		{
+			file.write((const char*)&vertex.pos.r, sizeof(float));
+			file.write((const char*)&vertex.pos.g, sizeof(float));
+			file.write((const char*)&vertex.pos.b, sizeof(float));
+
+			file.write((const char*)&vertex.normal.r, sizeof(float));
+			file.write((const char*)&vertex.normal.g, sizeof(float));
+			file.write((const char*)&vertex.normal.b, sizeof(float));
+
+			file.write((const char*)&vertex.texPos.r, sizeof(float));
+			file.write((const char*)&vertex.texPos.g, sizeof(float));
+		}
+
+		//index 정보
+		size = mesh.indices.size();
+
+		file.write((const char*)&size, sizeof(size_t));
+
+		for (auto index : mesh.indices)
+		{
+			file.write((const char*)&index, sizeof(unsigned));
+		}
+	}
+
+	//자식 정보 기입
+	for (auto& node : nodes)
+	{
+		if (node.second.parentName == nodeName)
+		{
+			outNode(file, node.second.name);
+		}
 	}
 }

@@ -43,6 +43,8 @@ protected:
 template<typename VertexType>
 Figure<VertexType>::Figure()
 {
+	static_assert(std::is_base_of<Effect, std::remove_pointer<EffectType>::type>::value,
+		"EffectType은 반드시 Effect를 상속받아야합니다");
 	m_Effect = nullptr;
 }
 

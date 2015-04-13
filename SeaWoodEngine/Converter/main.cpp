@@ -1,12 +1,13 @@
 ﻿#include "Converter.h"
 #include <iostream>
 #include <map>
+#include <memory>
 
 void printHelp()
 {
 	std::cout << "parse (fileName) : parsing file." << std::endl;
 	std::cout << "print : print info about parsed file." << std::endl;
-	std::cout << "out (fileName) (meshName) (materialName) : mesh export to .SWM file" << std::endl;
+	std::cout << "out (fileName) (nodeName) : node export to .SWM file" << std::endl;
 	std::cout << "help : print help message." << std::endl;
 	std::cout << "exit : exit this program." << std::endl;
 }
@@ -14,9 +15,9 @@ void printHelp()
 
 int main()
 {
-	Converter parser;
+	std::unique_ptr<Converter> converter(new Converter);
 
-	std::cout << "ASE Parser : .ASE -> .SWM" << std::endl;
+	std::cout << "ASE Converter : .ASE -> .SWM" << std::endl;
 
 	for (;;)
 	{
@@ -32,7 +33,7 @@ int main()
 
 			std::cin.getline(fileName, 256);
 
-			if (parser.parse(fileName + 1))
+			if (converter->parse(fileName + 1))
 			{
 				std::cout << "parsing succed." << std::endl;
 			}
@@ -43,7 +44,7 @@ int main()
 		}
 		else if (command == "print")
 		{
-			parser.printInfo();
+			converter->printInfo();
 		}
 		else if (command == "help")
 		{
@@ -51,11 +52,11 @@ int main()
 		}
 		else if (command == "out")
 		{
-			std::string file, mesh, material;
+			std::string file, node;
 
-			std::cin >> file >> mesh >> material;
+			std::cin >> file >> node;
 
-			if (parser.out(file, mesh, material))
+			if (converter->out(file, node))
 			{
 				std::cout << "out succed." << std::endl;
 			}

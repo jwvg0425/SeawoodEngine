@@ -1,6 +1,7 @@
 ﻿#include <string>
 #include <vector>
 #include <map>
+#include <fstream>
 
 struct AseFloat4
 {
@@ -28,6 +29,7 @@ struct AseMaterial
 
 	std::string texture = "";
 	float uTile = 0, vTile = 0;
+	std::string parentName;
 };
 
 struct AseVertex
@@ -46,11 +48,20 @@ struct AseMesh
 	std::vector<AseVertex> vertices;
 	std::vector<unsigned> indices;
 
-	AseMesh* parent = nullptr;
 	AseFloat3 translation;
 	AseFloat3 scale;
 	AseFloat3 rotateAxis;
 	float rotateAngle;
+};
+
+struct AseNode
+{
+	AseNode() : name(""), parentName("") {}
+
+	std::string name;
+	std::string parentName;
+	std::vector<AseMesh> meshes;
+	int materialIndex = 0;
 };
 
 class Converter
@@ -61,25 +72,28 @@ public:
 
 	bool parse(const std::string& fileName);
 	void printInfo();
-	bool out(const std::string& fileName, const std::string& meshName, const std::string& materialName);
+	bool out(const std::string& fileName, const std::string& nodeName);
 
 private:
+	void outMaterial(std::ofstream& file, const std::string& MaterialName);
+	void outNode(std::ofstream& file, const std::string& nodeName);
+
 	void tokenize(const std::string& line);
 	void parseScene();
 	void parseMaterialList();
 
-	void parseMaterial();
+	void parseMaterial(const std::string& parent);
 
 	void parseTexture(AseMaterial& mat);
 
-	void parseMesh();
-	void parseMeshInfo(AseMesh& mesh);
+	void parseNode();
+	void parseMesh(AseNode& node);
 	void parseVertex(AseMesh& mesh);
 	void parseFace(AseMesh& mesh);
 	void parseTVertex(std::vector<AseFloat3>& tVertices);
 	void parseTFace(AseMesh& mesh, const std::vector<AseFloat3>& tVertices);
 	void parseNormal(AseMesh& mesh);
-	void parseAnimation(AseMesh& mesh);
+	void parseAnimation(AseNode& mesh);
 
 
 	using Tokens = std::vector<std::string>;
@@ -89,6 +103,6 @@ private:
 
 	AseFloat3 sceneAmbient;
 
-	std::map<std::string, AseMesh> meshes;
+	std::map<std::string, AseNode> nodes;
 	std::map<std::string, AseMaterial> materials;
 };
