@@ -17,6 +17,7 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+ase/
 
 # Roslyn cache directories
 *.ide/
@@ -194,8 +195,7 @@ FakesAssemblies/
 .LSOverride
 
 # Icon must end with two \r
-Icon
-
+Icon
 # Thumbnails
 ._*
 
