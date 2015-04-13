@@ -10,7 +10,7 @@ class InputLayoutDesc final
 
 	static const D3D11_INPUT_ELEMENT_DESC m_PosColor[2];
 	static const D3D11_INPUT_ELEMENT_DESC m_PosNormal[2];
-	static const D3D11_INPUT_ELEMENT_DESC m_PosBasic[3];
+	static const D3D11_INPUT_ELEMENT_DESC m_PosBasic[4];
 };
 
 class InputLayouts final

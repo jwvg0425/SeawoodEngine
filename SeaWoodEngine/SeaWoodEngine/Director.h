@@ -51,6 +51,9 @@ public:
 	void				cacheModel(const std::string& fileName);
 	void				loadModel(const std::string& fileName, ModelInfo& info);
 
+	//시야공간 반직선 계산
+	void				getEyeRay(OUT XMVECTOR& rayOrigin, OUT XMVECTOR& rayDir);
+
 	LRESULT CALLBACK	WndProc(HWND hWnd, UINT iMessage, WPARAM wParam, LPARAM lParam);
 
 private:
@@ -64,6 +67,7 @@ private:
 	void				onMouseDown(MouseEvent::Status status);
 	void				onMouseMove(int x, int y);
 	void				onMouseUp(MouseEvent::Status status);
+	void				onPickTriangle();
 
 	static Director*	m_Instance;
 

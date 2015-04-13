@@ -370,6 +370,19 @@ bool SeaWood::Node::isUsingRimLight()
 	return m_UseRimLight;
 }
 
+float SeaWood::Node::getPickedTriangle(int* pickFace, float minDis)
+{
+	//기본 node는 무조건 -1. 트라이앵글 없다고 봄
+	*pickFace = -1;
+
+	return minDis;
+}
+
+void SeaWood::Node::onPickTriangle(int pick)
+{
+
+}
+
 void Node::removeChild(Node* child)
 {
 	_ASSERT(child != nullptr);

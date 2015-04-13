@@ -2,6 +2,7 @@
 #include "Effect.h"
 #include "InputLayout.h"
 #include "Node.h"
+#include "Camera.h"
 
 NS_SW_BEGIN
 
@@ -25,6 +26,8 @@ public:
 
 	static Figure<VertexType>* createWithEffect(EffectType effect);
 
+	float getPickedTriangle(int* pickFace, float minDis) override;
+
 protected:
 	void setVertices(const std::vector<VertexType>& vertices);
 	void setIndices(const std::vector<UINT>& indices);
@@ -39,6 +42,53 @@ protected:
 
 	bool m_IsReflect = false;
 };
+
+template<typename VertexType>
+float Figure<VertexType>::getPickedTriangle(int* pickFace, float minDis)
+{
+	XMVECTOR rayOrigin;
+	XMVECTOR rayDir;
+
+	Director::getInstance()->getEyeRay(rayOrigin, rayDir);
+
+	XMMATRIX view = GET_RENDERER()->getCamera()->getView();
+	XMMATRIX invView = XMMatrixInverse(&XMMatrixDeterminant(view), view);
+
+	XMMATRIX world = getWorld();
+	XMMATRIX invWorld = XMMatrixInverse(&XMMatrixDeterminant(world), world);
+
+	XMMATRIX toLocal = XMMatrixMultiply(invView, invWorld);
+
+	rayOrigin = XMVector3TransformCoord(rayOrigin, toLocal);
+	rayDir = XMVector3TransformNormal(rayDir, toLocal);
+
+	rayDir = XMVector3Normalize(rayDir);
+
+	*pickFace = -1;
+	for (UINT i = 0; i < m_Indices.size() / 3; ++i)
+	{
+		UINT i0 = m_Indices[i * 3 + 0];
+		UINT i1 = m_Indices[i * 3 + 1];
+		UINT i2 = m_Indices[i * 3 + 2];
+
+		XMVECTOR v0 = XMLoadFloat3(&m_Vertices[i0].m_Pos);
+		XMVECTOR v1 = XMLoadFloat3(&m_Vertices[i1].m_Pos);
+		XMVECTOR v2 = XMLoadFloat3(&m_Vertices[i2].m_Pos);
+
+		float t = 0.0f;
+
+		if (IntersectRayTriangle(rayOrigin, rayDir, v0, v1, v2, &t))
+		{
+			if (t < minDis)
+			{
+				minDis = t;
+				*pickFace = i;
+			}
+		}
+	}
+
+	return minDis;
+}
 
 template<typename VertexType>
 Figure<VertexType>::Figure()

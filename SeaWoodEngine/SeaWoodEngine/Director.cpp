@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "Renderer.h"
 #include "MouseEvent.h"
+#include "Camera.h"
 #include <time.h>
 #include <iostream>
 #include <sstream>
@@ -70,6 +71,9 @@ void Director::gameLoop()
 
 	//input device 갱신
 	m_KeyManager->update(dTime);
+
+	//mouse pick 계산
+	onPickTriangle();
 
 	//업데이트 등록된 노드들 업데이트 작업
 	for (auto& node : m_EventNodes[EventType::UPDATE_FRAME])
@@ -406,4 +410,51 @@ void SeaWood::Director::loadModel(const std::string& fileName, ModelInfo& info)
 	buffer[size] = '\0';
 
 	info.m_Texture = buffer;
+}
+
+void SeaWood::Director::getEyeRay(OUT XMVECTOR& rayOrigin, OUT XMVECTOR& rayDir)
+{
+	XMMATRIX proj = GET_RENDERER()->getCamera()->getProjection();
+	auto clientSize = Application::getInstance()->getClientSize();
+
+	float vx = (+2.0f*m_Mouse->m_Position.m_X / clientSize.m_Width - 1.0f) / proj(0, 0);
+	float vy = (-2.0f*m_Mouse->m_Position.m_Y / clientSize.m_Height + 1.0f) / proj(1, 1);
+
+	rayOrigin = XMVectorSet(0.0f, 0.0f, 0.0f, 1.0f);
+	rayDir = XMVectorSet(vx, vy, 1.0f, 0.0f);
+}
+
+void SeaWood::Director::onPickTriangle()
+{
+	static Node* prevNode = nullptr;
+	float minDis = FLT_MAX;
+	Node* minNode = nullptr;
+	int minPick;
+
+	for (auto& node : m_EventNodes[EventType::PICK_TRIANGLE])
+	{
+		int pick;
+		minDis = node->getPickedTriangle(&pick, minDis);
+
+		if (pick != -1)
+		{
+			minPick = pick;
+			minNode = node;
+		}
+	}
+
+	if (prevNode != nullptr && prevNode != minNode)
+	{
+		prevNode->onPickTriangle(-1);
+	}
+
+	if (minNode != nullptr)
+	{
+		minNode->onPickTriangle(minPick);
+		prevNode = minNode;
+	}
+	else
+	{
+		prevNode = nullptr;
+	}
 }

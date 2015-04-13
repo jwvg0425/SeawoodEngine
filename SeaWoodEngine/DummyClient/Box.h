@@ -18,6 +18,8 @@ public:
 	void setBoxWithMaterial(float width, float height, float depth, SeaWood::Material material);
 	void setBoxWithRandomColor(float width, float height, float depth);
 
+	void onPickTriangle(int pick) override;
+
 	CREATE_FUNC(Box);
 
 protected:

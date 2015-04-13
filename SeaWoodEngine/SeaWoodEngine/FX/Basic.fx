@@ -49,6 +49,7 @@ struct VertexIn
 	float3 PosL    : POSITION;
 	float3 NormalL : NORMAL;
 	float2 Tex     : TEXCOORD;
+	float4 Color   : COLOR;
 };
 
 struct VertexOut
@@ -57,6 +58,7 @@ struct VertexOut
     float3 PosW    : POSITION;
     float3 NormalW : NORMAL;
 	float2 Tex     : TEXCOORD;
+	float4 Color   : COLOR;
 };
 
 VertexOut VS(VertexIn vin)
@@ -72,6 +74,8 @@ VertexOut VS(VertexIn vin)
 	
 	// Output vertex attributes for interpolation across triangle.
 	vout.Tex = mul(float4(vin.Tex, 0.0f, 1.0f), gTexTransform).xy;
+
+	vout.Color = vin.Color;
 
 	return vout;
 }
@@ -149,7 +153,8 @@ float4 PS(VertexOut pin, uniform bool gUseTexture, uniform bool gUseRimLight) : 
 	}
 
 	// Modulate with late add.
-	float4 litColor = texColor*(ambient + diffuse) + spec + rim;
+	float4 color = pin.Color;
+	float4 litColor = texColor*(ambient + diffuse) + spec + rim + color*color.a;
 
 	if (gIsFogEnable)
 	{
@@ -161,7 +166,9 @@ float4 PS(VertexOut pin, uniform bool gUseTexture, uniform bool gUseRimLight) : 
 	// Common to take alpha from diffuse material and texture.
 	litColor.a = gMaterial.Diffuse.a * texColor.a;
 
-    return litColor;
+	
+
+	return litColor;
 }
 
 technique11 Light
