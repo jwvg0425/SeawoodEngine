@@ -5,6 +5,7 @@
 #include "Renderer.h"
 #include "MouseEvent.h"
 #include "Camera.h"
+#include "DebugNodes.h"
 #include <time.h>
 #include <iostream>
 #include <sstream>

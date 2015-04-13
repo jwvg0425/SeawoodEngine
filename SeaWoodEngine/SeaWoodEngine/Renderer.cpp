@@ -32,7 +32,7 @@ SeaWood::Renderer::~Renderer()
 	Blend::destroyAll();
 	Rasterizer::destroyAll();
 	DepthStencil::destroyAll();
-
+	DebugNodes::destroyAll();
 
 	ReleaseCOM(m_RenderTargetView);
 	ReleaseCOM(m_DepthStencilView);
@@ -157,6 +157,12 @@ void SeaWood::Renderer::beginFrame()
 		D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	Effects::beginFrame();
+
+	//debug 그리기
+	if (m_DebugMode != DebugMode::NONE)
+	{
+		DebugNodes::getDebugNode(m_DebugMode)->render();
+	}
 }
 
 void SeaWood::Renderer::render()
@@ -285,4 +291,9 @@ void SeaWood::Renderer::changeCamera(Camera* camera)
 Camera* SeaWood::Renderer::getCamera()
 {
 	return m_Camera;
+}
+
+void SeaWood::Renderer::setDebugDrawMode(DebugMode mode)
+{
+	m_DebugMode = mode;
 }

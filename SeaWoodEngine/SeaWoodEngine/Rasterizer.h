@@ -13,6 +13,7 @@ public:
 	static ID3D11RasterizerState* getClockwiseCull();
 
 private:
+
 	static ID3D11RasterizerState* m_WireFrame;
 	static ID3D11RasterizerState* m_NoCull;
 	static ID3D11RasterizerState* m_ClockwiseCull;

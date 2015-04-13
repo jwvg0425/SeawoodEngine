@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "SeaWood.h"
 #include "Ref.h"
+#include "DebugNodes.h"
 
 NS_SW_BEGIN
 
@@ -26,6 +27,8 @@ public:
 	void registerCamera(Camera* camera);
 	void changeCamera(Camera* camera);
 	Camera* getCamera();
+
+	void setDebugDrawMode(DebugMode mode);
 	
 
 	CREATE_FUNC(Renderer);
@@ -46,6 +49,9 @@ protected:
 	FLOAT m_BackgroundColor[4];
 
 	Camera* m_Camera = nullptr;
+
+	//debug rendering 용
+	DebugMode m_DebugMode = DebugMode::NONE;
 };
 
 NS_SW_END

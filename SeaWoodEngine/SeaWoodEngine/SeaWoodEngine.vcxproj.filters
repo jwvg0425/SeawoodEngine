@@ -43,6 +43,9 @@
     <Filter Include="base\main">
       <UniqueIdentifier>{43c1423d-1870-4f76-862a-12d97afeb2bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="base\debug">
+      <UniqueIdentifier>{22fb4883-3e80-408a-af07-45b28133c5e4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
@@ -114,6 +117,9 @@
     </ClCompile>
     <ClCompile Include="Utility.cpp">
       <Filter>base\main</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugNodes.cpp">
+      <Filter>base\debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="Utility.h">
       <Filter>base\main</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugNodes.h">
+      <Filter>base\debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
