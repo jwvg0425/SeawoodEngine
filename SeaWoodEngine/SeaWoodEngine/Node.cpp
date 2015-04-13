@@ -370,7 +370,7 @@ bool SeaWood::Node::isUsingRimLight()
 	return m_UseRimLight;
 }
 
-float SeaWood::Node::getPickedTriangle(int* pickFace, float minDis)
+float SeaWood::Node::getPickedTriangle(int* pickFace, XMVECTOR* pickPos, float minDis)
 {
 	//기본 node는 무조건 -1. 트라이앵글 없다고 봄
 	*pickFace = -1;
@@ -378,9 +378,14 @@ float SeaWood::Node::getPickedTriangle(int* pickFace, float minDis)
 	return minDis;
 }
 
-void SeaWood::Node::onPickTriangle(int pick)
+void SeaWood::Node::onPickTriangle(int pick, XMVECTOR pickPos)
 {
 
+}
+
+void SeaWood::Node::setVisible(bool isVisible)
+{
+	m_IsRender = isVisible;
 }
 
 void Node::removeChild(Node* child)

@@ -24,9 +24,14 @@ public:
 
 	void render() override;
 
+	void getBuffer(std::vector<VertexType>& vertices,
+				std::vector<UINT>& indices);
+
 	static Figure<VertexType>* createWithEffect(EffectType effect);
 
-	float getPickedTriangle(int* pickFace, float minDis) override;
+	float getPickedTriangle(int* pickFace, XMVECTOR* pickPos, float minDis) override;
+
+	void updateBuffer();
 
 protected:
 	void setVertices(const std::vector<VertexType>& vertices);
@@ -41,10 +46,39 @@ protected:
 	ID3D11Buffer* m_IndexBuffer = nullptr;
 
 	bool m_IsReflect = false;
+	bool m_IsDynamic = false;
 };
 
 template<typename VertexType>
-float Figure<VertexType>::getPickedTriangle(int* pickFace, float minDis)
+void Figure<VertexType>::updateBuffer()
+{
+	if (!m_IsDynamic)
+	{
+		return;
+	}
+
+	D3D11_MAPPED_SUBRESOURCE mappedData;
+	HR(GET_RENDERER()->getDeviceContext()->Map(m_VertexBuffer, 0,
+		D3D11_MAP_WRITE_DISCARD, 0, &mappedData));
+	VertexType* v = reinterpret_cast<VertexType*>(mappedData.pData);
+
+	for (int i = 0; i < m_Vertices.size(); i++)
+	{
+		v[i] = m_Vertices[i];
+	}
+
+	GET_RENDERER()->getDeviceContext()->Unmap(m_VertexBuffer, 0);
+}
+
+template<typename VertexType>
+void Figure<VertexType>::getBuffer(std::vector<VertexType>& vertices, std::vector<UINT>& indices)
+{
+	vertices = m_Vertices;
+	indices = m_Indices;
+}
+
+template<typename VertexType>
+float Figure<VertexType>::getPickedTriangle(int* pickFace, XMVECTOR* pickPos, float minDis)
 {
 	XMVECTOR rayOrigin;
 	XMVECTOR rayDir;
@@ -83,6 +117,9 @@ float Figure<VertexType>::getPickedTriangle(int* pickFace, float minDis)
 			{
 				minDis = t;
 				*pickFace = i;
+
+				//origin으로부터 dir방향으로 minDis만큼 간 위치가 마우스 위치 투영 좌표다.
+				*pickPos = rayOrigin + rayDir*minDis;
 			}
 		}
 	}
@@ -127,7 +164,11 @@ void Figure<VertexType>::setBuffer(const std::vector<VertexType>& vertices, cons
 {
 	setVertices(vertices);
 	setIndices(indices);
-	buildBuffer(isDynamic);
+
+	if (m_VertexBuffer == nullptr)
+	{
+		buildBuffer(isDynamic);
+	}
 }
 
 template<typename VertexType>
@@ -224,6 +265,9 @@ template<typename VertexType>
 void Figure<VertexType>::buildBuffer(bool isDynamic)
 {
 	D3D11_BUFFER_DESC vbd;
+	
+	m_IsDynamic = isDynamic;
+
 	if (isDynamic)
 	{
 		vbd.Usage = D3D11_USAGE_DYNAMIC;

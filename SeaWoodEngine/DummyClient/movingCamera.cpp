@@ -67,7 +67,7 @@ void MovingCamera::update(float dTime)
 
 void MovingCamera::onMouseMove(MouseEvent e)
 {
-	if (e.m_Status & MouseEvent::LEFT)
+	if (e.m_Status & MouseEvent::RIGHT)
 	{
 		float dx = XMConvertToRadians(0.25f*(e.m_Position.m_X - m_LastPos.m_X));
 		float dy = XMConvertToRadians(0.25f*(e.m_Position.m_Y - m_LastPos.m_Y));

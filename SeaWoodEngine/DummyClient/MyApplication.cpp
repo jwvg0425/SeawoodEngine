@@ -20,9 +20,10 @@ void MyApplication::onCreate()
 	FLOAT color[4] = { 0.3f, 0.7f, 0.5f, 1.0f };
 
 	renderer->setBackgroundColor(color);
+	renderer->setDebugDrawMode(DebugMode::PRINT_AXIS);
 
 	Director::getInstance()->registerRenderer(renderer);
-
+	
 	auto scene = FirstScene::create();
 	Director::getInstance()->startScene(scene);
 }

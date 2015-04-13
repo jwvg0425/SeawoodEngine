@@ -71,7 +71,7 @@ public:
 	virtual void	onMouseDown(MouseEvent e);
 	virtual void	onMouseMove(MouseEvent e);
 	virtual void	onMouseUp(MouseEvent e);
-	virtual void	onPickTriangle(int pick);
+	virtual void	onPickTriangle(int pick, XMVECTOR pickPos);
 
 	void			setEvent(EventType e);
 
@@ -82,9 +82,10 @@ public:
 
 	//render 대상인지 확인.
 	bool			isRender();
+	void			setVisible(bool isVisible);
 
 	//pick 여부 계산.리턴 값은 거리.
-	virtual float	getPickedTriangle(int* pickFace, float minDis);
+	virtual float	getPickedTriangle(int* pickFace, XMVECTOR* pickPos, float minDis);
 
 protected:
 	void updateWorld();

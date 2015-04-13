@@ -430,28 +430,33 @@ void SeaWood::Director::onPickTriangle()
 	static Node* prevNode = nullptr;
 	float minDis = FLT_MAX;
 	Node* minNode = nullptr;
+	XMVECTOR minPickPos = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
+	
 	int minPick;
 
 	for (auto& node : m_EventNodes[EventType::PICK_TRIANGLE])
 	{
 		int pick;
-		minDis = node->getPickedTriangle(&pick, minDis);
+		XMVECTOR pickPos;
+
+		minDis = node->getPickedTriangle(&pick, &pickPos, minDis);
 
 		if (pick != -1)
 		{
 			minPick = pick;
 			minNode = node;
+			minPickPos = pickPos;
 		}
 	}
 
 	if (prevNode != nullptr && prevNode != minNode)
 	{
-		prevNode->onPickTriangle(-1);
+		prevNode->onPickTriangle(-1, minPickPos);
 	}
 
 	if (minNode != nullptr)
 	{
-		minNode->onPickTriangle(minPick);
+		minNode->onPickTriangle(minPick, minPickPos);
 		prevNode = minNode;
 	}
 	else

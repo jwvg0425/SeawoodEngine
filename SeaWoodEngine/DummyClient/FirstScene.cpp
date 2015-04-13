@@ -3,8 +3,7 @@
 #include "RoundLight.h"
 #include "GeometryGenerator.h"
 #include "MovingCamera.h"
-#include "Box.h"
-#include "RoundFigure.h"
+#include "GridMap.h"
 #include <atomic>
 
 USING_NS_SW;
@@ -25,8 +24,12 @@ bool FirstScene::init()
 		return false;
 	}
 
-	auto camera = MovingCamera::createWithPos(XMVectorSet(0.0f, 0.0f, -20.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
+	auto camera = MovingCamera::createWithPos(XMVectorSet(0.0f, 20.0f, -60.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
 	GET_RENDERER()->registerCamera(camera);
+
+	auto gridMap = GridMap::create();
+
+	addChild(gridMap);
 
 
 	auto direct = DirectionalLight();
@@ -39,10 +42,6 @@ bool FirstScene::init()
 	auto light = Light<DirectionalLight>::createWithScene(this, direct);
 
 	addChild(light);
-
-	setFogEnable(true);
-	setFog(20.0f, 100.0f, XMVectorSet(1.0f, 1.0f, 1.0f, 1.0f));
-
 
 	return true;
 }
