@@ -29,9 +29,9 @@ protected:
 	Mode m_Mode = INCREASE;
 	float m_NowRadius = 10.0f;
 	float m_Radius = 10.0f;
-	float m_Speed = 5.0f;
+	float m_Speed = 10.0f;
 	float m_UpMulti = 2.0f;
-	float m_NowSpeed = 5.0f;
+	float m_NowSpeed = 10.0f;
 	float m_Width = 100.0f, m_Depth = 100.0f;
-	int m_M = 50, m_N = 50;
+	int m_M = 25, m_N = 25;
 };

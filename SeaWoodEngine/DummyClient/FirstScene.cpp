@@ -43,5 +43,9 @@ bool FirstScene::init()
 
 	addChild(light);
 
+	auto eyeLight = EyeLight::createWithScene(this);
+
+	addChild(eyeLight);
+
 	return true;
 }

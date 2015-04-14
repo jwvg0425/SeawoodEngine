@@ -57,8 +57,35 @@ void GridMap::onPickTriangle(int pick, XMVECTOR pickPos)
 
 void GridMap::pickHighlight()
 {
+	XMFLOAT3 color;
+
+	switch (m_Mode)
+	{
+	case INCREASE:
+		color.x = 0.2f;
+		color.y = 0.8f;
+		color.z = 0.2f;
+		break;
+	case DECREASE:
+		color.x = 0.2f;
+		color.y = 0.2f;
+		color.z = 0.8f;
+		break;
+	case FLAT:
+		color.x = 0.8f;
+		color.y = 0.2f;
+		color.z = 0.2f;
+		break;
+	}
+
 	for (int i = 0; i < m_Vertices.size(); i++)
 	{
+		if (m_Pick == -1)
+		{
+			m_Vertices[i].m_Color = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
+			continue;
+		}
+
 		float x = m_Vertices[i].m_Pos.x;
 		float z = m_Vertices[i].m_Pos.z;
 		float d = sqrt((x - m_PickPos.x)*(x - m_PickPos.x) +
@@ -66,14 +93,18 @@ void GridMap::pickHighlight()
 
 		if (d < m_NowRadius)
 		{
-			float color = 0.3f * cos(d / m_NowRadius*PI / 2);
-			m_Vertices[i].m_Color = XMFLOAT4(color, color, color, 1.0f);
+			float intensity = 0.3f * cos(d / m_NowRadius*PI / 2);
+
+			m_Vertices[i].m_Color = 
+				XMFLOAT4(color.x*intensity, color.y*intensity, color.z*intensity, 1.0f);
 		}
 		else
 		{
 			m_Vertices[i].m_Color = XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f);
 		}
 	}
+
+	updateBuffer();
 }
 
 void GridMap::update(float dTime)
@@ -124,11 +155,11 @@ void GridMap::update(float dTime)
 		{
 			float deltaX = (m_PickPos.x - m_Vertices[i].m_Pos.x);
 			float deltaZ = (m_PickPos.z - m_Vertices[i].m_Pos.z);
-			float distance = sqrt(deltaX*deltaX + deltaZ*deltaZ);
+			float distance = deltaX*deltaX + deltaZ*deltaZ;
 
-			if (distance < m_NowRadius)
+			if (distance < m_NowRadius*m_NowRadius)
 			{
-				distance = distance / m_NowRadius * (PI / 2.0f);
+				distance = distance / (m_NowRadius*m_NowRadius) * (PI / 2.0f);
 				float delta = 0.0f;
 				//mode에 따라 변경
 				switch (m_Mode)
@@ -170,6 +201,7 @@ void GridMap::update(float dTime)
 			UINT i0 = m_Indices[i * 3 + 0];
 			UINT i1 = m_Indices[i * 3 + 1];
 			UINT i2 = m_Indices[i * 3 + 2];
+
 			XMVECTOR a = XMLoadFloat3(&m_Vertices[i0].m_Pos);
 			XMVECTOR b = XMLoadFloat3(&m_Vertices[i1].m_Pos);
 			XMVECTOR c = XMLoadFloat3(&m_Vertices[i2].m_Pos);
@@ -202,6 +234,4 @@ void GridMap::update(float dTime)
 			XMStoreFloat3(&m_Vertices[i].m_Normal, n);
 		}
 	}
-
-	updateBuffer();
 }
