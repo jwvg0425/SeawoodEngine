@@ -44,22 +44,22 @@ bool MovingCamera::init()
 
 void MovingCamera::update(float dTime)
 {
-	if (GET_KEY_MANAGER()->getKeyState(VK_W) & KeyManager::PRESS)
+	if (GET_KEY_MANAGER()->isKeyState(VK_W, KeyManager::PRESS))
 	{
 		walk(10.0f*dTime);
 	}
 
-	if (GET_KEY_MANAGER()->getKeyState(VK_S) & KeyManager::PRESS)
+	if (GET_KEY_MANAGER()->isKeyState(VK_S, KeyManager::PRESS))
 	{
 		walk(-10.0f*dTime);
 	}
 
-	if (GET_KEY_MANAGER()->getKeyState(VK_A) & KeyManager::PRESS)
+	if (GET_KEY_MANAGER()->isKeyState(VK_A, KeyManager::PRESS))
 	{
 		strafe(-10.0f*dTime);
 	}
 
-	if (GET_KEY_MANAGER()->getKeyState(VK_D) & KeyManager::PRESS)
+	if (GET_KEY_MANAGER()->isKeyState(VK_D, KeyManager::PRESS))
 	{
 		strafe(10.0f*dTime);
 	}

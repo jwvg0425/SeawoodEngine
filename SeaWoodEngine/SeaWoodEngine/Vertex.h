@@ -15,6 +15,8 @@ namespace Vertex
 
 		XMFLOAT3 m_Pos;
 		XMFLOAT4 m_Color;
+
+		static ID3D11InputLayout* getInputLayout();
 	};
 
 	struct PosNormal
@@ -27,6 +29,8 @@ namespace Vertex
 
 		XMFLOAT3 m_Pos;
 		XMFLOAT3 m_Normal;
+
+		static ID3D11InputLayout* getInputLayout();
 	};
 
 	struct PosBasic
@@ -43,6 +47,8 @@ namespace Vertex
 		XMFLOAT3 m_Normal;
 		XMFLOAT2 m_Tex;
 		XMFLOAT4 m_Color;
+
+		static ID3D11InputLayout* getInputLayout();
 	};
 };
 

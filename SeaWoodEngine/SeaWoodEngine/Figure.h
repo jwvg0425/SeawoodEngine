@@ -176,7 +176,7 @@ void Figure<VertexType>::render()
 {
 	m_Effect->updateByObject(this);
 
-	GET_RENDERER()->setInputLayout(m_InputLayout);
+	GET_RENDERER()->setInputLayout(VertexType::getInputLayout());
 	GET_RENDERER()->setPrimitiveTopology(m_Topology);
 
 	UINT stride = sizeof(VertexType);

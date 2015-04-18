@@ -26,8 +26,7 @@ bool SeaWood::Model::init()
 	}
 
 	setEffect(Effects::getBasicEffect());
-	setInputLayout(InputLayouts::getPosBasic(),
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	return true;
 }

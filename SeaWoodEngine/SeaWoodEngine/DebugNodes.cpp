@@ -65,6 +65,6 @@ void SeaWood::DebugNodes::createAxis()
 	std::vector<UINT> indices = { 0, 1, 2, 3, 4, 5 };
 
 	axisNode->setBuffer(vertices, indices);
-	axisNode->setInputLayout(InputLayouts::getPosColor(), D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+	axisNode->setTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 	axisNode->retain();
 }

@@ -60,7 +60,7 @@ public:
 	void			removeFromParent();
 
 	//렌더 스테이트 관련
-	void				setInputLayout(ID3D11InputLayout* inputLayout, D3D11_PRIMITIVE_TOPOLOGY topology);
+	void				setTopology(D3D11_PRIMITIVE_TOPOLOGY topology);
 	void				setRasterizer(ID3D11RasterizerState* rasterizer);
 	void				setBlend(ID3D11BlendState* blend, const FLOAT* blendFactor = nullptr);
 	ID3D11BlendState*	getBlend() const;
@@ -79,18 +79,19 @@ public:
 	float			getDistanceToCamera(Camera* camera) const;
 
 	//render 대상인지 확인.
-	bool			isRender();
+	bool			isVisible();
 	void			setVisible(bool isVisible);
 
 	//pick 여부 계산.리턴 값은 거리.
 	virtual float	getPickedTriangle(int* pickFace, XMVECTOR* pickPos, float minDis);
 
+	void			getAllChilds(OUT std::vector<Node*>& childs);
 protected:
 	void updateWorld();
 
 	Childs		m_Childs;
 	Node*		m_Parent = nullptr;
-	bool		m_IsRender = true;
+	bool		m_IsVisible = true;
 	bool		m_UseRimLight = false;
 
 	std::vector<EventType> m_Events;
@@ -110,7 +111,6 @@ protected:
 
 	//render state 관련
 	D3D11_PRIMITIVE_TOPOLOGY m_Topology;
-	ID3D11InputLayout*	m_InputLayout = nullptr;
 	ID3D11RasterizerState* m_RasterizerState = nullptr;
 	ID3D11BlendState* m_BlendState = nullptr;
 	FLOAT m_BlendFactor[4];

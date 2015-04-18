@@ -433,8 +433,10 @@ void SeaWood::Director::onPickTriangle()
 	XMVECTOR minPickPos = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
 	
 	int minPick;
+	std::vector<Node*> nodes;
+	m_NowScene->getAllChilds(nodes);
 
-	for (auto& node : m_EventNodes[EventType::PICK_TRIANGLE])
+	for (auto& node : nodes)
 	{
 		int pick;
 		XMVECTOR pickPos;

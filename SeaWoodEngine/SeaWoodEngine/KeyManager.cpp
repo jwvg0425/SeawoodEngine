@@ -68,3 +68,10 @@ SeaWood::KeyManager::KeyState SeaWood::KeyManager::getKeyState(int keyCode)
 	return m_States[keyCode];
 }
 
+bool SeaWood::KeyManager::isKeyState(int keyCode, KeyState state)
+{
+	_ASSERT(keyCode >= 0 && keyCode < KEY_NUM);
+	
+	return (m_States[keyCode] & state) != 0;
+}
+

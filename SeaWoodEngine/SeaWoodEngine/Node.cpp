@@ -308,9 +308,9 @@ float SeaWood::Node::getDistanceToCamera(Camera* camera) const
 	return XMVectorGetZ(viewPointV);
 }
 
-bool SeaWood::Node::isRender()
+bool SeaWood::Node::isVisible()
 {
-	return m_IsRender;
+	return m_IsVisible;
 }
 
 const Node::Childs& SeaWood::Node::getChildList()
@@ -318,9 +318,8 @@ const Node::Childs& SeaWood::Node::getChildList()
 	return m_Childs;
 }
 
-void SeaWood::Node::setInputLayout(ID3D11InputLayout* inputLayout, D3D11_PRIMITIVE_TOPOLOGY topology)
+void SeaWood::Node::setTopology(D3D11_PRIMITIVE_TOPOLOGY topology)
 {
-	m_InputLayout = inputLayout;
 	m_Topology = topology;
 }
 
@@ -377,7 +376,25 @@ void SeaWood::Node::onPickTriangle(int pick, XMVECTOR pickPos)
 
 void SeaWood::Node::setVisible(bool isVisible)
 {
-	m_IsRender = isVisible;
+	m_IsVisible = isVisible;
+}
+
+void SeaWood::Node::getAllChilds(OUT std::vector<Node*>& childs)
+{
+	for (auto& child : m_Childs)
+	{
+		auto node = child.second;
+
+		//그리지 않는 대상인 경우 그 자식들까지 싹 다 제외
+		if (!node->isVisible())
+		{
+			return;
+		}
+
+		childs.push_back(node);
+
+		node->getAllChilds(childs);
+	}
 }
 
 void Node::removeChild(Node* child)

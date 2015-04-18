@@ -121,6 +121,9 @@
     <ClCompile Include="DebugNodes.cpp">
       <Filter>base\debug</Filter>
     </ClCompile>
+    <ClCompile Include="Vertex.cpp">
+      <Filter>base\renderer\global</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />

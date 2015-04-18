@@ -64,6 +64,9 @@ public:
 	void update(float dTime);
 	KeyState getKeyState(int keyCode);
 
+	//해당 키가 해당 상태였는지 아닌지 판단
+	bool isKeyState(int keyCode, KeyState state);
+
 protected:
 	KeyState m_States[KEY_NUM];
 	KeyState m_OldStates[KEY_NUM];

@@ -149,35 +149,7 @@ void SeaWood::Scene::render()
 {
 	std::vector<Node*> drawNodes;
 
-	std::function<void(Node*node)> getAllChilds = 
-		[this, &drawNodes, &getAllChilds](Node* node)
-	{
-		//그리지 않는 대상인 경우 그 자식들까지 싹 다 제외
-		if (!node->isRender())
-		{
-			return;
-		}
-
-		//자기 자신은 포함하지 않는다.
-		if(node != this)
-			drawNodes.push_back(node);
-
-		auto childs = node->getChildList();
-
-		if (childs.size() == 0)
-		{
-			return;
-		}
-		else
-		{
-			for (auto& child : childs)
-			{
-				getAllChilds(child.second);
-			}
-		}
-	};
-
-	getAllChilds(this);
+	getAllChilds(drawNodes);
 
 	std::sort(drawNodes.begin(), drawNodes.end(), [](Node* lhs, Node* rhs)
 	{

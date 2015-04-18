@@ -74,6 +74,7 @@
     </ClCompile>
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="FX\Basic.fx">
