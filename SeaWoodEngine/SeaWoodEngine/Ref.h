@@ -13,6 +13,8 @@ public:
 	void release();
 	void autorelease();
 
+	int getRefCount();
+
 protected:
 	int m_RefCount = 0;
 };

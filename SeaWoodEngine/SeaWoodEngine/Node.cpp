@@ -298,22 +298,14 @@ XMMATRIX SeaWood::Node::getParentWorld() const
 float SeaWood::Node::getDistanceToCamera(Camera* camera) const
 {
 	XMFLOAT3 cameraPos = camera->getEyePos();
-	XMVECTOR worldPointV = XMLoadFloat4(&XMFLOAT4(m_CenterPos.x, m_CenterPos.y, m_CenterPos.z, 1.0f));
+	XMVECTOR viewPointV = XMLoadFloat4(&XMFLOAT4(m_CenterPos.x, m_CenterPos.y, m_CenterPos.z, 1.0f));
 	XMMATRIX world = getWorld() * getParentWorld();
+	XMMATRIX view = camera->getView();
 
-	worldPointV = XMVector4Transform(worldPointV, world);
+	viewPointV = XMVector4Transform(viewPointV, world);
+	viewPointV = XMVector4Transform(viewPointV, view);
 
-	XMFLOAT4 worldPoint;
-
-	XMStoreFloat4(&worldPoint, worldPointV);
-
-	worldPoint.x -= cameraPos.x;
-	worldPoint.y -= cameraPos.y;
-	worldPoint.z -= cameraPos.z;
-
-	float distance = sqrt(worldPoint.x*worldPoint.x + worldPoint.y*worldPoint.y + worldPoint.z*worldPoint.z);
-
-	return distance;
+	return XMVectorGetZ(viewPointV);
 }
 
 bool SeaWood::Node::isRender()
@@ -360,12 +352,12 @@ void SeaWood::Node::scheduleUpdate()
 	Director::getInstance()->registerEvent(EventType::UPDATE_FRAME, this);
 }
 
-void SeaWood::Node::useRimLight(bool isUse)
+void SeaWood::Node::enableRimLight(bool isUse)
 {
 	m_UseRimLight = isUse;
 }
 
-bool SeaWood::Node::isUsingRimLight()
+bool SeaWood::Node::isEnableRimLight()
 {
 	return m_UseRimLight;
 }

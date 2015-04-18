@@ -149,7 +149,8 @@ void SeaWood::Scene::render()
 {
 	std::vector<Node*> drawNodes;
 
-	std::function<void(Node*node)> getAllChilds = [&](Node* node)
+	std::function<void(Node*node)> getAllChilds = 
+		[this, &drawNodes, &getAllChilds](Node* node)
 	{
 		//그리지 않는 대상인 경우 그 자식들까지 싹 다 제외
 		if (!node->isRender())
@@ -180,7 +181,7 @@ void SeaWood::Scene::render()
 
 	std::sort(drawNodes.begin(), drawNodes.end(), [](Node* lhs, Node* rhs)
 	{
-		auto compareDistance = [&]()
+		auto compareDistance = [&lhs, &rhs]()
 		{
 			auto camera = GET_RENDERER()->getCamera();
 			float lDistance = lhs->getDistanceToCamera(camera);

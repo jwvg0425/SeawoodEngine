@@ -220,9 +220,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="FX\color.fx">
-      <Filter>fx</Filter>
-    </FxCompile>
     <FxCompile Include="FX\light.fx">
       <Filter>fx</Filter>
     </FxCompile>
@@ -231,6 +228,9 @@
     </FxCompile>
     <FxCompile Include="FX\Basic.fx">
       <Filter>fx</Filter>
+    </FxCompile>
+    <FxCompile Include="FX\color.fx">
+      <Filter>base\structure</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

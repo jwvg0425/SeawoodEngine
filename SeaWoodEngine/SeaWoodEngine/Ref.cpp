@@ -32,3 +32,8 @@ void SeaWood::Ref::autorelease()
 {
 	Director::getInstance()->autorelease(this);
 }
+
+int SeaWood::Ref::getRefCount()
+{
+	return m_RefCount;
+}

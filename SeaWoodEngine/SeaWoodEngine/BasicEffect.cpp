@@ -199,7 +199,7 @@ void SeaWood::BasicEffect::updateByObject(Node* object)
 		m_IsTexture = false;
 	}
 
-	if (object->isUsingRimLight())
+	if (object->isEnableRimLight())
 	{
 		m_UseRimLight = true;
 	}

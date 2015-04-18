@@ -31,16 +31,14 @@ public:
 
 	const Material*	getMaterial();
 	void			setMaterial(Material material);
-	void			useRimLight(bool isUse);
-	bool			isUsingRimLight();
+	void			enableRimLight(bool isUse);
+	bool			isEnableRimLight();
 
 	ID3D11ShaderResourceView* getTexture();
 	void			setTexture(const std::wstring& fileName);
 	void			setTexture(const std::string& fileName);
 	void			setTextureTransform(CXMMATRIX matrix);
 	XMFLOAT4X4		getTextureTransform();
-
-	int				getRefCount();
 
 	//그리기 함수.
 	virtual void	render();

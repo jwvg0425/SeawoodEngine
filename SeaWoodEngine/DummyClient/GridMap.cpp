@@ -20,9 +20,6 @@ bool GridMap::init()
 		return false;
 	}
 
-	std::vector<FigureVertex> vertices;
-	std::vector<UINT> indices;
-
 	Material mat;
 
 	mat.m_Ambient = XMFLOAT4(0.0f, 0.3f, 0.0f, 0.0f);
@@ -39,10 +36,6 @@ bool GridMap::init()
 
 	Director::getInstance()->registerEvent(EventType::PICK_TRIANGLE, this);
 	scheduleUpdate();
-
-	GeometryGenerator::createGrid(m_Width, m_Depth, m_M, m_N, vertices, indices);
-
-	setBuffer(vertices, indices, true);
 
 	return true;
 }
@@ -171,11 +164,11 @@ void GridMap::update(float dTime)
 					delta = -pow(cos(distance), 0.5f) * dTime;
 					break;
 				case FLAT:
-					if (m_Vertices[i].m_Pos.y < m_PickPos.y -0.1f)
+					if (m_Vertices[i].m_Pos.y < m_PickPos.y - dTime * m_NowSpeed)
 					{
 						delta = pow(cos(distance), 0.5f) * dTime;
 					}
-					else if (m_Vertices[i].m_Pos.y > m_PickPos.y + 0.1f)
+					else if (m_Vertices[i].m_Pos.y > m_PickPos.y + dTime * m_NowSpeed)
 					{
 						delta = -pow(cos(distance), 0.5f) * dTime;
 					}
@@ -234,4 +227,19 @@ void GridMap::update(float dTime)
 			XMStoreFloat3(&m_Vertices[i].m_Normal, n);
 		}
 	}
+}
+
+void GridMap::setGrid(int m, int n, float width, float depth)
+{
+	m_M = m;
+	m_N = n;
+	m_Width = width;
+	m_Depth = depth;
+	
+	std::vector<FigureVertex> vertices;
+	std::vector<UINT> indices;
+
+
+	GeometryGenerator::createGrid(m_Width, m_Depth, m_M, m_N, vertices, indices);
+	setBuffer(vertices, indices, true);
 }

@@ -27,10 +27,11 @@ bool FirstScene::init()
 	auto camera = MovingCamera::createWithPos(XMVectorSet(0.0f, 20.0f, -60.0f, 1.0f), XMVectorZero(), XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f));
 	GET_RENDERER()->registerCamera(camera);
 
+
 	auto gridMap = GridMap::create();
+	gridMap->setGrid(50, 50, 100, 100);
 
 	addChild(gridMap);
-
 
 	auto direct = DirectionalLight();
 

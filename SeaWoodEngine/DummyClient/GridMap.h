@@ -19,6 +19,8 @@ public:
 	void onPickTriangle(int pick, XMVECTOR pickPos) override;
 	void update(float dTime) override;
 
+	void setGrid(int m, int n, float width, float depth);
+
 	CREATE_FUNC(GridMap);
 
 protected:
