@@ -82,6 +82,9 @@ void Figure<VertexType>::getBuffer(std::vector<VertexType>& vertices, std::vecto
 template<typename VertexType>
 float Figure<VertexType>::getPickedTriangle(int* pickFace, XMVECTOR* pickPos, float minDis)
 {
+	_ASSERT(pickFace != nullptr);
+	_ASSERT(pickPos != nullptr);
+
 	XMVECTOR rayOrigin;
 	XMVECTOR rayDir;
 

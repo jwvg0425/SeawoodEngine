@@ -140,6 +140,8 @@ TCHAR* SeaWood::Application::getTitle() const
 
 void SeaWood::Application::setTitle(TCHAR* title)
 {
+	_ASSERT(title != nullptr);
+
 	SetWindowText(m_WindowHandle, title);
 	m_Title = title;
 }

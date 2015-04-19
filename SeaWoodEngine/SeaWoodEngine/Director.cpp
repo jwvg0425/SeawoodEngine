@@ -301,6 +301,8 @@ KeyManager* SeaWood::Director::getKeyManager()
 
 void SeaWood::Director::clearEvent(EventType type, Node* node)
 {
+	_ASSERT(node != nullptr);
+
 	for (auto it = m_EventNodes[type].begin(); it != m_EventNodes[type].end();)
 	{
 		if (*it == node)

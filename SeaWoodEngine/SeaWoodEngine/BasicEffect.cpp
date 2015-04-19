@@ -64,16 +64,22 @@ void SeaWood::BasicEffect::setEyePosW(const XMFLOAT3& v)
 
 void SeaWood::BasicEffect::setDirLight(DirectionalLight* light)
 {
+	_ASSERT(light != nullptr);
+
 	m_DirLight->SetRawValue(light, 0, sizeof(DirectionalLight)* LIGHT_NUM);
 }
 
 void SeaWood::BasicEffect::setPointLight(PointLight* light)
 {
+	_ASSERT(light != nullptr);
+
 	m_PointLight->SetRawValue(light, 0, sizeof(PointLight)* LIGHT_NUM);
 }
 
 void SeaWood::BasicEffect::setSpotLight(SpotLight* light)
 {
+	_ASSERT(light != nullptr);
+
 	m_SpotLight->SetRawValue(light, 0, sizeof(SpotLight)* LIGHT_NUM);
 }
 
@@ -172,6 +178,8 @@ void SeaWood::BasicEffect::updateByFrame()
 
 void SeaWood::BasicEffect::updateByObject(Node* object)
 {
+	_ASSERT(object != nullptr);
+
 	auto world = object->getWorld() * object->getParentWorld();
 	auto viewProj = GET_RENDERER()->getCamera()->getViewProj();
 	auto worldViewProj = world * viewProj;
@@ -211,6 +219,8 @@ void SeaWood::BasicEffect::updateByObject(Node* object)
 
 void SeaWood::BasicEffect::setDiffuseMap(ID3D11ShaderResourceView* tex)
 {
+	_ASSERT(tex != nullptr);
+
 	m_DiffuseMap->SetResource(tex);
 }
 

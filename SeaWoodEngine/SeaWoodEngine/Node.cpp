@@ -83,6 +83,10 @@ void SeaWood::Node::setRotate(float x, float y, float z, bool relative /*= false
 
 void SeaWood::Node::getPosition(float* x, float* y, float* z)
 {
+	_ASSERT(x != nullptr);
+	_ASSERT(y != nullptr);
+	_ASSERT(z != nullptr);
+
 	*x = m_X;
 	*y = m_Y;
 	*z = m_Z;
@@ -90,6 +94,10 @@ void SeaWood::Node::getPosition(float* x, float* y, float* z)
 
 void SeaWood::Node::getScale(float* scaleX, float* scaleY, float* scaleZ)
 {
+	_ASSERT(scaleX != nullptr);
+	_ASSERT(scaleY != nullptr);
+	_ASSERT(scaleZ != nullptr);
+
 	*scaleX = m_ScaleX;
 	*scaleY = m_ScaleY;
 	*scaleZ = m_ScaleZ;
@@ -97,6 +105,10 @@ void SeaWood::Node::getScale(float* scaleX, float* scaleY, float* scaleZ)
 
 void SeaWood::Node::getRotate(float* angleX, float* angleY, float* angleZ)
 {
+	_ASSERT(angleX != nullptr);
+	_ASSERT(angleY != nullptr);
+	_ASSERT(angleZ != nullptr);
+
 	*angleX = m_AngleX;
 	*angleY = m_AngleY;
 	*angleZ = m_AngleZ;
@@ -199,6 +211,8 @@ void Node::update(float dTime)
 
 void Node::addChild(Node* child)
 {
+	_ASSERT(child != nullptr);
+
 	child->m_Parent = this;
 	child->retain();
 	m_Childs.push_back(std::make_pair("NO_NAME", child));
@@ -206,6 +220,8 @@ void Node::addChild(Node* child)
 
 void SeaWood::Node::addChild(Node* child, std::string name)
 {
+	_ASSERT(child != nullptr);
+
 	child->m_Parent = this;
 	child->retain();
 	m_Childs.push_back(std::make_pair(name, child));
@@ -257,6 +273,8 @@ void SeaWood::Node::removeAllChilds()
 
 void SeaWood::Node::getChilds(std::string name, Nodes* childs)
 {
+	_ASSERT(childs != nullptr);
+
 	for (auto& child : m_Childs)
 	{
 		if (child.first == name)
@@ -297,6 +315,8 @@ XMMATRIX SeaWood::Node::getParentWorld() const
 
 float SeaWood::Node::getDistanceToCamera(Camera* camera) const
 {
+	_ASSERT(camera != nullptr);
+
 	XMFLOAT3 cameraPos = camera->getEyePos();
 	XMVECTOR viewPointV = XMLoadFloat4(&XMFLOAT4(m_CenterPos.x, m_CenterPos.y, m_CenterPos.z, 1.0f));
 	XMMATRIX world = getWorld() * getParentWorld();
@@ -363,6 +383,9 @@ bool SeaWood::Node::isEnableRimLight()
 
 float SeaWood::Node::getPickedTriangle(int* pickFace, XMVECTOR* pickPos, float minDis)
 {
+	_ASSERT(pickFace != nullptr);
+	_ASSERT(pickPos != nullptr);
+
 	//기본 node는 무조건 -1. 트라이앵글 없다고 봄
 	*pickFace = -1;
 
@@ -400,6 +423,7 @@ void SeaWood::Node::getAllChilds(OUT std::vector<Node*>& childs)
 void Node::removeChild(Node* child)
 {
 	_ASSERT(child != nullptr);
+
 	if (child == nullptr)
 	{
 		return;

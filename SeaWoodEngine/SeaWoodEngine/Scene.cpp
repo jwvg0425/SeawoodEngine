@@ -33,6 +33,8 @@ bool SeaWood::Scene::init()
 
 void SeaWood::Scene::addChild(Node* child)
 {
+	_ASSERT(child != nullptr);
+
 	child->setParent(this);
 	child->retain();
 	m_Childs.push_back(std::make_pair("NO_NAME", child));
@@ -40,16 +42,22 @@ void SeaWood::Scene::addChild(Node* child)
 
 void SeaWood::Scene::registerLight(const DirectionalLight* directionalLight)
 {
+	_ASSERT(directionalLight != nullptr);
+
 	m_DirectionalLight.push_back(directionalLight);
 }
 
 void SeaWood::Scene::registerLight(const PointLight* pointLight)
 {
+	_ASSERT(pointLight != nullptr);
+
 	m_PointLight.push_back(pointLight);
 }
 
 void SeaWood::Scene::registerLight(const SpotLight* spotLight)
 {
+	_ASSERT(spotLight != nullptr);
+
 	m_SpotLight.push_back(spotLight);
 }
 
@@ -60,6 +68,8 @@ const Scene::DLights& SeaWood::Scene::getDirectionalLight()
 
 void SeaWood::Scene::deleteLight(const DirectionalLight* directionalLight)
 {
+	_ASSERT(directionalLight != nullptr);
+
 	for (auto it = m_DirectionalLight.begin(); it != m_DirectionalLight.end();)
 	{
 		if (*it == directionalLight)
@@ -75,6 +85,8 @@ void SeaWood::Scene::deleteLight(const DirectionalLight* directionalLight)
 
 void SeaWood::Scene::deleteLight(const PointLight* pointLight)
 {
+	_ASSERT(pointLight != nullptr);
+
 	for (auto it = m_PointLight.begin(); it != m_PointLight.end();)
 	{
 		if (*it == pointLight)
@@ -90,6 +102,8 @@ void SeaWood::Scene::deleteLight(const PointLight* pointLight)
 
 void SeaWood::Scene::deleteLight(const SpotLight* spotLight)
 {
+	_ASSERT(spotLight != nullptr);
+
 	for (auto it = m_SpotLight.begin(); it != m_SpotLight.end();)
 	{
 		if (*it == spotLight)

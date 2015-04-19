@@ -31,6 +31,8 @@ ID3DX11EffectTechnique* SeaWood::SimpleColorEffect::getTech()
 
 void SeaWood::SimpleColorEffect::updateByObject(Node* object)
 {
+	_ASSERT(object != nullptr);
+
 	auto world = object->getWorld();
 	auto viewProj = GET_RENDERER()->getCamera()->getViewProj();
 	auto worldViewProj = world * viewProj;

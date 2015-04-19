@@ -52,6 +52,8 @@ void SeaWood::SimpleLightEffect::setEyePosW(const XMFLOAT3& v)
 
 void SeaWood::SimpleLightEffect::setDirLight(DirectionalLight* light)
 {
+	_ASSERT(light != nullptr);
+
 	m_DirLight->SetRawValue(light, 0, sizeof(DirectionalLight)* 3);
 }
 
@@ -67,6 +69,8 @@ ID3DX11EffectTechnique* SeaWood::SimpleLightEffect::getTech()
 
 void SeaWood::SimpleLightEffect::updateByObject(Node* object)
 {
+	_ASSERT(object != nullptr);
+
 	auto world = object->getWorld();
 	auto viewProj = GET_RENDERER()->getCamera()->getViewProj();
 	auto worldViewProj = world * viewProj;
@@ -118,11 +122,15 @@ void SeaWood::SimpleLightEffect::updateByFrame()
 
 void SeaWood::SimpleLightEffect::setPointLight(PointLight* light)
 {
+	_ASSERT(light != nullptr);
+
 	m_PointLight->SetRawValue(light, 0, sizeof(PointLight)* 3);
 }
 
 void SeaWood::SimpleLightEffect::setSpotLight(SpotLight* light)
 {
+	_ASSERT(light != nullptr);
+
 	m_SpotLight->SetRawValue(light, 0, sizeof(SpotLight)* 3);
 }
 

@@ -233,7 +233,7 @@
       <Filter>fx</Filter>
     </FxCompile>
     <FxCompile Include="FX\color.fx">
-      <Filter>base\structure</Filter>
+      <Filter>fx</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
