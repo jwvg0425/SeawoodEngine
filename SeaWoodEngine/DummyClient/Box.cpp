@@ -19,9 +19,6 @@ bool Box::init()
 		return false;
 	}
 
-	setEffect(Effects::getBasicEffect());
-	setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
 	Director::getInstance()->registerEvent(EventType::PICK_TRIANGLE, this);
 
 	return true;

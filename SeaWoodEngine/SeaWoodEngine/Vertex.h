@@ -16,6 +16,7 @@ namespace Vertex
 		XMFLOAT3 m_Pos;
 		XMFLOAT4 m_Color;
 
+		static EffectType getDefaultEffect();
 		static ID3D11InputLayout* getInputLayout();
 	};
 
@@ -30,6 +31,7 @@ namespace Vertex
 		XMFLOAT3 m_Pos;
 		XMFLOAT3 m_Normal;
 
+		static EffectType getDefaultEffect();
 		static ID3D11InputLayout* getInputLayout();
 	};
 
@@ -48,6 +50,7 @@ namespace Vertex
 		XMFLOAT2 m_Tex;
 		XMFLOAT4 m_Color;
 
+		static EffectType getDefaultEffect();
 		static ID3D11InputLayout* getInputLayout();
 	};
 };

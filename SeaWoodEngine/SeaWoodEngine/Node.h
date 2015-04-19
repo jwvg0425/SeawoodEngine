@@ -110,7 +110,7 @@ protected:
 	ID3D11ShaderResourceView* m_DiffuseMapSRV = nullptr;
 
 	//render state 관련
-	D3D11_PRIMITIVE_TOPOLOGY m_Topology;
+	D3D11_PRIMITIVE_TOPOLOGY m_Topology = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST;
 	ID3D11RasterizerState* m_RasterizerState = nullptr;
 	ID3D11BlendState* m_BlendState = nullptr;
 	FLOAT m_BlendFactor[4];

@@ -27,15 +27,13 @@ bool GridMap::init()
 	mat.m_Specular = XMFLOAT4(0.2f, 0.5f, 0.2f, 16.0f);
 
 	setMaterial(mat);
+	//enableRimLight(true);
 
 	//컬링 없이 한다.
 	setRasterizer(Rasterizer::getNoCull());
 	setTexture("Textures//grass.dds");
 	XMMATRIX textureTransform = XMMatrixScaling(5, 5, 5);
 	setTextureTransform(textureTransform);
-
-	setEffect(Effects::getBasicEffect());
-	setTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	Director::getInstance()->registerEvent(EventType::PICK_TRIANGLE, this);
 	scheduleUpdate();
