@@ -6,6 +6,9 @@
 #include "Rect.h"
 #include "Vertex.h"
 #include "Light.h"
+#include "Vector.h"
+#include "Matrix.h"
+#include "Volume.h"
 
 NS_SW_BEGIN
 

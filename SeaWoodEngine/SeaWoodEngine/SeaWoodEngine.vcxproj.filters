@@ -46,18 +46,15 @@
     <Filter Include="base\debug">
       <UniqueIdentifier>{22fb4883-3e80-408a-af07-45b28133c5e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="base\structure\2D">
+      <UniqueIdentifier>{c2fcacbf-15bd-4570-8a25-c6c530902c4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\structure\3D">
+      <UniqueIdentifier>{fea15060-24c9-4a26-bac2-fd9ba0e324ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="Point2.cpp">
-      <Filter>base\structure</Filter>
-    </ClCompile>
-    <ClCompile Include="Rect.cpp">
-      <Filter>base\structure</Filter>
-    </ClCompile>
-    <ClCompile Include="Size.cpp">
-      <Filter>base\structure</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>node</Filter>
     </ClCompile>
@@ -124,21 +121,27 @@
     <ClCompile Include="Vertex.cpp">
       <Filter>base\renderer\global</Filter>
     </ClCompile>
+    <ClCompile Include="Point2.cpp">
+      <Filter>base\structure\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>base\structure\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Size.cpp">
+      <Filter>base\structure\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>base\structure\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>base\structure\3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Volume.cpp">
+      <Filter>base\structure\3D</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Point2.h">
-      <Filter>base\structure</Filter>
-    </ClInclude>
-    <ClInclude Include="Rect.h">
-      <Filter>base\structure</Filter>
-    </ClInclude>
-    <ClInclude Include="Size.h">
-      <Filter>base\structure</Filter>
-    </ClInclude>
-    <ClInclude Include="structure.h">
-      <Filter>base\structure</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>node</Filter>
     </ClInclude>
@@ -220,6 +223,27 @@
     </ClInclude>
     <ClInclude Include="DebugNodes.h">
       <Filter>base\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Point2.h">
+      <Filter>base\structure\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>base\structure\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Size.h">
+      <Filter>base\structure\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>base\structure\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>base\structure\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Volume.h">
+      <Filter>base\structure\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="structure.h">
+      <Filter>base\structure</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
